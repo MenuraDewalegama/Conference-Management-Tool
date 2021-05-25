@@ -3,11 +3,29 @@
   "version": "1.0.0",
   "description": "This project is the backend nodejs web-server application and it is developed to serve the frontend of the application.",
   "scripts": {
+    "start": "nodemon app.js"
   },
   "author": "Code4 Technologies",
   "license": "MIT",
   "dependencies": {
+    "@koa/cors": "^3.1.0",
+    "@koa/router": "^10.0.0",
+    "bcrypt": "^5.0.1",
+    "crypto-js": "^4.0.0",
+    "dotenv": "^8.2.0",
+    "jsonwebtoken": "^8.5.1",
+    "koa": "^2.13.1",
+    "koa-body": "^4.2.0",
+    "koa-bodyparser": "^4.3.0",
+    "koa-jwt": "^4.0.1",
+    "koa-send": "^5.0.1",
+    "koa-unless": "^1.0.7",
+    "mime-types": "^2.1.30",
+    "mongodb": "^3.6.6",
+    "ms": "^2.1.2",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
+    "nodemon": "^2.0.7"
   }
 }
