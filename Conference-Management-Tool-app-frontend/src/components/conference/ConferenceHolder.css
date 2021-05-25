@@ -1,0 +1,24 @@
+.outer_container{
+    margin-top: 2rem;
+    /*border: 1px solid lightgray;*/
+    /*box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;*/
+}
+
+.header_top{
+    position: relative;
+    top: 3rem;
+    left: 10rem;
+}
+
+.outer{
+    /*background-color: yellow;*/
+    margin: 2rem;
+    padding: 2rem;
+    /*border: 1px solid lightgray;*/
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.conf_header{
+    font-weight: 100;
+}
