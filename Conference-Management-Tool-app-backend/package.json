@@ -4,6 +4,8 @@
   "description": "This project is the backend nodejs web-server application and it is developed to serve the frontend of the application.",
   "scripts": {
   },
+  "author": "Code4 Technologies",
+  "license": "MIT",
   "dependencies": {
   },
   "devDependencies": {
