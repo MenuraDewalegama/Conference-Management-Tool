@@ -1,0 +1,13 @@
+{
+  "name": "conference-management-tool-by-code4-technologies",
+  "version": "1.0.0",
+  "description": "This project is the frontend ReactJS web application.",
+  "scripts": {
+  },
+  "author": "Code4 Technologies",
+  "license": "MIT",
+  "dependencies": {
+  },
+  "devDependencies": {
+  }
+}
