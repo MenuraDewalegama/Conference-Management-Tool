@@ -1,9 +1,73 @@
-import React from 'react';
+import React, {useContext, useEffect} from 'react';
+import {Button, Nav, Navbar} from 'react-bootstrap';
+import {Bell} from 'react-bootstrap-icons';
+import {Link, Switch} from 'react-router-dom';
+import {UserContext} from '../../context/user.context';
+import './NavigationBar.css';
 
 const NavigationBar = () => {
+    /* state. */
+    // const [currentUser, setCurrentUser] = useState({ id: 'U001', name: 'John Doe', type: 'ADMIN'});
+    const {currentUser, logOutUser} = useContext(UserContext);
+
+    useEffect(() => {
+        console.log('use effect hook is working!');
+    });
+
+    const performLogOut = () => {
+        /* log out current user. */
+        // logOutUser();
+        console.log('user is logging out.');
+        /* redirect to main page. */
+
+    };
+
+
     return (
         <div>
-            <h1>Navigation bar works</h1>
+            <div>
+                <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+                    <Link to="/" className="nav-link">
+                        <Navbar.Brand className='header_font'>Code 4 Conference</Navbar.Brand>
+                    </Link>
+
+                    <Navbar.Toggle aria-controls="responsive-navbar-nav"/>
+                    <Navbar.Collapse id="responsive-navbar-nav">
+                        <Nav className="mr-auto">
+                        </Nav>
+
+                        {     // if user logged in
+                            (currentUser) ?
+                                <Nav>
+                                    <h6 className="user_name">Hi {currentUser?.name}</h6>
+                                    <Link style={{margin: 'auto'}} to="/cart" className="nav-link">
+                                        <Bell className="navbar_icon"/>
+                                    </Link>
+
+                                    <Button className="nav-link" variant="danger"
+                                            onClick={() => performLogOut()}>Logout</Button>
+                                </Nav>
+
+                                //if user is not logged in
+                                : <Nav>
+                                    <Link to="/login" className="nav-link navigation_property">Login</Link>
+                                    <Link to="/register" className="nav-link navigation_property">Register</Link>
+                                </Nav>
+                        }
+
+                    </Navbar.Collapse>
+                </Navbar>
+
+                <Switch>
+                    {/* route paths can be set here. */}
+                    {/*<Route path="/login">*/}
+                    {/*    <Login/>*/}
+                    {/*</Route>*/}
+                    {/*<Route path="/register">*/}
+                    {/*    <Register/>*/}
+                    {/*</Route>*/}
+                </Switch>
+            </div>
         </div>
     );
 };

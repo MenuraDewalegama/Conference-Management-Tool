@@ -5,7 +5,7 @@ import ConferenceHolder from '../conference/ConferenceHolder';
 /* functional component. */
 const Main = () => {
     return (
-        <div>
+        <div style={{ height: '100%' }}>
             <Switch>
                 <Redirect exact from="/" to="/conferences"/>
                 {/* conferences component */}
