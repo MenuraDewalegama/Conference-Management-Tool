@@ -8,3 +8,17 @@ const unless = require('koa-unless');
 const ms = require('ms');
 const dotenv = require('dotenv').config();
 require('./src/util/database.util');
+
+
+const app = new Koa();
+const PORT = process.env.dPORT;
+
+
+app.listen(PORT,(error) => {
+    if (error) {
+        console.error('Something went wrong when server starts!');
+    } else {
+        console.log(`Server is started on port ${PORT}`);
+    }
+});
+
