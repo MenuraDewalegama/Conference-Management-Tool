@@ -9,9 +9,12 @@ const ms = require('ms');
 const dotenv = require('dotenv').config();
 require('./src/util/database.util');
 
-
 const app = new Koa();
 const PORT = process.env.dPORT;
+
+/* enable CORS. */
+const cors = require('@koa/cors');
+app.use(cors());
 
 
 app.listen(PORT,(error) => {
