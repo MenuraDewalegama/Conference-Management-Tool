@@ -1,6 +1,6 @@
 import React, {useContext, useEffect} from 'react';
 import {Button, Nav, Navbar} from 'react-bootstrap';
-import {Bell} from 'react-bootstrap-icons';
+import {Bell, PencilSquare} from 'react-bootstrap-icons';
 import {Link, Switch} from 'react-router-dom';
 import {UserContext} from '../../context/user.context';
 import './NavigationBar.css';
@@ -47,7 +47,16 @@ const NavigationBar = () => {
                                     <Link style={{margin: 'auto'}} to="/cart" className="nav-link">
                                         <Bell className="navbar_icon"/>
                                     </Link>
-                                    
+
+
+                                    {//temporaly added for development purposes
+                                    }
+
+                                    <Link style={{margin: 'auto'}} to="/register" className="nav-link">
+                                        <PencilSquare className="navbar_icon"/>
+                                    </Link>
+                                
+
                                     <Button className="nav-link" variant="danger"
                                             onClick={() => performLogOut()}>Logout</Button>
                                 </Nav>
@@ -64,12 +73,7 @@ const NavigationBar = () => {
 
                 <Switch>
                     {/* route paths can be set here. */}
-                    {/*<Route path="/login">*/}
-                    {/*    <Login/>*/}
-                    {/*</Route>*/}
-                    {/*<Route path="/register">*/}
-                    {/*    <Register/>*/}
-                    {/*</Route>*/}
+                 
                 </Switch>
             </div>
         </div>

@@ -16,6 +16,7 @@
 *.launch
 .settings/
 *.sublime-workspace
+.vscode
 
 # backend project IDE realted
 /Conference-Management-Tool-app-backend/.idea
