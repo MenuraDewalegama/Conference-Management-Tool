@@ -43,7 +43,10 @@ const NavigationBar = () => {
                                     <Link style={{margin: 'auto'}} to="/cart" className="nav-link">
                                         <Bell className="navbar_icon"/>
                                     </Link>
-
+                                    
+                                    <Link style={{margin: 'auto'}} to="/dashBoard" className="nav-link">
+                                    <h6 className="user_name"> DashBoard </h6>
+                                    </Link>
                                     <Button className="nav-link" variant="danger"
                                             onClick={() => performLogOut()}>Logout</Button>
                                 </Nav>
