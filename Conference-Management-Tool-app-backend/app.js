@@ -16,6 +16,9 @@ const PORT = process.env.dPORT;
 const cors = require('@koa/cors');
 app.use(cors());
 
+/* enable koa-body. */
+app.use(koaBody({multipart: true}));
+
 
 app.listen(PORT,(error) => {
     if (error) {
