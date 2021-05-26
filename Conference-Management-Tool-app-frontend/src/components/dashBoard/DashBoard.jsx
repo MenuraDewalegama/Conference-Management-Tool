@@ -6,6 +6,7 @@
 import React from 'react';
 import {Col, Container, Image, Row} from 'react-bootstrap';
 import './DashBoard.css';
+import ConferenceViewCard from './SubModules/ConferenceViewCard';
 
 export default class DashBoard extends React.Component{
 
@@ -17,6 +18,7 @@ export default class DashBoard extends React.Component{
         return <div>
             <br />
            <h1 className="center">Welcome to DashBoard</h1>
+           <ConferenceViewCard/>
         </div>
     }
 
