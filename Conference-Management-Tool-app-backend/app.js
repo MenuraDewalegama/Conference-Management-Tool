@@ -19,7 +19,24 @@ app.use(cors());
 /* enable koa-body. */
 app.use(koaBody({multipart: true}));
 
+/* directory paths declaration. */
 
+/* create assets dir if not exists. */
+
+/* create dir when needed. */
+
+/* routes. */
+
+/* auth route and assets routes are exposed here. */
+
+/* JWT - 401 error handling. */
+
+/* JWT protected routes should place under this line. */
+
+/* app routes are set here. */
+
+
+/* server. */
 app.listen(PORT,(error) => {
     if (error) {
         console.error('Something went wrong when server starts!');
