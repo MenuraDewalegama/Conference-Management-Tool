@@ -3,37 +3,29 @@
 @date : 26/05/2021
 */
 
+const conferencePostDAO = require('../dal/conference-post-dao');
+
 /* get all conference posts. */
 const getAllConferencePost = () => {
-    return new Promise((resolve, reject) => {
-
-    });
+    return conferencePostDAO.getAllConferencePost();
 };
 
 /* get a conference post by ID. */
 const getConferencePostByID = (conferencePostID) => {
-    return new Promise((resolve, reject) => {
-
-    });
+    return conferencePostDAO.getConferencePost(conferencePostID);
 };
 
 /* creates a new save conference post. */
 const saveConferencePost = (conferencePost) => {
-    return new Promise((resolve, reject) => {
-
-    });
+    return conferencePostDAO.createConferencePost(conferencePost);
 };
 
 /* update a conference post. */
 const updateConferencePost = (id, conferencePost) => {
-    return new Promise((resolve, reject) => {
-
-    });
+    return conferencePostDAO.updateConferencePost(id, conferencePost);
 };
 
 /* delete a conference post by ID. */
 const deleteConferencePost = (conferencePostID) => {
-    return new Promise((resolve, reject) => {
-
-    });
+    return conferencePostDAO.deleteConferencePost(conferencePostID);
 };
