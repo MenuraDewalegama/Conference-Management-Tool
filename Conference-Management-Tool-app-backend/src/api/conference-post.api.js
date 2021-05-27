@@ -29,3 +29,11 @@ const updateConferencePost = (id, conferencePost) => {
 const deleteConferencePost = (conferencePostID) => {
     return conferencePostDAO.deleteConferencePost(conferencePostID);
 };
+
+module.exports = {
+    getAllConferencePost,
+    getConferencePostByID,
+    saveConferencePost,
+    updateConferencePost,
+    deleteConferencePost
+};
