@@ -1,8 +1,9 @@
 import React, {useContext, useEffect} from 'react';
 import {Button, Nav, Navbar} from 'react-bootstrap';
 import {Bell, PencilSquare} from 'react-bootstrap-icons';
-import {Link, Switch} from 'react-router-dom';
+import {Route, Link, Switch} from 'react-router-dom';
 import {UserContext} from '../../context/user.context';
+import Register from '../Register/Register';
 import './NavigationBar.css';
 
 const NavigationBar = () => {
@@ -72,7 +73,9 @@ const NavigationBar = () => {
                 </Navbar>
 
                 <Switch>
-                    {/* route paths can be set here. */}
+                <Route path="/register">
+                        <Register/>
+                    </Route>
                  
                 </Switch>
             </div>
