@@ -3,7 +3,9 @@
 }
 
 
-
+.opacity{
+  opacity: .8;
+}
 .card {
     font-size: .875rem;
   }
