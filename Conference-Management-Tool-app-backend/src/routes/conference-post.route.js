@@ -4,14 +4,24 @@
 */
 
 const Router = require('@koa/router');
+const conferencePostAPI = require('../api/conference-post.api');
 
 const router = new Router({
     prefix: '/api/v1/conferences'
 });
 
 /* get all conference posts. */
-router.get('/', ctx => {
+router.get('/', async (ctx) => {
     console.log('get all method works!');
+    try {
+        const result = await conferencePostAPI.getAllConferencePost();
+        ctx.response.type = 'application/json';
+        ctx.response.status = 200;
+        ctx.response.body = result;
+    } catch (error) {
+        ctx.response.status = 500;
+        console.log(error);
+    }
 });
 
 /*get conference posts by IDs. */
