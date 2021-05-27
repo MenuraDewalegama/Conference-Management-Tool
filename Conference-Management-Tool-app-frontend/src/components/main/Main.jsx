@@ -1,7 +1,7 @@
 import React from 'react';
 import {Redirect, Route, Switch} from 'react-router-dom';
 import ConferenceHolder from '../conference/ConferenceHolder';
-import DashBoard from '../dashBoard/DashBoard';
+import DashBoardHolder from '../dashBoard/DashBoardHolder';
 
 /* functional component. */
 const Main = () => {
@@ -13,8 +13,8 @@ const Main = () => {
                 <Route exact path="/conferences">
                     <ConferenceHolder/>
                 </Route>
-                <Route exact path="/dashBoard">
-                    <DashBoard/>
+                <Route path="/dashboard">
+                    <DashBoardHolder/>
                 </Route>
             </Switch>
         </div>
