@@ -25,8 +25,27 @@ router.get('/', async (ctx) => {
 });
 
 /*get conference posts by IDs. */
-router.get('/:id', ctx => {
+router.get('/:id',async (ctx) => {
     console.log('get method works!');
+    const id = ctx.request.params.id;
+
+    /* validate input. */
+    /* TODO: validate ID. */
+
+    try {
+        ctx.response.type = 'application/json';
+        const result = await conferencePostAPI.getConferencePostByID(id);
+        if (result) {
+            ctx.response.status = 200;
+            ctx.response.body = result;
+        } else {
+            /* no matching user found. */
+            ctx.response.status = 404;
+        }
+    } catch (error) {
+        ctx.response.status = 500;
+        console.log(error);
+    }
 });
 
 /* create a new conference post. */
