@@ -8,6 +8,7 @@ const unless = require('koa-unless');
 const ms = require('ms');
 const dotenv = require('dotenv').config();
 require('./src/util/database.util');
+const directoryService = require('./src/service/dir.service');
 
 const app = new Koa();
 const PORT = process.env.dPORT;
@@ -19,27 +20,8 @@ app.use(cors());
 /* enable koa-body. */
 app.use(koaBody({multipart: true}));
 
-/* directory paths declaration. */
-const assetDir = `${process.cwd()}${path.sep}assets`; path.join(process.cwd(),`/public/assets`);
-const conferencePostDir = path.join(process.cwd(),`/public/assets/conference-posts`);
-const keySpeakersDir = path.join(process.cwd(),`/public/assets/conference-posts/key-speakers`);
-
 /* create assets dir if not exists. */
-if (!fs.existsSync(assetDir)) {
-    /* creating assets dir. */
-    fs.mkdirSync(assetDir);
-}
-
-/* create products dir if not exists. */
-if (!fs.existsSync(conferencePostDir)) {
-    /* creating products dir. */
-    fs.mkdirSync(conferencePostDir);
-}
-
-if (!fs.existsSync(keySpeakersDir)) {
-    /* creating products dir. */
-    fs.mkdirSync(keySpeakersDir);
-}
+directoryService.createDirIfNotExists();
 
 /* routes. */
 const conferencePostRoutes = require('./src/routes/conference-post.route');
