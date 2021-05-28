@@ -84,8 +84,53 @@ router.post('/', async (ctx) => {
 });
 
 /* update an existing conference post. */
-router.put('/', ctx => {
+router.put('/:id',async (ctx) => {
     console.log('put method works!');
+    const conferencePostID = ctx.request.params.id;
+    let existingConferenceRecord;
+    const conferencePostBody = ctx.request.body;
+    const conferencePostDetails = JSON.parse(conferencePostBody?.conferencePostDetails);
+    /* validate user input. */
+    /* TODO: validate conference-post details. */
+
+    /* check whether there is a matching record for the given id. */
+    try {
+        const result = await conferencePostAPI.getConferencePostByID(conferencePostID);
+        existingConferenceRecord = result;
+        if (!result) {
+            /* if no record found. */
+            ctx.response.status = 404;
+            return;
+        }
+    } catch (error) {
+        /* something went wrong when finding a matching record. */
+        ctx.response.status = 500;
+        console.error(error);
+        return;
+    }
+
+    try { /* update the product. */
+        const result = await conferencePostAPI.updateConferencePost(conferencePostID, {
+                topic: conferencePostDetails.topic,
+                description: conferencePostDetails.description,
+                venue: conferencePostDetails.venue,
+                dateTime: conferencePostDetails.dateTime,
+                keySpeakers: conferencePostDetails.keySpeakers,
+                organizers: conferencePostDetails.organizers, // array
+                isApproved: false // conferencePost.isApproved
+            }, ctx.request.files,
+            existingConferenceRecord);
+        ctx.response.status = 204;
+        if (result.modifiedCount === 1) {
+            /* update successful. */
+            ctx.response.status = 204;
+        }
+    } catch (error) {
+        /* something wrong with update process. */
+        ctx.response.status = 500; // internal server error.
+        console.error(error);
+    }
+
 });
 
 
