@@ -4,6 +4,7 @@
 */
 
 const Router = require('@koa/router');
+const idGeneration = require('../service/id-generation.service');
 const conferencePostAPI = require('../api/conference-post.api');
 
 const router = new Router({
@@ -25,7 +26,7 @@ router.get('/', async (ctx) => {
 });
 
 /*get conference posts by IDs. */
-router.get('/:id',async (ctx) => {
+router.get('/:id', async (ctx) => {
     console.log('get method works!');
     const id = ctx.request.params.id;
 
@@ -49,8 +50,37 @@ router.get('/:id',async (ctx) => {
 });
 
 /* create a new conference post. */
-router.post('/', ctx => {
+router.post('/', async (ctx) => {
     console.log('post method works!');
+    const conferencePostBody = ctx.request.body;
+    const conferencePostDetails = JSON.parse(conferencePostBody?.conferencePostDetails);
+    /* validate user input. */
+    /* TODO: validate conference-post details. */
+
+    /* generate ID for each key speakers. */
+    conferencePostDetails.keySpeakers = idGeneration
+        .generateIdForElementsInArray(conferencePostDetails.keySpeakers);
+
+    try { /* add the user. */
+        const generatedResult = await conferencePostAPI.saveConferencePost({
+            topic: conferencePostDetails.topic,
+            description: conferencePostDetails.description,
+            venue: conferencePostDetails.venue,
+            dateTime: conferencePostDetails.dateTime,
+            keySpeakers: conferencePostDetails.keySpeakers,
+            organizers: conferencePostDetails.organizers, // array
+            isApproved: false // conferencePost.isApproved
+        }, ctx.request.files);
+        ctx.response.type = 'application/json';
+        ctx.response.status = 201; // created
+        ctx.response.body = {
+            'generatedId': generatedResult.insertedId
+        };
+
+    } catch (error) {
+        ctx.response.status = 500; // internal server error.
+        console.error(error);
+    }
 });
 
 /* update an existing conference post. */
