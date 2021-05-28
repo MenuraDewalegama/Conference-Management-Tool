@@ -6,6 +6,7 @@
 const Router = require('@koa/router');
 const idGeneration = require('../service/id-generation.service');
 const conferencePostAPI = require('../api/conference-post.api');
+const commonValidation = require('../routes/validation/common.validation');
 
 const router = new Router({
     prefix: '/api/v1/conferences'
@@ -87,6 +88,16 @@ router.post('/', async (ctx) => {
 router.put('/:id', async (ctx) => {
     console.log('put method works!');
     const conferencePostID = ctx.request.params.id;
+
+    /* check the given id is valid or not. */
+    try {
+        await commonValidation.validateID(conferencePostID);
+    } catch (error) {
+        ctx.response.status = 400;
+        ctx.response.body = error;
+        return;
+    }
+
     let existingConferenceRecord;
     const conferencePostBody = ctx.request.body;
     const conferencePostDetails = JSON.parse(conferencePostBody?.conferencePostDetails);
@@ -137,14 +148,23 @@ router.put('/:id', async (ctx) => {
 /* delete an existing conference post. */
 router.del('/:id', async (ctx) => {
     console.log('delete method works!');
-    const id = ctx.params.id;
+    const conferencePostID = ctx.params.id;
+
+    /* check the given id is valid or not. */
+    try {
+        await commonValidation.validateID(conferencePostID);
+    } catch (error) {
+        ctx.response.status = 400;
+        ctx.response.body = error;
+        return;
+    }
 
     try {
-        const result = await conferencePostAPI.getConferencePostByID(id);
+        const result = await conferencePostAPI.getConferencePostByID(conferencePostID);
         if (result) {
             /* found a matching record for the given ID. */
             try {
-                const result = await conferencePostAPI.deleteConferencePost(id);
+                const result = await conferencePostAPI.deleteConferencePost(conferencePostID);
                 if (result?.deletedCount === 1) {
                     /* record delete successfully. */
                     ctx.response.status = 204;
