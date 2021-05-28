@@ -7,6 +7,7 @@ const Router = require('@koa/router');
 const idGeneration = require('../service/id-generation.service');
 const conferencePostAPI = require('../api/conference-post.api');
 const commonValidation = require('../routes/validation/common.validation');
+const conferencePostValidation = require('../routes/validation/conference-post.validation');
 
 const router = new Router({
     prefix: '/api/v1/conferences'
@@ -14,7 +15,6 @@ const router = new Router({
 
 /* get all conference posts. */
 router.get('/', async (ctx) => {
-    console.log('get all method works!');
     try {
         const result = await conferencePostAPI.getAllConferencePost();
         ctx.response.type = 'application/json';
@@ -22,13 +22,12 @@ router.get('/', async (ctx) => {
         ctx.response.body = result;
     } catch (error) {
         ctx.response.status = 500;
-        console.log(error);
+        console.error(error);
     }
 });
 
 /*get conference posts by IDs. */
 router.get('/:id', async (ctx) => {
-    console.log('get method works!');
     const id = ctx.request.params.id;
 
     /* validate input. */
@@ -46,17 +45,22 @@ router.get('/:id', async (ctx) => {
         }
     } catch (error) {
         ctx.response.status = 500;
-        console.log(error);
+        console.error(error);
     }
 });
 
 /* create a new conference post. */
 router.post('/', async (ctx) => {
-    console.log('post method works!');
     const conferencePostBody = ctx.request.body;
     const conferencePostDetails = JSON.parse(conferencePostBody?.conferencePostDetails);
     /* validate user input. */
-    /* TODO: validate conference-post details. */
+    try {
+        await conferencePostValidation.checkKeySpeakersImageFiles(ctx.request?.files, conferencePostDetails.keySpeakers);
+    } catch (error) {
+        ctx.response.status = error.code;
+        ctx.response.body = error.message;
+        return;
+    }
 
     /* generate ID for each key speakers. */
     conferencePostDetails.keySpeakers = idGeneration
@@ -86,7 +90,6 @@ router.post('/', async (ctx) => {
 
 /* update an existing conference post. */
 router.put('/:id', async (ctx) => {
-    console.log('put method works!');
     const conferencePostID = ctx.request.params.id;
 
     /* check the given id is valid or not. */
@@ -147,7 +150,6 @@ router.put('/:id', async (ctx) => {
 
 /* delete an existing conference post. */
 router.del('/:id', async (ctx) => {
-    console.log('delete method works!');
     const conferencePostID = ctx.params.id;
 
     /* check the given id is valid or not. */
