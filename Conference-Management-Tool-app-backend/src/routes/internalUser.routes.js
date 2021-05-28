@@ -147,3 +147,5 @@ router.del('/:id', async ctx => {
     }
 
 });
+
+module.exports = router;

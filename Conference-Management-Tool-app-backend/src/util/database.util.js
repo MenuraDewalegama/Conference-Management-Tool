@@ -1,7 +1,3 @@
-/*
-@author : Dhanusha Perera
-@date : 26/05/2021
-*/
 const {MongoClient} = require('mongodb');
 const dotenv = require('dotenv').config();
 

@@ -2,8 +2,6 @@ const internalUserDAO = require('../dal/internalUser.dao');
 const mineTypes = require('mime-types');
 const fs = require('fs');
 const path = require('path');
-const { resolve } = require('path');
-const { rejects } = require('assert');
 
 /* asestes and internalUser dir */
 
@@ -12,7 +10,7 @@ const internalUserDir = `${assetDir}${path.sep}internalUsers`;
 
 /** add internalUser */
 
-const addInternalUser = async ({ fullName, contactNo, email, type }, ctxInternalUserImage) => {
+const addInternalUser = async ({fullName, contactNo, email, type }, ctxInternalUserImage) => {
     const internalUser = {
         fullName,
         contactNo,
@@ -21,7 +19,7 @@ const addInternalUser = async ({ fullName, contactNo, email, type }, ctxInternal
         imagePath: null
     }
 
-    return new promises(async (resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
         try {
             const generateResult = await internalUserDAO.addInternalUser(internalUser);
 
@@ -60,7 +58,8 @@ const addInternalUser = async ({ fullName, contactNo, email, type }, ctxInternal
 
         } catch (error) {
             reject(error);
-        }
+            console.log("test")
+        };
     });
 };
 

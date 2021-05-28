@@ -1,8 +1,3 @@
-/*
-@author : Dhanusha Perera
-@date : 26/05/2021
-*/
-
 /** provide basic database CRUD operations. */
 module.exports = class DatabaseService {
     static databaseFileName = '../util/database.util';

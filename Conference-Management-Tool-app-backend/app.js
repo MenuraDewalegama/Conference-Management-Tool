@@ -26,6 +26,7 @@ app.use(koaBody({multipart: true}));
 /* create dir when needed. */
 
 /* routes. */
+const InternalUserRoutes = require('../Conference-Management-Tool-app-backend/src/routes/internalUser.routes')
 
 /* auth route and assets routes are exposed here. */
 
@@ -34,7 +35,7 @@ app.use(koaBody({multipart: true}));
 /* JWT protected routes should place under this line. */
 
 /* app routes are set here. */
-
+app.use(InternalUserRoutes.routes()).use(InternalUserRoutes.allowedMethods());
 
 /* server. */
 app.listen(PORT,(error) => {

@@ -1,7 +1,7 @@
 const DatabaseService = require('../service/database.service.js');
 
 const collectionName= 'InternalUsers';
-const InternalUsers = DatabaseService(collectionName);
+const InternalUsers = new DatabaseService(collectionName);
 
 const addInternalUser = async({fullName, contactNo, email, type, imagePath }) =>{
     return await InternalUsers.save({fullName, contactNo, email, type, imagePath })
@@ -17,15 +17,15 @@ const updateInternalUserImagePath = async(id, {imagePath}) =>{
 }
 
 const deleteInternalUser = async id =>{
-    return await internalUser.delete(id);
+    return await InternalUsers.delete(id);
 }
 
 const getInternalUser = async id =>{
-    return await internalUser.findById(id);
+    return await InternalUsers.findById(id);
 }
 
 const getAllInternalUsers = async ()=>{
-    return await internalUser.findAll();
+    return await InternalUsers.findAll();
 };
 
 module.exports = {
