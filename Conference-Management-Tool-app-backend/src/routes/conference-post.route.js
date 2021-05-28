@@ -84,7 +84,7 @@ router.post('/', async (ctx) => {
 });
 
 /* update an existing conference post. */
-router.put('/:id',async (ctx) => {
+router.put('/:id', async (ctx) => {
     console.log('put method works!');
     const conferencePostID = ctx.request.params.id;
     let existingConferenceRecord;
@@ -135,8 +135,37 @@ router.put('/:id',async (ctx) => {
 
 
 /* delete an existing conference post. */
-router.del('/', ctx => {
+router.del('/:id', async (ctx) => {
     console.log('delete method works!');
+    const id = ctx.params.id;
+
+    try {
+        const result = await conferencePostAPI.getConferencePostByID(id);
+        if (result) {
+            /* found a matching record for the given ID. */
+            try {
+                const result = await conferencePostAPI.deleteConferencePost(id);
+                if (result?.deletedCount === 1) {
+                    /* record delete successfully. */
+                    ctx.response.status = 204;
+                } else {
+                    /* something went wrong with delete operation. */
+                    ctx.response.status = 500;
+                }
+            } catch (error) {
+                ctx.response.status = 500;
+                console.error(error);
+            }
+        } else {
+            /* no matching record found for the given ID. */
+            ctx.response.status = 404;
+        }
+
+    } catch (error) {
+        /* something went wrong when finding a matching record. */
+        ctx.response.status = 500;
+        console.error(error);
+    }
 });
 
 module.exports = router;
