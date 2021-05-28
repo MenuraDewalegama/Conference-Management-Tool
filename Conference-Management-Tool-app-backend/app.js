@@ -20,10 +20,26 @@ app.use(cors());
 app.use(koaBody({multipart: true}));
 
 /* directory paths declaration. */
+const assetDir = `${process.cwd()}${path.sep}assets`; path.join(process.cwd(),`/public/assets`);
+const conferencePostDir = path.join(process.cwd(),`/public/assets/conference-posts`);
+const keySpeakersDir = path.join(process.cwd(),`/public/assets/conference-posts/key-speakers`);
 
 /* create assets dir if not exists. */
+if (!fs.existsSync(assetDir)) {
+    /* creating assets dir. */
+    fs.mkdirSync(assetDir);
+}
 
-/* create dir when needed. */
+/* create products dir if not exists. */
+if (!fs.existsSync(conferencePostDir)) {
+    /* creating products dir. */
+    fs.mkdirSync(conferencePostDir);
+}
+
+if (!fs.existsSync(keySpeakersDir)) {
+    /* creating products dir. */
+    fs.mkdirSync(keySpeakersDir);
+}
 
 /* routes. */
 const conferencePostRoutes = require('./src/routes/conference-post.route');
