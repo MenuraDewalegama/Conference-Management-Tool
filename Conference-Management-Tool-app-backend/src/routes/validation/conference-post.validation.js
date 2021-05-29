@@ -9,7 +9,12 @@ const checkKeySpeakersImageFiles = (imageFiles, keySpeakersArray) => {
         let checkingArr = [];
 
         /* check key speakers variable is an array or not. */
-        if (Array.isArray(keySpeakersArray) && keySpeakersArray.length >= 0) {
+        if (!(imageFiles?.conferencePostImage)) {
+            reject({
+                code: 400,
+                message: 'Invalid: Conference image is required.'
+            });
+        } else if (Array.isArray(keySpeakersArray) && keySpeakersArray.length >= 0) {
             /* get the key speakers array size and
             put numbers from 1 to key speakers array size into checking array. */
             for (let i = 1; i <= keySpeakersArray.length; i++) {
