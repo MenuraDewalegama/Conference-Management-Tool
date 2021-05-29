@@ -13,6 +13,10 @@ const getAllInternalUsers = () => {
     });
 };
 
+const saveInernalUser = ()=>{
+    
+}
+
 module.exports = {
     getAllInternalUsers
 };
