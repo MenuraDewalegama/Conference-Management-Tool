@@ -20,15 +20,15 @@ export default class DashBoardHolder extends React.Component{
     render(){
         return <div>
           <Switch>
-                <Route exact path='/dashboard'>
+                <Route path='/dashboard'>
                   <DashBoard/>
                 </Route>
-                <Route exact path='/dashboard/users'>
+                {/* <Route exact path='/dashboard/users'>
                    <InternalUsersViewHolder/>
                 </Route>
                 <Route exat path='/dashboard/craetusers'>
                     <CreateUserView/>
-                </Route>
+                </Route> */}
           </Switch>
         </div>
     }

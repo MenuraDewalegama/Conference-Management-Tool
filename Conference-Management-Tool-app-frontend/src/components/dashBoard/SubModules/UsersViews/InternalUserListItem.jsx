@@ -5,7 +5,7 @@ import sha256 from 'crypto-js/sha256';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-export default function InternalUserList(props) {
+export default function InternalUserListItem(props) {
 
     const { internalUser } = props;
     let history = useHistory();
