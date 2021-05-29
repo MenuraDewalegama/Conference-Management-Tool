@@ -5,7 +5,7 @@ import axios from '../service/axios.service'
 import InternalUserService from '../service/internalUser.service'
 
 const InternalUserContext = React.createContext({
-    internalUsers: [],
+    internalUser: [],
     getAllInternalUsers: () => {
     },
 });
@@ -31,10 +31,13 @@ class InternalUserProvider extends Component{
        /** Get all the getAllInternalUsers by calling backend.
      * @return Promise with a result. If success, then resolve the product.
      * otherwise, reject the error(errorRespond) */
+
         getAllInternalUsers() {
             return new Promise(async (resolve, reject) => {
                 try {
-                    const response = await InternalUserService.getAllinternalUsers();
+                    const response = await InternalUserService.getAllInternalUsers();
+                    console.log("from contex");
+                    console.log(response);
                     if (response.status === 200) {
                         this.setState({
                             internalUsers: response.data
@@ -46,4 +49,20 @@ class InternalUserProvider extends Component{
                 }
             });
         }
+
+        render() {
+            return (
+                <InternalUserContext.Provider value={{
+                    internalUsers: this.state.internalUsers,
+                    getAllInternalUsers: this.getAllInternalUsers.bind(this),
+                }
+                }>
+                    {this.props.children}
+                </InternalUserContext.Provider>
+            );
+        }
 }
+const InternalUserConsumer = InternalUserContext.Consumer;
+module.exports = {
+    InternalUserContext, InternalUserProvider, InternalUserConsumer
+};

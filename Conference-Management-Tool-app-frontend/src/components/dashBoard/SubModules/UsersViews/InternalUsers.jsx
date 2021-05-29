@@ -7,9 +7,9 @@ export default class InternalUsers extends React.Component {
     constructor(prop) {
         super(prop);
 
-        this.state = {
-            internalUser: null,
-        };
+        // this.state = {
+        //     internalUser: null,
+        // };
     }
 
     render() {
@@ -17,7 +17,6 @@ export default class InternalUsers extends React.Component {
         return (
             <div className="container" style={{ padding: "2rem 0" }}>
                 {/* header. */}
-
                 <div className="container products-header p-0">
                     <div className="row">
                         <div className='col'>
@@ -34,15 +33,12 @@ export default class InternalUsers extends React.Component {
                 </div>
               </div>
 
-                <div className="container" fluid>
+                <div className="container">
                     <div className="row">
                         {/* display Internal Users item by item by looping through. */}
                         {internalUsers.map((internalUser) => {
                             return (
-                                <InternalUserListItem
-                                    key={internalUser._id}
-                                    internalUser={internalUser}
-                                />
+                                <InternalUserListItem  key={internalUser._id}  internalUser={internalUser} />
                             );
                         })}
                     </div>

@@ -1,23 +1,25 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Route, Switch } from 'react-router-dom';
 import {InternalUserContext} from '../../../../context/internalUser.context'
+import CreateUserView from './CreateUserView';
 import InternalUsers from './InternalUsers';
 
-export default class UsersViewHolder extends React.Component {
+export default class InternalUsersViewHolder extends React.Component {
 
-    static contextType = InternalUserContext
+    static contextType = InternalUserContext;
     constructor(props) {
         super(props);
     }
 
     render() {
+        console.log(this.context);
         return <div>
             <h1 className="center">Welcome to Users view</h1>
             <Switch>
-                <Route path='/internalusers'>
-                  <InternalUsers internalUsers={(this.context?.internalUsers)? this.context?.internalUsers : []} />
+                <Route path='/dashboard/internalusers'>
+                  <InternalUsers internalUsers={(this.context?.internalUsers) ? this.context?.internalUsers : []} />
                 </Route>
-                <Route exat path='/dashboard/craetusers'>
+                <Route path='/dashboard/craetusers'>
                     <CreateUserView/>
                 </Route>
           </Switch>
