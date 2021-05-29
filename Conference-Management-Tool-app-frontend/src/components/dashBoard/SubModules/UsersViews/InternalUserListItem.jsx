@@ -10,18 +10,14 @@ export default function InternalUserListItem(props) {
     let history = useHistory();
 
     return (
-        <div>
-            <br />
-            <div className="row">
-                <div className="col">
-                    <div className="card">
-                        <div className="card-body">
-                            <div className="cart-title"><b>{internalUser.fullName}</b></div>
-                            <div className="cart-text" >
-                            <b>{internalUser.contactNo}</b>
-                            </div>
-                        </div>
-                    </div>
+        <div className="col">
+            <div className="card">
+                <div className="card-body">
+                    <h1 className="card-title"><b>{internalUser.fullName}</b></h1>
+                    <div className="card-text"><b>{internalUser.contactNo}</b></div>
+                    <div className="card-text"><b>{internalUser.email}</b></div>
+                    <div className="card-text"><b>{internalUser.type}</b></div>
+                    <div className="card-text"><b>{internalUser.imagePath}</b></div>
                 </div>
             </div>
         </div>
