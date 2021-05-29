@@ -10,20 +10,21 @@ export default function InternalUserListItem(props) {
     let history = useHistory();
 
     return (
-        <div>
-            <br />
-            <div className="row">
-                <div className="col">
-                    <div className="card">
-                        <div className="card-body">
-                            <div className="cart-title"><b>{internalUser.fullName}</b></div>
-                            <div className="cart-text" >
-                            <b>{internalUser.contactNo}</b>
-                            </div>
-                        </div>
-                    </div>
+        <div className="col">
+            {true ? 
+            <div className="card">
+                <div className="card-body center">
+                    {/* Todo: should add imge view */}
+                    <h3 className="card-title"><b>Name: </b>{internalUser.fullName}</h3>
+                    <div className="card-text"><b>Contact: </b>{internalUser.contactNo}</div>
+                    <div className="card-text"><b>Email: </b>{internalUser.email}</div>
+                    <div className="card-text"><b>User Type: </b>{internalUser.type}</div>
+                    <div className="card-text"><b>{internalUser.imagePath}</b></div>
                 </div>
-            </div>
+            </div> :
+             <div>
+                 </div>}
+            
         </div>
     );
 }
