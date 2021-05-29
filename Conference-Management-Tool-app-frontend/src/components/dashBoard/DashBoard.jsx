@@ -36,7 +36,7 @@ export default class DashBoard extends React.Component {
                                     <div className="card-footer">
                                         <div className="stats">
                                             <i className="material-icons text-dark">warning</i>
-                                            <Link to="/dashboard/users">View Users...</Link>
+                                            <Link to="/dashboard/internalusers">View Users...</Link>
                                         </div>
                                     </div>
                                 </div>

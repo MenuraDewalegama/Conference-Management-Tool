@@ -9,7 +9,7 @@ import { Link, Route, Switch } from 'react-router-dom';
 import DashBoard from './DashBoard';
 import './DashBoard.css';
 import CreateUserView from './SubModules/UsersViews/CreateUserView';
-import UsersViewHolder from './SubModules/UsersViews/UsersViewHolder';
+import InternalUsersViewHolder from './SubModules/UsersViews/InternalUsersViewHolder';
 
 export default class DashBoardHolder extends React.Component{
 
@@ -23,11 +23,8 @@ export default class DashBoardHolder extends React.Component{
                 <Route exact path='/dashboard'>
                   <DashBoard/>
                 </Route>
-                <Route exact path='/dashboard/users'>
-                   <UsersViewHolder/>
-                </Route>
-                <Route exat path='/dashboard/craetusers'>
-                    <CreateUserView/>
+                 <Route path='/dashboard/internalusers'>
+                   <InternalUsersViewHolder/>
                 </Route>
           </Switch>
         </div>
