@@ -1,7 +1,11 @@
 import React from 'react';
 
-export default function CreateUserView() {
-    return <div>
+export default class CreateEditUserView extends React.Component {
+    constructor(props){
+        super(props);
+    }
+    render(){
+        return <div>
         <div className="container">
             <h1 className="center bg-dark text-light">welcome to create User Page</h1>
             <div className="row">
@@ -49,4 +53,6 @@ export default function CreateUserView() {
             </div>
         </div>
     </div>
+    } 
+   
 }
