@@ -18,6 +18,7 @@ const updateInternalUserImagePath = async(id, {imagePath}) =>{
 
 const deleteInternalUser = async id =>{
     return await InternalUsers.delete(id);
+    console.log('enawa')
 }
 
 const getInternalUser = async id =>{
