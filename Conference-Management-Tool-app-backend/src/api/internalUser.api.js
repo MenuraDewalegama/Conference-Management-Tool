@@ -68,7 +68,7 @@ const getInternalUsers = async () => {
 };
 
 const getInternalUser = async id => {
-    return await internalUserDAO.updateInternalUser(id);
+    return await internalUserDAO.getInternalUser(id);
 };
 
 const updateInternalUser = async (id,
@@ -151,6 +151,7 @@ const deleteInternalUser = async id=>{
     return new Promise(async (resolve, reject) =>{
         try {
             const existingInternalUser = await internalUserDAO.getInternalUser(id);
+            console.log(existingInternalUser);
             const oldImageFilePath = `${internalUserDir + path.sep + path.parse(existingInternalUser?.imagePath).base}`;
             console.log(oldImageFilePath);
             if (fs.existsSync(oldImageFilePath)) {

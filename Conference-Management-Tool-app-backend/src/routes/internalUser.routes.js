@@ -1,5 +1,15 @@
 const Router = require('@koa/router');
+
+const path = require('path');
+const fs = require('fs');
+const mimeTypes = require('mime-types');
+
 const { addInternalUser, getInternalUsers, getInternalUser, updateInternalUser, deleteInternalUser } = require('../api/internalUser.api')
+
+/* assets and products dir */
+const assetDir = `${process.cwd()}${path.sep}assets`;
+const internalUsersDir = `${assetDir}${path.sep}internaluser`;
+const internalUsersDefaultDir = `${assetDir}${path.sep}internaluser${path.sep}default.jpg`;
 
 const router = new Router({
     prefix: '/internaluser'
@@ -31,7 +41,8 @@ router.get('/:id', async ctx => {
         }
     } catch (error) {
         ctx.response.status = 500;
-        console.log(error);
+        // console.log(error);
+        console.log(ctx.params.id);
     }
 });
 
@@ -119,7 +130,8 @@ router.del('/:id', async ctx => {
     const id = ctx.params.id;
 
     try {
-        const result = await addInternalUser(id);
+        const result = await getInternalUser(id);
+        console.log(result);
         if (result) {
             /* found a matching record for the given ID. */
             try {
