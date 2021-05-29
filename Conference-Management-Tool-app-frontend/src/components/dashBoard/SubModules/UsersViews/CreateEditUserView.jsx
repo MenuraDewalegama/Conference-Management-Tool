@@ -1,5 +1,6 @@
 import React from 'react';
-import InternalUserContext from '../../../../context/internalUser.context'
+import { Link } from "react-router-dom";
+import {InternalUserContext} from '../../../../context/internalUser.context'
 
 export default class CreateEditUserView extends React.Component {
     static contextType = InternalUserContext;
@@ -23,15 +24,17 @@ export default class CreateEditUserView extends React.Component {
         console.log("value " + value);
     }
 
-    performSaveOrUpdate(saveOrUpdate){
+    performSaveOrUpdate(){
         const internalUser = {
             fullName: this.state.fullName,
             contactNo: this.state.contactNo,
             email: this.state.email,
-            type: this.state.type
-
-
+            type: this.state.type,
+            password: this.state.password
         }
+
+        this.context?.addInternalUser(internalUser);
+        
     };
 
     render() {
@@ -52,7 +55,7 @@ export default class CreateEditUserView extends React.Component {
                                     <form>
                                         <div class="form-group">
                                             <label for="exampleFormControlInput1">Full Name</label>
-                                            <input type="text" class="form-control" name="fullName" onChange={event => { this.onChange(event) }} id="exampleFormControlInput1" placeholder="ex:- Jone Deo" />
+                                            <input type="text" class="form-control" name="fullName"  onChange={event => { this.onChange(event) }} id="exampleFormControlInput1" placeholder="ex:- Jone Deo" />
                                         </div>
                                         <div class="form-group">
                                             <label for="exampleFormControlInput1">ContactNo:</label>
@@ -72,9 +75,9 @@ export default class CreateEditUserView extends React.Component {
                                         <button type="button" className="btn btn-info"
                                         onClick={event =>{
                                             event.preventDefault();
-
-                                            this.performSaveOrUpdate(saveOrUpdate);
-                                        }}>Submit</button>
+                                            this.performSaveOrUpdate();
+                                        }}><Link to="/dashboard/internalusers">Submit</Link></button>
+                                        
                                     </form>
                                 </div>
                             </div>

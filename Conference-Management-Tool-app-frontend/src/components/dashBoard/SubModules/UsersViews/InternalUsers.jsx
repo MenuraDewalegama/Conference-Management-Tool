@@ -21,7 +21,7 @@ export default class InternalUsers extends React.Component {
                     <div className="row">
                         <div className='col'>
                             <h1>Internal Users</h1>
-                            <Link to="/dashboard/internalusers/craet">Create User</Link>
+                            <Link to="/dashboard/internalusers/creat">Create User</Link>
                         </div>
                         <div className='col'
                             style={{

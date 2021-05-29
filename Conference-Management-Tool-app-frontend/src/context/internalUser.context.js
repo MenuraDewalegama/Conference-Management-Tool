@@ -8,6 +8,8 @@ const InternalUserContext = React.createContext({
     internalUser: [],
     getAllInternalUsers: () => {
     },
+    addInternalUser: (internalUser) => {
+    },
 });
 
 class InternalUserProvider extends Component {
@@ -53,25 +55,26 @@ class InternalUserProvider extends Component {
     /** Add a new internal user */
     addInternalUser(internalUser) {
         return new Promise(async (resolve, reject) => {
+            console.log("Calling");
             try {
-                const response = await InternalUserService.saveInernalUser(internalUser);
+                const response = await InternalUserService.saveInternalUser(internalUser);
                 if (response.status === 201) {
                     /* 201 -  created. */
-                    const responseResultObject = response.data;
-                    const newInternalUsersList = [...this.state.internalUsers];
-                    newInternalUsersList.unshift({
-                        ...internalUsers,
-                        _id: responseResultObject?.generatedId
-                    });
+                    // const responseResultObject = response.data;
+                    // const newInternalUsersList = [...this.state.internalUsers];
+                    // newInternalUsersList.unshift({
+                    //     ...internalUsers,
+                    //     _id: responseResultObject?.generatedId
+                    // });
 
-                    this.setState({
-                        internalUsers: newInternalUsersList
-                    });
+                    // this.setState({
+                    //     internalUsers: newInternalUsersList
+                    // });
 
-                    const addedInternalUsers = this.state
-                        .internalUsers.find(internalUserElem => internalUserElem._id === responseResultObject?.generatedId);
-                    if (addedInternalUsers) {
-                        resolve(addedInternalUsers);
+                    // const addedInternalUsers = this.state
+                    //     .internalUsers.find(internalUserElem => internalUserElem._id === responseResultObject?.generatedId);
+                    if (response) {
+                        resolve(response);
                     } else {
                         reject(new Error('Product was not inserted successfully!'));
                     }
@@ -87,6 +90,7 @@ class InternalUserProvider extends Component {
             <InternalUserContext.Provider value={{
                 internalUsers: this.state.internalUsers,
                 getAllInternalUsers: this.getAllInternalUsers.bind(this),
+                addInternalUser: this.addInternalUser.bind(this),
             }
             }>
                 {this.props.children}

@@ -19,7 +19,7 @@ export default class InternalUsersViewHolder extends React.Component {
                 <Route exact path='/dashboard/internalusers'>
                   <InternalUsers internalUsers={(this.context?.internalUsers) ? this.context?.internalUsers : []} />
                 </Route>
-                <Route path='/dashboard/internalusers/craet'>
+                <Route path='/dashboard/internalusers/creat'>
                     <CreateEditUserView/>
                 </Route>
           </Switch>
