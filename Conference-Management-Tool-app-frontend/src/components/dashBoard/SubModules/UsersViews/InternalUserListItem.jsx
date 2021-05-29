@@ -11,15 +11,20 @@ export default function InternalUserListItem(props) {
 
     return (
         <div className="col">
+            {true ? 
             <div className="card">
-                <div className="card-body">
-                    <h1 className="card-title"><b>{internalUser.fullName}</b></h1>
-                    <div className="card-text"><b>{internalUser.contactNo}</b></div>
-                    <div className="card-text"><b>{internalUser.email}</b></div>
-                    <div className="card-text"><b>{internalUser.type}</b></div>
+                <div className="card-body center">
+                    {/* Todo: should add imge view */}
+                    <h3 className="card-title"><b>Name: </b>{internalUser.fullName}</h3>
+                    <div className="card-text"><b>Contact: </b>{internalUser.contactNo}</div>
+                    <div className="card-text"><b>Email: </b>{internalUser.email}</div>
+                    <div className="card-text"><b>User Type: </b>{internalUser.type}</div>
                     <div className="card-text"><b>{internalUser.imagePath}</b></div>
                 </div>
-            </div>
+            </div> :
+             <div>
+                 </div>}
+            
         </div>
     );
 }
