@@ -61,6 +61,7 @@ router.post('/', async ctx => {
                 fullName: internalUser.fullName,
                 contactNo: internalUser.contactNo,
                 email: internalUser.email,
+                password: internalUser.password,
                 type: internalUser.type
             }, ctx.request.files?.internalUserImage);
             ctx.response.type = 'application/json';
@@ -85,7 +86,7 @@ router.put('/:id', async ctx => {
 
     /* check whether there is a matching record for the given id. */
     try {
-        const result = await getInternalUsers(id);
+        const result = await getInternalUser(id);
         existingInternalUserRecord = result;
         if (!result) {
             /* if no record found. */
@@ -108,6 +109,7 @@ router.put('/:id', async ctx => {
                 contactNo: internalUser.contactNo,
                 email: internalUser.email,
                 type: internalUser.type,
+                password: internalUser.password,
                     imagePath: (internalUser?.imagePath?.length === 0) ? null : internalUser?.imagePath
                 },
                 ctx.request.files?.internalUserImage,

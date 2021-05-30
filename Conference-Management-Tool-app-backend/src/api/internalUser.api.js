@@ -10,12 +10,13 @@ const internalUserDir = `${assetDir}${path.sep}internalUsers`;
 
 /** add internalUser */
 
-const addInternalUser = async ({fullName, contactNo, email, type }, ctxInternalUserImage) => {
+const addInternalUser = async ({fullName, contactNo, email, type, password }, ctxInternalUserImage) => {
     const internalUser = {
         fullName,
         contactNo,
         email,
         type,
+        password,
         imagePath: null
     }
 
@@ -72,7 +73,7 @@ const getInternalUser = async id => {
 };
 
 const updateInternalUser = async (id,
-    { fullName, contactNo, email, type, imagePath },
+    { fullName, contactNo, email, type, password, imagePath },
     ctxInternalUserImage,
     existingInternalUser) => {
 
@@ -80,6 +81,7 @@ const updateInternalUser = async (id,
         contactNo,
         email,
         type,
+        password,
         imagePath }
 
         return new Promise(async (resolve, reject) => {
@@ -126,7 +128,7 @@ const updateInternalUser = async (id,
                     }
                 } else {
                     /* Internal User Image are not provided. */
-                    if (product?.imagePath == null) {
+                    if (internalUser?.imagePath == null) {
                         const oldImageFilePath = `${internalUserDir + path.sep + path.parse(existingInternalUser?.imagePath).base}`;
                         if (fs.existsSync(oldImageFilePath)) {
                             try {
