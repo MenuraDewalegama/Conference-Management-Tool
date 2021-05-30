@@ -77,7 +77,8 @@ const updateInternalUser = async (id,
     ctxInternalUserImage,
     existingInternalUser) => {
 
-    const internalUser = { fullName,
+    const internalUser = {
+        fullName,
         contactNo,
         email,
         type,

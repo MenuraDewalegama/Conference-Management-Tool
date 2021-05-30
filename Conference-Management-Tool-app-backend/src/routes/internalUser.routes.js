@@ -48,7 +48,10 @@ router.get('/:id', async ctx => {
 
 /** insert a internalUser. */
 router.post('/', async ctx => {
+
     const internalUser = ctx.request.body;
+    console.log("route eke")
+    console.log(internalUser);
     if (internalUser?._id || internalUser?._id === '' || internalUser?._id >= 0) {
         ctx.response.type = 'application/json';
         ctx.response.status = 400; // bad request
