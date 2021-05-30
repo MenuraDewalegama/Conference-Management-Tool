@@ -11,7 +11,7 @@ export default class CreateEditUserView extends React.Component {
             contactNo: '',
             email: '',
             type: '',
-            password: '123qwe'
+            password: ''
         }
     }
 
@@ -29,7 +29,7 @@ export default class CreateEditUserView extends React.Component {
             contactNo: this.state.contactNo,
             email: this.state.email,
             type: this.state.type,
-            password: this.state.password
+            password: '123qwe'
         }
         this.context?.addInternalUser(internalUser);
     };
@@ -50,21 +50,21 @@ export default class CreateEditUserView extends React.Component {
                             <div className="card-body">
                                 <div className="container">
                                     <form>
-                                        <div class="form-group">
-                                            <label for="exampleFormControlInput1">Full Name</label>
-                                            <input type="text" class="form-control" name="fullName"  onChange={event => { this.onChange(event) }} id="exampleFormControlInput1" placeholder="ex:- Jone Deo" />
+                                        <div className="form-group">
+                                            <label>Full Name</label>
+                                            <input type="text" className="form-control" name="fullName"  onChange={event => { this.onChange(event) }} id="exampleFormControlInput1" placeholder="ex:- Jone Deo" />
                                         </div>
-                                        <div class="form-group">
-                                            <label for="exampleFormControlInput1">ContactNo:</label>
-                                            <input type="number" class="form-control" name="contactNo" onChange={event => { this.onChange(event) }} id="exampleFormControlInput1" placeholder="ex:- 0371234567" />
+                                        <div className="form-group">
+                                            <label>ContactNo:</label>
+                                            <input type="number" className="form-control" name="contactNo" onChange={event => { this.onChange(event) }} id="exampleFormControlInput1" placeholder="ex:- 0371234567" />
                                         </div>
-                                        <div class="form-group">
-                                            <label for="exampleFormControlInput1">Email address</label>
-                                            <input type="email" class="form-control" name="email" onChange={event => { this.onChange(event) }} id="exampleFormControlInput1" placeholder="name@example.com" />
+                                        <div className="form-group">
+                                            <label>Email address</label>
+                                            <input type="email" className="form-control" name="email" onChange={event => { this.onChange(event) }} id="exampleFormControlInput1" placeholder="name@example.com" />
                                         </div>
-                                        <div class="form-group">
-                                            <label for="exampleFormControlSelect1">select Type</label>
-                                            <select class="form-control" name="type" onChange={event => { this.onChange(event) }} id="exampleFormControlSelect1">
+                                        <div className="form-group">
+                                            <label>select Type</label>
+                                            <select className="form-control" name="type" onChange={event => { this.onChange(event) }} id="exampleFormControlSelect1">
                                                 <option>Writer</option>
                                                 <option>Reseacher</option>
                                             </select>

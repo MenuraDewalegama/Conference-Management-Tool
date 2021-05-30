@@ -38,8 +38,6 @@ class InternalUserProvider extends Component {
         return new Promise(async (resolve, reject) => {
             try {
                 const response = await InternalUserService.getAllInternalUsers();
-                console.log("from contex");
-                console.log(response);
                 if (response.status === 200) {
                     this.setState({
                         internalUsers: response.data
@@ -55,8 +53,8 @@ class InternalUserProvider extends Component {
     /** Add a new internal user */
     addInternalUser(internalUser) {
         return new Promise(async (resolve, reject) => {
-            console.log("Calling");
             try {
+                
                 const response = await InternalUserService.saveInternalUser(internalUser);
                 if (response.status === 201) {
                     /* 201 -  created. */
