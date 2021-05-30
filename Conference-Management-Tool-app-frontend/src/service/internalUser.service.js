@@ -43,6 +43,7 @@ const configureFormDataObject = (isAdding, internalUser) => {
             formData.append('fullName', internalUser.fullName);
             formData.append('contactNo', internalUser.contactNo);
             formData.append('email', internalUser.email);
+            formData.append('password', internalUser.password);
             formData.append('type', internalUser.type);
 
             if (isAdding && internalUser.hasOwnProperty('internalUserImage') && internalUser.internalUserImage) {
