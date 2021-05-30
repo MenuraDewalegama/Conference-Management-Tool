@@ -34,7 +34,7 @@ class InternalUserProvider extends Component {
     }
 
     /** Get all the getAllInternalUsers by calling backend.
-  * @return Promise with a result. If success, then resolve the product.
+  * @return Promise with a result. If success, then resolve the internal User.
   * otherwise, reject the error(errorRespond) */
 
     getAllInternalUsers() {
@@ -74,10 +74,10 @@ class InternalUserProvider extends Component {
 
                     const addedInternalUsers = this.state
                         .internalUsers.find(internalUserElem => internalUserElem._id === responseResultObject?.generatedId);
-                    if (response) {
-                        resolve(response);
+                    if (addedInternalUsers) {
+                        resolve(addedInternalUsers);
                     } else {
-                        reject(new Error('Product was not inserted successfully!'));
+                        reject(new Error('Internal User was not inserted successfully!'));
                     }
                 }
             } catch (error) {
@@ -87,7 +87,7 @@ class InternalUserProvider extends Component {
     }
 
       /** Update a existing InternalUser by calling backend services.
-     * @param product InternalUser object with the ID and new values.
+     * @param InternalUser InternalUser object with the ID and new values.
      * @returns Promise promise a result. if success, resolve boolean true,
      * otherwise reject the error(errorResponse). */
        updateInternalUser(internalUser) {
@@ -96,12 +96,12 @@ class InternalUserProvider extends Component {
                 const response = await InternalUserService.updateInternalUser(internalUser);
                 if (response.status === 204) {
                     /* 204 -  NO CONTENT, updated successfully. */
-                    /* get the products array. */
+                    /* get the internal Users array. */
                     const internalUsersArr = [...this.state.internalUsers];
-                    /* find the index of the updated product element/object. */
+                    /* find the index of the updated internal User element/object. */
                     const indexOfInternalUser = internalUsersArr
                         .findIndex((internalUserElem, index) => internalUserElem.id === internalUser.id);
-                    /* replace the updated product with the old one. */
+                    /* replace the updated internal User with the old one. */
                     internalUsersArr.splice(indexOfInternalUser, 1, internalUser);
 
                     this.setState((prevValue => {

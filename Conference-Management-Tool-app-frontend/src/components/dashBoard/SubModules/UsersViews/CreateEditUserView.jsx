@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, Prompt } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { InternalUserContext } from '../../../../context/internalUser.context';
 import { Button, Col, Container, Form, Image, Row } from 'react-bootstrap';
 // import Prompt from '../prompt/Prompt';
@@ -32,7 +32,8 @@ export default class CreateEditUserView extends React.Component {
 
         /* get the internalUser id from the URL and assign it to state(internalUserId). */
         // const internalUserIDFromURL = this.props.match.params?.internalUserID;
-        const internalUserIDFromURL = null;
+        const internalUserIDFromURL = this.props.match.params?.internalUserId;
+        console.log(internalUserIDFromURL + 'ththt');
         if (internalUserIDFromURL) {
             /* set isAdding to false because we deal with updating a record. */
             this.setState({
@@ -98,7 +99,7 @@ export default class CreateEditUserView extends React.Component {
 
     /** perform save or update operation.
     * @param saveOrUpdate addInternalUser method or updateInternalUser method. */
-    performSaveOrUpdate() {
+    performSaveOrUpdate(saveOrUpdate) {
         const internalUserObject = {
             fullName: this.state.fullName,
             contactNo: this.state.contactNo,
@@ -194,19 +195,19 @@ export default class CreateEditUserView extends React.Component {
                                     <form>
                                         <div className="form-group">
                                             <label>Full Name</label>
-                                            <input type="text" className="form-control" name="fullName" onChange={event => { this.onChange(event) }} id="exampleFormControlInput1" placeholder="ex:- Jone Deo" />
+                                            <Form.Control type="text" className="form-control" value={this.state.fullName} name="fullName" onChange={event => { this.onChange(event) }} id="exampleFormControlInput1" placeholder="ex:- Jone Deo" />
                                         </div>
                                         <div className="form-group">
                                             <label>ContactNo:</label>
-                                            <input type="number" className="form-control" name="contactNo" onChange={event => { this.onChange(event) }} id="exampleFormControlInput1" placeholder="ex:- 0371234567" />
+                                            <input type="number" className="form-control" value={this.state.contactNo} name="contactNo" onChange={event => { this.onChange(event) }} id="exampleFormControlInput1" placeholder="ex:- 0371234567" />
                                         </div>
                                         <div className="form-group">
                                             <label>Email address</label>
-                                            <input type="email" className="form-control" name="email" onChange={event => { this.onChange(event) }} id="exampleFormControlInput1" placeholder="name@example.com" />
+                                            <input type="email" className="form-control" value={this.state.email} name="email" onChange={event => { this.onChange(event) }} id="exampleFormControlInput1" placeholder="name@example.com" />
                                         </div>
                                         <div className="form-group">
                                             <label>select Type</label>
-                                            <select className="form-control" name="type" onChange={event => { this.onChange(event) }} id="exampleFormControlSelect1">
+                                            <select className="form-control" name="type" value={this.state.type} onChange={event => { this.onChange(event) }} id="exampleFormControlSelect1">
                                                 <option>Writer</option>
                                                 <option>Reseacher</option>
                                             </select>
@@ -218,7 +219,7 @@ export default class CreateEditUserView extends React.Component {
                                                     src={(this.state?.imagePath) ?
                                                         `http://localhost:3000${this.state.imagePath}` :
                                                         `https://via.placeholder.com/300`}
-                                                    alt={`${this.state.name} product image`}
+                                                    alt={`${this.state.name} internalUser image`}
                                                     rounded />
 
                                                     <div>
@@ -230,8 +231,8 @@ export default class CreateEditUserView extends React.Component {
                                                     </div>
                                                 </>
                                             }
-                                            <Form.File id="id_productImage"
-                                                label="Upload Product Image"
+                                            <Form.File id="id_internalUserImage"
+                                                label="Upload Internal User Image"
                                                 onChange={event => this.onChangeInternalUserFormFile(event)} />
                                         </div>
                                         <button type="button" className="btn btn-info"
@@ -241,12 +242,12 @@ export default class CreateEditUserView extends React.Component {
                                             }}>{
                                                 (this.state.isAdding) ? 'Save' : 'Edit'
                                             }
-                                                {/* <Link to="/dashboard/internalusers">Submit</Link> */}
-                                            </button>
-                                            <button type="button" className="btn btn-warning">
-                                                  <Link to="/dashboard/internalusers">Cancel</Link></button>
-                                            
-                                            
+                                            {/* <Link to="/dashboard/internalusers">Submit</Link> */}
+                                        </button>
+                                        <button type="button" className="btn btn-warning">
+                                            <Link to="/dashboard/internaluser">Cancel</Link></button>
+
+
 
                                     </form>
                                 </div>

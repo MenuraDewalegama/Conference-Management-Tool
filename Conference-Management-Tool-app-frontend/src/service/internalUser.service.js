@@ -1,6 +1,6 @@
 import axios from './axios.service';
 
-/** Get all products by calling backend services.
+/** Get all internal Users by calling backend services.
  * @return Promise promise a result. */
 const getAllInternalUsers = () => {
     return new Promise(async (resolve, reject) => {
@@ -14,7 +14,7 @@ const getAllInternalUsers = () => {
 };
 
 /** Save a new InernalUser by calling backend services.
- * @param product InernalUser object with and new values but the ID .
+ * @param internalUser InernalUser object with and new values but the ID .
  * @returns Promise promise a result. */
 const saveInternalUser = (internalUser) => {
     return new Promise(async (resolve, reject) => {
@@ -87,9 +87,9 @@ const configureFormDataObject = (isAdding, internalUser) => {
 
             if (!isAdding) {
                 /* ready the formData object for update operation. */
-                if (product.hasOwnProperty('internalUserImage') && internalUser.internalUserImage) {
+                if (internalUser.hasOwnProperty('internalUserImage') && internalUser.internalUserImage) {
                     /* append the image to the formData, if only client did upload any image. */
-                    formData.append('productImage', internalUser.internalUserImage);
+                    formData.append('internalUserImage', internalUser.internalUserImage);
                 } else {
                     /* append the imagePath to the formData, if only client did not upload any image
                         or if in case client wants to remove the existing image. */

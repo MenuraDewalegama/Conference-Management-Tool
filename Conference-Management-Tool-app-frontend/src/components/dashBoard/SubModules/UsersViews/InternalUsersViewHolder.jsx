@@ -30,14 +30,12 @@ export default class InternalUsersViewHolder extends React.Component {
                 <Route exact path='/dashboard/internalusers'>
                     <InternalUsers internalUsers={(this.context?.internalUsers) ? this.context?.internalUsers : []} />
                 </Route>
-                <Route path='/dashboard/internalusers/creat'
-                    render={(props) => ((isAdmin) ?
-                        <CreateEditUserView {...props} saveOrUpdate={this.addInternalUser.bind(this)} /> :
-                        <Redirect to="/" />)} />
-                <Route path='/dashboard/internalusers/:internalUserID/edit'
-                    render={(props) => ((isAdmin) ?
-                        <CreateEditUserView {...props} saveOrUpdate={this.updateInternalUser.bind(this)} /> :
-                        <Redirect to="/" />)} />
+                <Route path='/dashboard/internalusers/create'
+                    render={(props) =>
+                        <CreateEditUserView {...props} saveOrUpdate={this.addInternalUser.bind(this)} />} />
+                <Route path='/dashboard/internalUsers/:internalUserID/edit'
+                    render={(props) =>
+                        <CreateEditUserView {...props} saveOrUpdate={this.updateInternalUser.bind(this)} />} />
             </Switch>
         </div>
     }
