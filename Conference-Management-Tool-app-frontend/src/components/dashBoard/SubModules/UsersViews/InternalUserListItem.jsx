@@ -19,6 +19,7 @@ export default function InternalUserListItem(props) {
                     <div className="card-text"><b>Contact: </b>{internalUser.contactNo}</div>
                     <div className="card-text"><b>Email: </b>{internalUser.email}</div>
                     <div className="card-text"><b>User Type: </b>{internalUser.type}</div>
+                    <div className="card-text"><b>password: </b>{internalUser.password}</div>   {/* Todo:  should remove */}
                     <div className="card-text"><b>{internalUser.imagePath}</b></div>
                 </div>
             </div> :
