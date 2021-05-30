@@ -17,7 +17,6 @@ export default class CreateEditUserView extends React.Component {
 
     /** set user input to state 
              *   @param event */
-
     onChange(event) {
         const { name, value } = event.target;
         this.setState({ [name]: value });
@@ -32,9 +31,7 @@ export default class CreateEditUserView extends React.Component {
             type: this.state.type,
             password: this.state.password
         }
-
         this.context?.addInternalUser(internalUser);
-        
     };
 
     render() {
