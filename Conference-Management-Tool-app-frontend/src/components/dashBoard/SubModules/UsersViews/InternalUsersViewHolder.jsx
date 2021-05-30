@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, Route, Switch } from 'react-router-dom';
 import {InternalUserContext} from '../../../../context/internalUser.context'
-import CreateUserView from './CreateUserView';
+import CreateEditUserView from './CreateEditUserView';
 import InternalUsers from './InternalUsers';
 
 export default class InternalUsersViewHolder extends React.Component {
@@ -16,11 +16,11 @@ export default class InternalUsersViewHolder extends React.Component {
         return <div>
             <h1 className="center">Welcome to Users view</h1>
             <Switch>
-                <Route path='/dashboard/internalusers'>
+                <Route exact path='/dashboard/internalusers'>
                   <InternalUsers internalUsers={(this.context?.internalUsers) ? this.context?.internalUsers : []} />
                 </Route>
-                <Route path='/dashboard/craetusers'>
-                    <CreateUserView/>
+                <Route path='/dashboard/internalusers/creat'>
+                    <CreateEditUserView/>
                 </Route>
           </Switch>
         </div>
