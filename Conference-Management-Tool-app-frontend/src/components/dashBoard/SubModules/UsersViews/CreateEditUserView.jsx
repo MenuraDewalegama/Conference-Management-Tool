@@ -1,17 +1,75 @@
 import React from 'react';
-import { Link } from "react-router-dom";
-import {InternalUserContext} from '../../../../context/internalUser.context'
+import { Link, Prompt } from "react-router-dom";
+import { InternalUserContext } from '../../../../context/internalUser.context';
+import { Button, Col, Container, Form, Image, Row } from 'react-bootstrap';
+// import Prompt from '../prompt/Prompt';
 
 export default class CreateEditUserView extends React.Component {
     static contextType = InternalUserContext;
+
     constructor(props) {
         super(props);
+
         this.state = {
+            isAdding: true, // true = dealing with an insertion operation.
             fullName: '',
             contactNo: '',
             email: '',
             type: '',
-            password: ''
+            password: '',
+            internalUserId: 0,
+            isInternalUserIdValid: false,
+            internalUserRecord: null, // if matching record found, then we can store it here
+            imagePath: '',
+            imageFile: null
+        }
+    }
+
+    /* life cycle. */
+    componentDidMount() {
+
+        console.log('add-edit : ', this.context);
+
+        /* get the internalUser id from the URL and assign it to state(internalUserId). */
+        // const internalUserIDFromURL = this.props.match.params?.internalUserID;
+        const internalUserIDFromURL = null;
+        if (internalUserIDFromURL) {
+            /* set isAdding to false because we deal with updating a record. */
+            this.setState({
+                isAdding: false, // false = we deal with a update operation
+            });
+
+            // TODO: validate internalUserId
+            if (/^[A-Za-z0-9]{24}$/.test(internalUserIDFromURL)) {
+                this.setState({
+                    isInternalUserIdValid: true,
+                    internalUserId: internalUserIDFromURL
+                });
+
+                // TODO: getinternalUserId.
+                /* find the a matching record by given ID,
+                * if no matching record found set the state(internalUserIdRecord) to null,
+                * if matching record is found. */
+                // TODO: set state(imagePath), if found matching record.
+                this.context.getInternalUserByID(internalUserIDFromURL).then(internalUserElem => {
+                    // console.log(internalUserElem);
+                    this.setState({
+                        internalUserRecord: internalUserElem,
+                        internalUserId: internalUserElem?._id,
+                        fullName: internalUserElem?.fullName,
+                        contactNo: internalUserElem?.contactNo,
+                        email: internalUserElem?.email,
+                        type: internalUserElem?.type,
+                        password: internalUserElem?.password,
+                        imagePath: (internalUserElem?.imagePath) ? internalUserElem?.imagePath : '',
+                        imageFile: null
+                    });
+                }).catch(reason => {
+                    console.error(reason);
+                });
+
+            }
+            console.log(internalUserIDFromURL);
         }
     }
 
@@ -23,18 +81,102 @@ export default class CreateEditUserView extends React.Component {
         console.log("value " + value);
     }
 
-    performSaveOrUpdate(){
-        const internalUser = {
+    /** Set image file to the component state when user upload a image file.
+    * @param event */
+    onChangeInternalUserFormFile(event) {
+        console.log(event.target.files[0]);
+        const imageFile = event.target.files[0];
+        this.setState({ imageFile: (imageFile) ? imageFile : null });
+    }
+
+    /* Remove Image button process - we just remove the imagePath. */
+    removeImagePath() {
+        this.setState({
+            imagePath: ''
+        });
+    }
+
+    /** perform save or update operation.
+    * @param saveOrUpdate addInternalUser method or updateInternalUser method. */
+    performSaveOrUpdate() {
+        const internalUserObject = {
             fullName: this.state.fullName,
             contactNo: this.state.contactNo,
             email: this.state.email,
             type: this.state.type,
             password: '123qwe'
+        };
+        // this.context?.addInternalUser(internalUser);
+
+        /* if image is uploaded, then assign it to internalUserObject. */
+        if (this.state.imageFile) {
+            internalUserObject.productImage = this.state.imageFile;
+        } else {
+            /* existing imagePath is assigned to the internalUserObject.
+            * That means no image update happens. */
+            internalUserObject.imagePath = this.state.imagePath;
         }
-        this.context?.addInternalUser(internalUser);
+
+        if (this.state.isAdding) {
+            /* add a new internal User. */
+            if (internalUserObject.hasOwnProperty('imagePath') && internalUserObject.imagePath.length === 0) {
+                delete internalUserObject.imagePath;
+            }
+            saveOrUpdate(internalUserObject).then(value => {
+                // TODO: display insert successful or not
+                // display insertion successful
+                console.log('Internal User added successfully!');
+                window.location = '/';
+            }).catch(reason => {
+                console.error(reason);
+            });
+        } else {
+            /* update operation. */
+            internalUserObject.id = this.state.internalUserId;
+            saveOrUpdate(internalUserObject).then(value => {
+                // TODO: display update successful or not
+                // display updated successfully
+                console.log('Internal User updated successfully!');
+                window.location = '/';
+            }).catch(reason => {
+                console.error(reason);
+            });
+        }
+        this.setState({
+            fullName: '',
+            contactNo: '',
+            email: '',
+            type: '',
+            password: '123qwe',
+            internalUserId: 0,
+            isInternalUserIdValid: false,
+            internalUserRecord: null,
+            imagePath: '',
+            imageFile: null
+        });
     };
 
     render() {
+        const { saveOrUpdate } = this.props;
+
+        /* if we deal with updating a internalUser and the internalUser id is not valid.
+      Then, display invalid.*/
+        if (!this.state.isInternalUserIdValid && !this.state.isAdding) {
+            const message = 'Internal User ID is invalid';
+            // return (
+            //     <><Prompt message={message} /></>
+            // );
+        }
+
+        /* if no matching record found. */
+        // TODO: if no matching record is found then, display 'no matching record is found'
+        if (!this.state.internalUserRecord && !this.state.isAdding) {
+            const message = 'No matching Internal User record found.';
+            // return (
+            //     <><Prompt message={message} /></>
+            // );
+        }
+
         return <div>
             <div className="container">
                 <h1 className="center bg-dark text-light">welcome to create User Page</h1>
@@ -52,7 +194,7 @@ export default class CreateEditUserView extends React.Component {
                                     <form>
                                         <div className="form-group">
                                             <label>Full Name</label>
-                                            <input type="text" className="form-control" name="fullName"  onChange={event => { this.onChange(event) }} id="exampleFormControlInput1" placeholder="ex:- Jone Deo" />
+                                            <input type="text" className="form-control" name="fullName" onChange={event => { this.onChange(event) }} id="exampleFormControlInput1" placeholder="ex:- Jone Deo" />
                                         </div>
                                         <div className="form-group">
                                             <label>ContactNo:</label>
@@ -69,12 +211,43 @@ export default class CreateEditUserView extends React.Component {
                                                 <option>Reseacher</option>
                                             </select>
                                         </div>
+                                        <div className="form-group">
+                                            {(this.state.isAdding) ? '' :
+                                                <><Image
+                                                    style={{ width: '300px' }}
+                                                    src={(this.state?.imagePath) ?
+                                                        `http://localhost:3000${this.state.imagePath}` :
+                                                        `https://via.placeholder.com/300`}
+                                                    alt={`${this.state.name} product image`}
+                                                    rounded />
+
+                                                    <div>
+                                                        <Button variant="secondary"
+                                                            style={{
+                                                                marginTop: '1.2rem'
+                                                            }}
+                                                            onClick={this.removeImagePath.bind(this)}>Remove Image</Button>
+                                                    </div>
+                                                </>
+                                            }
+                                            <Form.File id="id_productImage"
+                                                label="Upload Product Image"
+                                                onChange={event => this.onChangeInternalUserFormFile(event)} />
+                                        </div>
                                         <button type="button" className="btn btn-info"
-                                        onClick={event =>{
-                                            event.preventDefault();
-                                            this.performSaveOrUpdate();
-                                        }}><Link to="/dashboard/internalusers">Submit</Link></button>
-                                        
+                                            onClick={event => {
+                                                event.preventDefault();
+                                                this.performSaveOrUpdate(saveOrUpdate);
+                                            }}>{
+                                                (this.state.isAdding) ? 'Save' : 'Edit'
+                                            }
+                                                {/* <Link to="/dashboard/internalusers">Submit</Link> */}
+                                            </button>
+                                            <button type="button" className="btn btn-warning">
+                                                  <Link to="/dashboard/internalusers">Cancel</Link></button>
+                                            
+                                            
+
                                     </form>
                                 </div>
                             </div>
