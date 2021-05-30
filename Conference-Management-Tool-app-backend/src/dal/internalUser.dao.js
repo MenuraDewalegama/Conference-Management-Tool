@@ -8,7 +8,13 @@ const addInternalUser = async({fullName, contactNo, email, type, password, image
 }
 
 const updateInternalUser = async(id, {fullName, contactNo, email, type, password, imagePath })=>{
-    const internalUser = {fullName, contactNo, email, type, password, imagePath }
+    const internalUser = {
+        fullName, 
+        contactNo, 
+        email, 
+        type, 
+        password, 
+        imagePath }
     return await InternalUsers.update(id,internalUser);
 }
 
