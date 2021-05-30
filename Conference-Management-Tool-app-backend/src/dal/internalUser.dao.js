@@ -3,12 +3,12 @@ const DatabaseService = require('../service/database.service.js');
 const collectionName= 'InternalUsers';
 const InternalUsers = new DatabaseService(collectionName);
 
-const addInternalUser = async({fullName, contactNo, email, type, imagePath }) =>{
-    return await InternalUsers.save({fullName, contactNo, email, type, imagePath })
+const addInternalUser = async({fullName, contactNo, email, type, password, imagePath }) =>{
+    return await InternalUsers.save({fullName, contactNo, email, type, password, imagePath })
 }
 
-const updateInternalUser = async(id, {fullName, contactNo, email, type, imagePath })=>{
-    const internalUser = {fullName, contactNo, email, type, imagePath }
+const updateInternalUser = async(id, {fullName, contactNo, email, type, password, imagePath })=>{
+    const internalUser = {fullName, contactNo, email, type, password, imagePath }
     return await InternalUsers.update(id,internalUser);
 }
 
