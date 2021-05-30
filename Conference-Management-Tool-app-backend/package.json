@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "This project is the backend nodejs web-server application and it is developed to serve the frontend of the application.",
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "nodemon app.js",
+    "test": "jest"
   },
   "author": "Code4 Technologies",
   "license": "MIT",
