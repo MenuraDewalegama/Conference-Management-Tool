@@ -3,7 +3,9 @@
 }
 
 
-
+.opacity{
+  opacity: .8;
+}
 .card {
     font-size: .875rem;
   }
@@ -15821,7 +15823,7 @@
   }
   
   .fixed-plugin .badge-purple {
-    background-color: #9368E9;
+    /* background-color: #9368E9; */
   }
   
   .fixed-plugin .badge-white {
