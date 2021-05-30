@@ -31,7 +31,14 @@ router.get('/:id', async (ctx) => {
     const id = ctx.request.params.id;
 
     /* validate input. */
-    /* TODO: validate ID. */
+    try {
+        const validationResult = await commonValidation.validateID(id);
+    } catch (errorMessage) {
+        /* found errors. */
+        ctx.response.status = 400;
+        ctx.response.body = errorMessage;
+        return;
+    }
 
     try {
         ctx.response.type = 'application/json';
@@ -39,6 +46,7 @@ router.get('/:id', async (ctx) => {
         if (result) {
             ctx.response.status = 200;
             ctx.response.body = result;
+            console.log(result);
         } else {
             /* no matching user found. */
             ctx.response.status = 404;
@@ -94,10 +102,11 @@ router.put('/:id', async (ctx) => {
 
     /* check the given id is valid or not. */
     try {
-        await commonValidation.validateID(conferencePostID);
-    } catch (error) {
+        const validationResult = await commonValidation.validateID(conferencePostID);
+    } catch (errorMessage) {
+        /* found errors. */
         ctx.response.status = 400;
-        ctx.response.body = error;
+        ctx.response.body = errorMessage;
         return;
     }
 
