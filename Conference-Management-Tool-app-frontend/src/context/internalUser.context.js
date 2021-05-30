@@ -10,6 +10,9 @@ const InternalUserContext = React.createContext({
     },
     addInternalUser: (internalUser) => {
     },
+    updateInternalUser: (internalUser) => {
+    },
+    
 });
 
 class InternalUserProvider extends Component {
@@ -58,24 +61,53 @@ class InternalUserProvider extends Component {
                 const response = await InternalUserService.saveInternalUser(internalUser);
                 if (response.status === 201) {
                     /* 201 -  created. */
-                    // const responseResultObject = response.data;
-                    // const newInternalUsersList = [...this.state.internalUsers];
-                    // newInternalUsersList.unshift({
-                    //     ...internalUsers,
-                    //     _id: responseResultObject?.generatedId
-                    // });
+                    const responseResultObject = response.data;
+                    const newInternalUsersList = [...this.state.internalUsers];
+                    newInternalUsersList.unshift({
+                        ...internalUsers,
+                        _id: responseResultObject?.generatedId
+                    });
 
-                    // this.setState({
-                    //     internalUsers: newInternalUsersList
-                    // });
+                    this.setState({
+                        internalUsers: newInternalUsersList
+                    });
 
-                    // const addedInternalUsers = this.state
-                    //     .internalUsers.find(internalUserElem => internalUserElem._id === responseResultObject?.generatedId);
+                    const addedInternalUsers = this.state
+                        .internalUsers.find(internalUserElem => internalUserElem._id === responseResultObject?.generatedId);
                     if (response) {
                         resolve(response);
                     } else {
                         reject(new Error('Product was not inserted successfully!'));
                     }
+                }
+            } catch (error) {
+                reject(error);
+            }
+        });
+    }
+
+      /** Update a existing InternalUser by calling backend services.
+     * @param product InternalUser object with the ID and new values.
+     * @returns Promise promise a result. if success, resolve boolean true,
+     * otherwise reject the error(errorResponse). */
+       updateInternalUser(internalUser) {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const response = await InternalUserService.updateInternalUser(internalUser);
+                if (response.status === 204) {
+                    /* 204 -  NO CONTENT, updated successfully. */
+                    /* get the products array. */
+                    const internalUsersArr = [...this.state.internalUsers];
+                    /* find the index of the updated product element/object. */
+                    const indexOfInternalUser = internalUsersArr
+                        .findIndex((internalUserElem, index) => internalUserElem.id === internalUser.id);
+                    /* replace the updated product with the old one. */
+                    internalUsersArr.splice(indexOfInternalUser, 1, internalUser);
+
+                    this.setState((prevValue => {
+                        prevValue.internalUsers = internalUsersArr;
+                    }));
+                    resolve(true);
                 }
             } catch (error) {
                 reject(error);
@@ -89,6 +121,7 @@ class InternalUserProvider extends Component {
                 internalUsers: this.state.internalUsers,
                 getAllInternalUsers: this.getAllInternalUsers.bind(this),
                 addInternalUser: this.addInternalUser.bind(this),
+                updateInternalUser: this.updateInternalUser(this),
             }
             }>
                 {this.props.children}

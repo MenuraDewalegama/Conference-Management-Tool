@@ -11,6 +11,16 @@ export default class InternalUsersViewHolder extends React.Component {
         super(props);
     }
 
+     /** temporary method to add a new product. */
+  addInternalUser(internalUser) {
+    return this.context.addInternalUser(internalUser);
+  }
+
+  /** temporary method to update the product. */
+  updateInternalUser(internalUser) {
+    return this.context.updateProduct(product);
+  }
+
     render() {
         console.log(this.context);
         return <div>

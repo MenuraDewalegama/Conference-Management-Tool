@@ -36,6 +36,40 @@ const saveInternalUser = (internalUser) => {
     });
 };
 
+
+/** Update a existing InternalUser by calling backend services.
+ * @param InternalUser InternalUser object with the ID and new values.
+ * @returns Promise promise a result. */
+ const updateInternalUser = (internalUser) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const formData = await configureFormDataObject(false, internalUser);
+
+            /* send a put request to the backend using axios. */
+            const response = axios.put(`${process.env.CONFERENCE_MANAGEMENT_BACKEND_API_URL}internaluser/${internalUser?.id}`, formData);
+            resolve(response);
+        } catch (error) {
+            if (error.response) {
+                // The request was made and the server responded with a status code
+                // that falls out of the range of 2xx
+                console.log(error.response.data);
+                console.log(error.response.status);
+                console.log(error.response.headers);
+            } else if (error.request) {
+                // The request was made but no response was received
+                // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+                // http.ClientRequest in node.js
+                console.log(error.request);
+            } else {
+                // Something happened in setting up the request that triggered an Error
+                console.log('Error', error.message);
+            }
+            console.log(error.config);
+            reject(error);
+        }
+    });
+};
+
 const configureFormDataObject = (isAdding, internalUser) => {
     return new Promise((resolve, reject) => {
         try {
@@ -76,5 +110,6 @@ const configureFormDataObject = (isAdding, internalUser) => {
 
 module.exports = {
     getAllInternalUsers,
-    saveInternalUser
+    saveInternalUser,
+    updateInternalUser
 };
