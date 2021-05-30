@@ -6,15 +6,29 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './DashBoard.css';
+import { InternalUserContext } from '../../context/internalUser.context';
 
 
 export default class DashBoard extends React.Component {
-
+    static contextType = InternalUserContext;
     constructor(props) {
         super(props);
     }
 
     render() {
+        const userCount = this.context?.internalUsers;
+        const writerCount = [];
+        const reseacherCount = [];
+
+        for (let index = 0; index < userCount.length; index++) {
+            if (userCount[index].type == "Writer") {
+                writerCount.push(userCount[index])
+            } else {
+                reseacherCount.push(userCount[index])
+            }
+
+        }
+
         return <div>
             <br />
             <h1 className="center">Welcome to DashBoard</h1>
@@ -24,19 +38,37 @@ export default class DashBoard extends React.Component {
                         <div className="row">
                             <div className="col-md-3">
                                 <div className="card card-stats">
-                                    <div className="card-header card-header-warning card-header-icon">
+                                    <div className="card-header card-header-dark card-header-icon">
                                         <div className="card-icon">
-                                            <i className="material-icons">content_copy</i>
+                                            <i className="material-icons">people_alt</i>
+                                            <br />
+                                            <br />
+                                            <br />
+                                            <i className="material-icons">science</i>
+                                            <br />
+                                            <br />
+                                            <br />
+                                            <i className="material-icons">border_color</i>
                                         </div>
-                                        <p className="card-category">Users</p>
-                                        <h3 className="card-title">124
-                                                 <small>K</small>
-                                        </h3>
+                                        <br />
+                                        <div>
+                                            <p className="card-category">Total Intrernal Users</p>
+                                            <h3 className="card-title">{userCount.length}</h3>
+                                        </div>
+                                        <hr />
+                                        <div>
+                                            <p className="card-category">Reseachers Count</p>
+                                            <h3 className="card-title">{reseacherCount.length}</h3>
+                                        </div>
+                                        <hr />
+                                        <div>
+                                            <p className="card-category">Writers Count</p>
+                                            <h3 className="card-title">{writerCount.length}</h3>
+                                        </div>
                                     </div>
                                     <div className="card-footer">
-                                        <div className="stats">
-                                            <i className="material-icons text-dark">warning</i>
-                                            <Link to="/dashboard/internalusers">View Users...</Link>
+                                        <div className="center">
+                                            <Link to="/dashboard/internalusers" className="btn btn-info">View Users</Link>
                                         </div>
                                     </div>
                                 </div>
@@ -63,7 +95,7 @@ export default class DashBoard extends React.Component {
                                         <div className="card-icon">
                                             <i className="material-icons">info_outline</i>
                                         </div>
-                                        <p className="card-category">Reserchers</p>
+                                        <p className="card-category">Reseach Papers</p>
                                         <h3 className="card-title">75</h3>
                                     </div>
                                     <div className="card-footer">
