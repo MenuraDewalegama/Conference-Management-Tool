@@ -24,6 +24,7 @@
 /Conference-Management-Tool-app-backend/node_modules
 /Conference-Management-Tool-app-backend/package-lock.json
 /Conference-Management-Tool-app-backend/dal/test.js
+/Conference-Management-Tool-app-backend/public/
 /Conference-Management-Tool-app-backend/assets
 
 # frontend project IDE realted
