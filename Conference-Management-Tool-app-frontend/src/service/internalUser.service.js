@@ -31,7 +31,6 @@ const getAllInternalUsers = () => {
  * @returns Promise promise a result. */
 const saveInternalUser = (internalUser) => {
     return new Promise(async (resolve, reject) => {
-        console.log("calling service");
         try {
             const formData = await configureFormDataObject(true, internalUser);
 
@@ -65,9 +64,6 @@ const saveInternalUser = (internalUser) => {
             if (error.response) {
                 // The request was made and the server responded with a status code
                 // that falls out of the range of 2xx
-                console.log(error.response.data);
-                console.log(error.response.status);
-                console.log(error.response.headers);
             } else if (error.request) {
                 // The request was made but no response was received
                 // `error.request` is an instance of XMLHttpRequest in the browser and an instance of

@@ -57,8 +57,6 @@ class InternalUserProvider extends Component {
     getInternalUserByID(internalUserID) {
         return new Promise(async (resolve, reject) => {
 
-            console.log("vvvvvv");
-
             const requestedInternalUser = this.state.internalUsers.find(internalUserElem => (internalUserElem?._id === internalUserID));
             if (requestedInternalUser) {
                 resolve(requestedInternalUser);
@@ -74,7 +72,6 @@ class InternalUserProvider extends Component {
                     }
                 } catch (error) {
                     reject(error);
-                    console.log("jjjjj");
                 }
             }
         });

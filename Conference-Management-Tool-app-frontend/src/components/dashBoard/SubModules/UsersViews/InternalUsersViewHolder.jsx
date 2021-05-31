@@ -23,7 +23,6 @@ export default class InternalUsersViewHolder extends React.Component {
 
     render() {
         // const isAdmin = (atob(sessionStorage.getItem(sha256(process.env.AUTHENTICATED_USER_TYPE))) === 'ADMIN');
-        console.log(this.context);
         return <div>
             <h1 className="center">Welcome to Users view</h1>
             <Switch>

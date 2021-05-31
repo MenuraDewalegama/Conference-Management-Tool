@@ -28,8 +28,6 @@ export default class CreateEditUserView extends React.Component {
     /* life cycle. */
     componentDidMount() {
 
-        console.log('add-edit : ', this.context);
-
         /* get the internalUser id from the URL and assign it to state(internalUserId). */
         // const internalUserIDFromURL = this.props.match.params?.internalUserID;
         const internalUserIDFromURL = this.props.match.params?.internalUserID;
@@ -52,8 +50,6 @@ export default class CreateEditUserView extends React.Component {
                 * if matching record is found. */
                 // TODO: set state(imagePath), if found matching record.
                 this.context.getInternalUserByID(internalUserIDFromURL).then(internalUserElem => {
-                    console.log("contex work..");
-                    console.log(internalUserElem);
                     this.setState({
                         internalUserRecord: internalUserElem,
                         internalUserId: internalUserElem?._id,
@@ -70,7 +66,6 @@ export default class CreateEditUserView extends React.Component {
                 });
 
             }
-            console.log(internalUserIDFromURL);
         }
     }
 
@@ -79,13 +74,11 @@ export default class CreateEditUserView extends React.Component {
     onChange(event) {
         const { name, value } = event.target;
         this.setState({ [name]: value });
-        console.log("value " + value);
     }
 
     /** Set image file to the component state when user upload a image file.
     * @param event */
     onChangeInternalUserFormFile(event) {
-        console.log(event.target.files[0]);
         const imageFile = event.target.files[0];
         this.setState({ imageFile: (imageFile) ? imageFile : null });
     }
@@ -159,8 +152,6 @@ export default class CreateEditUserView extends React.Component {
 
     render() {
         const { saveOrUpdate } = this.props;
-        console.log("edit .....");
-        console.log(this.state.type);
         /* if we deal with updating a internalUser and the internalUser id is not valid.
       Then, display invalid.*/
         if (!this.state.isInternalUserIdValid && !this.state.isAdding) {
@@ -247,9 +238,6 @@ export default class CreateEditUserView extends React.Component {
                                         </button>
                                         <button type="button" className="btn btn-warning">
                                             <Link to="/dashboard/internaluser">Cancel</Link></button>
-
-
-
                                     </form>
                                 </div>
                             </div>
