@@ -17,7 +17,7 @@ const addInternalUser = async ({fullName, contactNo, email, type, password }, ct
         email,
         type,
         password,
-        imagePath: null
+        imagePath: '/assets/internalUsers/'
     }
 
     return new Promise(async (resolve, reject) => {

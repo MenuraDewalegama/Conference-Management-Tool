@@ -15,7 +15,7 @@ export default class CreateEditUserView extends React.Component {
             fullName: '',
             contactNo: '',
             email: '',
-            type: '',
+            type: 'Writer',
             password: '',
             internalUserId: 0,
             isInternalUserIdValid: false,
@@ -104,7 +104,7 @@ export default class CreateEditUserView extends React.Component {
 
         /* if image is uploaded, then assign it to internalUserObject. */
         if (this.state.imageFile) {
-            internalUserObject.productImage = this.state.imageFile;
+            internalUserObject.internalUserImage = this.state.imageFile;
         } else {
             /* existing imagePath is assigned to the internalUserObject.
             * That means no image update happens. */
@@ -201,7 +201,7 @@ export default class CreateEditUserView extends React.Component {
                                             <label>select Type</label>
                                             <select className="form-control" name="type" value={this.state.type} onChange={event => { this.onChange(event) }} id="exampleFormControlSelect1">
                                                 <option>Writer</option>
-                                                <option>Reseacher</option>
+                                                <option>Reviewer</option>
                                             </select>
                                         </div>
                                         <div className="form-group">
