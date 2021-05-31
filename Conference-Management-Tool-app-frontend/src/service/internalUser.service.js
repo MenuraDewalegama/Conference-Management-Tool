@@ -124,5 +124,6 @@ const configureFormDataObject = (isAdding, internalUser) => {
 module.exports = {
     getAllInternalUsers,
     saveInternalUser,
-    updateInternalUser
+    updateInternalUser,
+    getInternalUserByID
 };

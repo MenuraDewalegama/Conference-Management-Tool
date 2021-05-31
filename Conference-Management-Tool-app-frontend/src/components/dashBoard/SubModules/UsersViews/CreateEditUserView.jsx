@@ -33,7 +33,6 @@ export default class CreateEditUserView extends React.Component {
         /* get the internalUser id from the URL and assign it to state(internalUserId). */
         // const internalUserIDFromURL = this.props.match.params?.internalUserID;
         const internalUserIDFromURL = this.props.match.params?.internalUserID;
-        console.log(this.props.match.params);
         if (internalUserIDFromURL) {
             /* set isAdding to false because we deal with updating a record. */
             this.setState({
@@ -53,7 +52,8 @@ export default class CreateEditUserView extends React.Component {
                 * if matching record is found. */
                 // TODO: set state(imagePath), if found matching record.
                 this.context.getInternalUserByID(internalUserIDFromURL).then(internalUserElem => {
-                    // console.log(internalUserElem);
+                    console.log("contex work..");
+                    console.log(internalUserElem);
                     this.setState({
                         internalUserRecord: internalUserElem,
                         internalUserId: internalUserElem?._id,

@@ -12,7 +12,8 @@ const InternalUserContext = React.createContext({
     },
     updateInternalUser: (internalUser) => {
     },
-    
+    getInternalUserByID: (internalUserID) => {
+    },
 });
 
 class InternalUserProvider extends Component {
@@ -53,38 +54,37 @@ class InternalUserProvider extends Component {
         });
     }
 
-        /** Get the internalUser by its internalUserID.
-     * @param  productID id of the internalUser.
-     * @return Promise with a result. If success, then resolve the internalUser.
-     * otherwise, reject the error(errorRespond) */
-         getInternalUserByID(internalUserID) {
-            return new Promise(async (resolve, reject) => {
-    
-                const requestedInternalUser = this.state.internalUsers.find(internalUserElem => (internalUserElem?._id === internalUserElemID));
-                if (requestedInternalUser) {
-                    resolve(requestedInternalUser);
-                } else {
-                    try {
-                        const response = await InternalUserService.getInternalUserByID(internalUserID);
-                        /* if matching record found. then resolve it. */
-                        if (response.status === 200) {
-                            /* 200 - OK. */
-                            const retrievedInternalUser = JSON.parse(response.data);
-                            this.setState(((prevState) => prevState.internalUsers.unshift(retrievedInternalUser)));
-                            resolve(retrievedInternalUser);
-                        }
-                    } catch (error) {
-                        reject(error);
+    getInternalUserByID(internalUserID) {
+        return new Promise(async (resolve, reject) => {
+
+            console.log("vvvvvv");
+
+            const requestedInternalUser = this.state.internalUsers.find(internalUserElem => (internalUserElem?._id === internalUserID));
+            if (requestedInternalUser) {
+                resolve(requestedInternalUser);
+            } else {
+                try {
+                    const response = await InternalUserService.getInternalUserByID(internalUserID);
+                    /* if matching record found. then resolve it. */
+                    if (response.status === 200) {
+                        /* 200 - OK. */
+                        const retrievedInternalUser = JSON.parse(response.data);
+                        this.setState(((prevState) => prevState.internalUsers.unshift(retrievedInternalUser)));
+                        resolve(retrievedInternalUser);
                     }
+                } catch (error) {
+                    reject(error);
+                    console.log("jjjjj");
                 }
-            });
-        }
+            }
+        });
+    }
 
     /** Add a new internal user */
     addInternalUser(internalUser) {
         return new Promise(async (resolve, reject) => {
             try {
-                
+
                 const response = await InternalUserService.saveInternalUser(internalUser);
                 if (response.status === 201) {
                     /* 201 -  created. */
@@ -113,11 +113,11 @@ class InternalUserProvider extends Component {
         });
     }
 
-      /** Update a existing InternalUser by calling backend services.
-     * @param InternalUser InternalUser object with the ID and new values.
-     * @returns Promise promise a result. if success, resolve boolean true,
-     * otherwise reject the error(errorResponse). */
-       updateInternalUser(internalUser) {
+    /** Update a existing InternalUser by calling backend services.
+   * @param InternalUser InternalUser object with the ID and new values.
+   * @returns Promise promise a result. if success, resolve boolean true,
+   * otherwise reject the error(errorResponse). */
+    updateInternalUser(internalUser) {
         return new Promise(async (resolve, reject) => {
             try {
                 const response = await InternalUserService.updateInternalUser(internalUser);
@@ -148,7 +148,8 @@ class InternalUserProvider extends Component {
                 internalUsers: this.state.internalUsers,
                 getAllInternalUsers: this.getAllInternalUsers.bind(this),
                 addInternalUser: this.addInternalUser.bind(this),
-                updateInternalUser: this.updateInternalUser(this),
+                updateInternalUser: this.updateInternalUser.bind(this),
+                getInternalUserByID: this.getInternalUserByID.bind(this),
             }
             }>
                 {this.props.children}
