@@ -32,8 +32,8 @@ export default class CreateEditUserView extends React.Component {
 
         /* get the internalUser id from the URL and assign it to state(internalUserId). */
         // const internalUserIDFromURL = this.props.match.params?.internalUserID;
-        const internalUserIDFromURL = this.props.match.params?.internalUserId;
-        console.log(internalUserIDFromURL + 'ththt');
+        const internalUserIDFromURL = this.props.match.params?.internalUserID;
+        console.log(this.props.match.params);
         if (internalUserIDFromURL) {
             /* set isAdding to false because we deal with updating a record. */
             this.setState({
@@ -159,7 +159,8 @@ export default class CreateEditUserView extends React.Component {
 
     render() {
         const { saveOrUpdate } = this.props;
-
+        console.log("edit .....");
+        console.log(this.state.type);
         /* if we deal with updating a internalUser and the internalUser id is not valid.
       Then, display invalid.*/
         if (!this.state.isInternalUserIdValid && !this.state.isAdding) {

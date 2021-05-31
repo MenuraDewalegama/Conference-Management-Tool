@@ -53,6 +53,33 @@ class InternalUserProvider extends Component {
         });
     }
 
+        /** Get the internalUser by its internalUserID.
+     * @param  productID id of the internalUser.
+     * @return Promise with a result. If success, then resolve the internalUser.
+     * otherwise, reject the error(errorRespond) */
+         getInternalUserByID(internalUserID) {
+            return new Promise(async (resolve, reject) => {
+    
+                const requestedInternalUser = this.state.internalUsers.find(internalUserElem => (internalUserElem?._id === internalUserElemID));
+                if (requestedInternalUser) {
+                    resolve(requestedInternalUser);
+                } else {
+                    try {
+                        const response = await InternalUserService.getInternalUserByID(internalUserID);
+                        /* if matching record found. then resolve it. */
+                        if (response.status === 200) {
+                            /* 200 - OK. */
+                            const retrievedInternalUser = JSON.parse(response.data);
+                            this.setState(((prevState) => prevState.internalUsers.unshift(retrievedInternalUser)));
+                            resolve(retrievedInternalUser);
+                        }
+                    } catch (error) {
+                        reject(error);
+                    }
+                }
+            });
+        }
+
     /** Add a new internal user */
     addInternalUser(internalUser) {
         return new Promise(async (resolve, reject) => {
