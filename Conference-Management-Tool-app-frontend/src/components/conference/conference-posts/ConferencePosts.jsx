@@ -60,9 +60,10 @@ const ConferencePosts = () => {
 
             {context.conferencePosts.map((conferencePost, idx) => {
                 return (
-                    <div>
+                    <div key={conferencePost?.id}>
                         {((isShowMore && context.conferencePosts.length > 1) || (idx === 0 && context.conferencePosts.length > 1)) ?
-                            (<ConferencePost key={idx} conferencePost={conferencePost} isShowMore={isShowMore}/>)
+                            (<ConferencePost key={conferencePost?.id} conferencePost={conferencePost}
+                                             isShowMore={isShowMore}/>)
                             : ''
                         }
                     </div>
