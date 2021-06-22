@@ -16,7 +16,7 @@ const ConferencePost = (props) => {
 
     return (
         <Container>
-            {(true) ? ( // if the user is an editor = true // TODO: check the user type
+            {(false) ? ( // if the user is an editor = true // TODO: check the user type
                 <Row>
                     <Col style={{
                         display: 'flex',

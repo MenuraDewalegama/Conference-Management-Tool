@@ -40,7 +40,7 @@ const ConferencePosts = () => {
 
     return (
         <div>
-            {(true) ? ( // if the user is an editor = true // TODO: check the user type
+            {(false) ? ( // if the user is an editor = true // TODO: check the user type
                 <Container>
                     <Row>
                         <Col>
