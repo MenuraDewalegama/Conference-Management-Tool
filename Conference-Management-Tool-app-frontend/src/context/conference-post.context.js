@@ -101,12 +101,30 @@ class ConferencePostProvider extends Component {
         };
     }
 
+    /** add a conference post. */
+    _addConferencePost(conferencePost) {
+        console.log('Add conference post using context!');
+    }
+
+    /** edit a conference post. */
+    _editConferencePost(conferencePost) {
+        console.log('Edit conference post using context!');
+    }
+
+    /** delete a conference post by ID. */
+    _deleteConferencePost(conferencePostID) {
+        console.log('Delete conference post using context!');
+    }
+
     render() {
         return (
             <ConferencePostContext.Provider
                 value={
                     {
-                        conferencePosts: this.state.conferencePosts
+                        conferencePosts: this.state.conferencePosts,
+                        addConferencePost: this._addConferencePost.bind(this),
+                        editConferencePost: this._editConferencePost.bind(this),
+                        deleteConferencePost: this._deleteConferencePost.bind(this),
                     }
                 }>
                 {this.props.children}

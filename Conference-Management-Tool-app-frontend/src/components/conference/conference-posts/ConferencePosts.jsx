@@ -40,6 +40,24 @@ const ConferencePosts = () => {
 
     return (
         <div>
+            {(true) ? ( // if the user is an editor = true // TODO: check the user type
+                <Container>
+                    <Row>
+                        <Col>
+                            <h1>Conference Posts</h1>
+                        </Col>
+                        <Col style={{
+                            display: 'flex',
+                            justifyContent: 'flex-end',
+                            alignItems: 'center'
+                        }}>
+                            <Button title={'Add New Conference Post'}
+                                    onClick={() => context.addConferencePost()}>ADD</Button>
+                        </Col>
+                    </Row>
+                </Container>
+            ) : ''}
+
             {context.conferencePosts.map((conferencePost, idx) => {
                 return (
                     <div>
