@@ -2,16 +2,45 @@
 @author : Dhanusha Perera
 @date : 17/06/2021
 */
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {Col, Container, Image, Row} from 'react-bootstrap';
 import KeySpeakers from '../../key-speakers/KeySpeakers';
+import {PencilSquare, Trash} from 'react-bootstrap-icons';
+import {ConferencePostContext} from '/src/context/conference-post.context';
 
 const ConferencePost = (props) => {
+
+    const context = useContext(ConferencePostContext);
 
     const [conferencePost, setConferencePost] = useState(props.conferencePost);
 
     return (
         <Container>
+            {(false) ? ( // if the user is an editor = true // TODO: check the user type
+                <Row>
+                    <Col style={{
+                        display: 'flex',
+                        justifyContent: 'flex-end',
+                        padding: '2rem'
+                    }}>
+                        <div title={'Edit this conference-post'}>
+                            <PencilSquare style={{
+                                margin: '0 1rem',
+                                color: 'blue',
+                                fontSize: '1.2rem',
+                                cursor: 'pointer'
+                            }} onClick={(event) => context.editConferencePost(conferencePost)}/>
+                        </div>
+                        <div title={'Delete this conference-post'}>
+                            <Trash style={{
+                                color: 'crimson',
+                                fontSize: '1.2rem',
+                                cursor: 'pointer'
+                            }} onClick={(event) => context.deleteConferencePost(conferencePost?.id)}
+                            /></div>
+                    </Col>
+                </Row>
+            ) : ''}
             <Row>
                 <Col>
                     <div>

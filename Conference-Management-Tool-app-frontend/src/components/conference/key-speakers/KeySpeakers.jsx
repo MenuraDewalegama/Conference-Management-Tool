@@ -19,8 +19,8 @@ const KeySpeakers = (props) => {
         <Carousel activeIndex={index} onSelect={handleSelect}>
             {keySpeakers.map(keySpeaker => {
                 return (
-                    <Carousel.Item>
-                        <KeySpeaker keySpeaker={keySpeaker}/>
+                    <Carousel.Item key={keySpeaker?.id}>
+                        <KeySpeaker key={keySpeaker?.id} keySpeaker={keySpeaker}/>
                     </Carousel.Item>
                 )
             })}
