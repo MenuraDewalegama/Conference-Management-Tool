@@ -18,13 +18,13 @@ export default class DashBoard extends React.Component {
     render() {
         const userCount = this.context?.internalUsers;
         const writerCount = [];
-        const reseacherCount = [];
+        const reviewerCount = [];
 
         for (let index = 0; index < userCount.length; index++) {
             if (userCount[index].type == "Writer") {
                 writerCount.push(userCount[index])
             } else {
-                reseacherCount.push(userCount[index])
+                reviewerCount.push(userCount[index])
             }
 
         }
@@ -57,8 +57,8 @@ export default class DashBoard extends React.Component {
                                         </div>
                                         <hr />
                                         <div>
-                                            <p className="card-category">Reseachers Count</p>
-                                            <h3 className="card-title">{reseacherCount.length}</h3>
+                                            <p className="card-category">Reviewer Count</p>
+                                            <h3 className="card-title">{reviewerCount.length}</h3>
                                         </div>
                                         <hr />
                                         <div>
