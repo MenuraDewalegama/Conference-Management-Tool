@@ -120,7 +120,7 @@ export default class CreateEditUserView extends React.Component {
                 // TODO: display insert successful or not
                 // display insertion successful
                 console.log('Internal User added successfully!');
-                window.location = '/dashboard/internalusers';
+                window.location = '/';
             }).catch(reason => {
                 console.error(reason);
             });
@@ -131,7 +131,7 @@ export default class CreateEditUserView extends React.Component {
                 // TODO: display update successful or not
                 // display updated successfully
                 console.log('Internal User updated successfully!');
-                window.location = '/dashboard/internalusers';
+                window.location = '/';
             }).catch(reason => {
                 console.error(reason);
             });
@@ -233,7 +233,8 @@ export default class CreateEditUserView extends React.Component {
                                                 this.performSaveOrUpdate(saveOrUpdate);
                                             }}>{
                                                 (this.state.isAdding) ? 'Save' : 'Edit'
-                                            } {/* <Link to="/dashboard/internalusers">Submit</Link> */}
+                                            }
+                                            {/* <Link to="/dashboard/internalusers">Submit</Link> */}
                                         </button>
                                         <button type="button" className="btn btn-warning">
                                             <Link to="/dashboard/internaluser">Cancel</Link></button>
