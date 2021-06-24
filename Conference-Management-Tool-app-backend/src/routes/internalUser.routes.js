@@ -143,7 +143,7 @@ router.del('/:id', async ctx => {
                 const result = await deleteInternalUser(id);
                 if (result?.deletedCount === 1) {
                     /* record delete successfully. */
-                    ctx.response.status = 204;
+                    ctx.response.status = 200;
                 } else {
                     /* something went wrong with delete operation. */
                     ctx.response.status = 500;
