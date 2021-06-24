@@ -14,6 +14,8 @@ const InternalUserContext = React.createContext({
     },
     getInternalUserByID: (internalUserID) => {
     },
+    deleteInternalUser:  (internalUserID) => {
+    }, 
 });
 
 class InternalUserProvider extends Component {
@@ -139,6 +141,33 @@ class InternalUserProvider extends Component {
         });
     }
 
+    /** Delete a InternalUser by InternalUserID by using backend services.
+ * @param InternalUserID ID of the InternalUser to be deleted.
+ * @return Promise promise with a result. */
+    deleteInternalUser(internalUserID) {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const response = await InternalUserService.deleteInternalUser(internalUserID);
+                if (response.status === 200) {
+                    /* 200 - successful. */
+                    /* get the InternalUser array. */
+                    const internalUsersArr = [...this.state.internalUsers];
+                    /* find the index of the updated product element/object. */
+                    const indexOfInternalUser = internalUsersArr.findIndex((internalUserElem, index) => internalUserElem.id === internalUser.id);
+                    /* replace the updated product with the old one. */
+                    internalUsersArr.splice(indexOfInternalUser, 1);
+
+                    this.setState((prevValue => {
+                        prevValue.internalUsers = internalUsersArr;
+                    }));
+                    resolve(true);
+                }
+            } catch (error) {
+                reject(error);
+            }
+        });
+    }
+
     render() {
         return (
             <InternalUserContext.Provider value={{
@@ -147,6 +176,7 @@ class InternalUserProvider extends Component {
                 addInternalUser: this.addInternalUser.bind(this),
                 updateInternalUser: this.updateInternalUser.bind(this),
                 getInternalUserByID: this.getInternalUserByID.bind(this),
+                deleteInternalUser: this.deleteInternalUser.bind(this),
             }
             }>
                 {this.props.children}

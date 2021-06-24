@@ -6,13 +6,14 @@ import { Card } from 'react-bootstrap';
 
 export default function InternalUserListItem(props) {
 
-    const { internalUser, selectInternalUser } = props;
+    const { internalUser, selectInternalUser, removeInternalUser  } = props;
     let history = useHistory();
 
     /** redirecting to the edit page,using product ID. */
     const redirectToEdit = () => {
         history.push(`/dashboard/internalUsers/${internalUser?._id}/edit`);
     };
+
 
     return (
         <div className="col">
@@ -35,6 +36,14 @@ export default function InternalUserListItem(props) {
                         title="Edit"
                     >
                         <PencilSquare style={{ fontSize: '1.6rem' }} />
+                    </button>
+                    <button
+                        onClick={() => {
+                            // selectInternalUser(internalUser);
+                            removeInternalUser(internalUser);
+                        }}
+                        title="Delete"
+                    >Delete
                     </button>
                 </div> :
                 <div>
