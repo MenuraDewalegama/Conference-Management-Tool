@@ -16,7 +16,7 @@ const Main = () => {
                 <Route exact path="/conferences">
                     <ConferenceHolder />
                 </Route>
-                <Route exact path="/dashboard">
+                <Route path="/dashboard">
                     <DashBoardHolder />
                 </Route>
                 <Route exact path="/review" component={ReviewHolder} />
