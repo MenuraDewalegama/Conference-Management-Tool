@@ -90,7 +90,7 @@ class InternalUserProvider extends Component {
                     const responseResultObject = response.data;
                     const newInternalUsersList = [...this.state.internalUsers];
                     newInternalUsersList.unshift({
-                        ...internalUsers,
+                        ...internalUser,
                         _id: responseResultObject?.generatedId
                     });
 

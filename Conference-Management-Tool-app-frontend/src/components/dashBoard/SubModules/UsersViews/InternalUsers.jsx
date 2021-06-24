@@ -20,7 +20,9 @@ export default class InternalUsers extends React.Component {
 
     removeInternalUser (internalUser) {
         console.log(internalUser._id);
+        window.location = '/dashboard/internalusers';
         return this.context.deleteInternalUser(internalUser._id);
+       
     }
 
     render() {
