@@ -48,7 +48,6 @@ const saveInternalUser = (internalUser) => {
     });
 };
 
-
 /** Update a existing InternalUser by calling backend services.
  * @param InternalUser InternalUser object with the ID and new values.
  * @returns Promise promise a result. */
@@ -114,12 +113,25 @@ const configureFormDataObject = (isAdding, internalUser) => {
     });
 };
 
-
-/**implemented Add internal User Method into context */
+/** Delete a internalUser by internalUserID by using backend services.
+ * @param internalUserID ID of the internalUser to be deleted.
+ * @return Promise promise with a result. If successful, then resolve the ,
+ * otherwise, reject the error(errorResponse) */
+ const deleteInternalUser = (internalUserID) => {
+    return new Promise((resolve, reject) => {
+        try { /* send a delete request to the backend using axios. */
+            const result = axios.delete(`${process.env.CONFERENCE_MANAGEMENT_BACKEND_API_URL}internaluser/${internalUserID}`);
+            resolve(result);
+        } catch (error) {
+            reject(error);
+        }
+    });
+};
 
 module.exports = {
     getAllInternalUsers,
     saveInternalUser,
     updateInternalUser,
-    getInternalUserByID
+    getInternalUserByID,
+    deleteInternalUser
 };
