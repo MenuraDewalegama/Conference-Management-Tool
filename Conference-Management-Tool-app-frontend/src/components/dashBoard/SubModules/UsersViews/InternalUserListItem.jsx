@@ -6,7 +6,7 @@ import { Card } from 'react-bootstrap';
 
 export default function InternalUserListItem(props) {
 
-    const { internalUser, selectInternalUser } = props;
+    const { internalUser, selectInternalUser, removeInternalUser } = props;
     let history = useHistory();
 
     /** redirecting to the edit page,using product ID. */
@@ -14,31 +14,38 @@ export default function InternalUserListItem(props) {
         history.push(`/dashboard/internalUsers/${internalUser?._id}/edit`);
     };
 
+
     return (
-        <div className="col">
+        <div className="col-md-4">
             {true ?
-                <div className="card">
+                <div className="card bg-dark text-warning">
+                    <div className="card-header">
+                        <h3 className="text-center text-light">{internalUser.fullName}</h3>
+                    </div>
                     <div className="card-body center">
                         {/* Todo: should add imge view */}
-                        <h3 className="card-title"><b>Name: </b>{internalUser.fullName}</h3>
-                        <div className="card-text"><b>Contact: </b>{internalUser.contactNo}</div>
-                        <div className="card-text"><b>Email: </b>{internalUser.email}</div>
-                        <div className="card-text"><b>User Type: </b>{internalUser.type}</div>
-                        <div className="card-text"><b>password: </b>{internalUser.password}</div>   {/* Todo:  should remove */}
-                        <div className="card-text"><b>{internalUser.imagePath}</b></div>
+                        <h4 className="text-center"><b className="text-light">Contact: </b>{internalUser.contactNo}</h4>
+                        <h4 className="text-center"><b className="text-light">Email: </b>{internalUser.email}</h4>
+                        <h4 className="text-center"><b className="text-light">User Type: </b>{internalUser.type}</h4>
+                        {/* <h4 className="text-center"><b className="text-light">password: </b>{internalUser.password}</h4> */}
+                        <h4 className="text-center"><b className="text-light">image URL</b>{internalUser.imagePath}</h4>
                     </div>
-                    <button
-                        onClick={() => {
-                            selectInternalUser(internalUser);
-                            redirectToEdit();
-                        }}
-                        title="Edit"
-                    >
-                        <PencilSquare style={{ fontSize: '1.6rem' }} />
+                    <div className="card-footer center">
+                        <button className="btn btn-info"
+                            onClick={() => {
+                                selectInternalUser(internalUser);
+                                redirectToEdit();
+                            }} >
+                            <PencilSquare style={{ fontSize: '1.3rem' }} />
+                        </button>
+                        <button className="btn btn-denger"
+                            onClick={() => {
+                                // selectInternalUser(internalUser);
+                                removeInternalUser(internalUser);
+                            }}>Delete
                     </button>
-                </div> :
-                <div>
-                </div>}
+                    </div>
+                </div> : []}
 
         </div>
     );

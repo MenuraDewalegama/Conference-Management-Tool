@@ -1,9 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import sha256 from "crypto-js/sha256";
-import InternalUserListItem from './InternalUserListItem'
+import InternalUserListItem from './InternalUserListItem';
+import { InternalUserContext } from '../../../../context/internalUser.context'
 
 export default class InternalUsers extends React.Component {
+
+    static contextType = InternalUserContext;
     constructor(prop) {
         super(prop);
         this.state = {
@@ -13,6 +16,13 @@ export default class InternalUsers extends React.Component {
 
     selectInternalUser(internalUser) {
         this.setState({ internalUser: internalUser });
+    }
+
+    removeInternalUser (internalUser) {
+        console.log(internalUser._id);
+        window.location = '/dashboard/internalusers';
+        return this.context.deleteInternalUser(internalUser._id);
+       
     }
 
     render() {
@@ -47,6 +57,9 @@ export default class InternalUsers extends React.Component {
                                     internalUser={internalUser}
                                     selectInternalUser={(internalUser) =>{
                                         this.selectInternalUser(internalUser)
+                                    }}
+                                    removeInternalUser={() =>{
+                                        this.removeInternalUser(internalUser)
                                     }} />
                             );
                         })}
