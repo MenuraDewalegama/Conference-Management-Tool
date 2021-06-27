@@ -28,6 +28,9 @@ const conferencePostRoutes = require('./src/routes/conference-post.route');
 // console.log(conferencePostRoutes);
 const InternalUserRoutes = require('../Conference-Management-Tool-app-backend/src/routes/internalUser.routes');
 
+const externalUserRoutes = require('../Conference-Management-Tool-app-backend/src/routes/externalUser.routes');
+
+
 /* auth route and assets routes are exposed here. */
 
 /* JWT - 401 error handling. */
@@ -38,6 +41,8 @@ const InternalUserRoutes = require('../Conference-Management-Tool-app-backend/sr
 app.use(conferencePostRoutes.routes()).use(conferencePostRoutes.allowedMethods());
 
 app.use(InternalUserRoutes.routes()).use(InternalUserRoutes.allowedMethods());
+
+app.use(externalUserRoutes.routes()).use(externalUserRoutes.allowedMethods());
 
 /* server. */
 app.listen(PORT, (error) => {
