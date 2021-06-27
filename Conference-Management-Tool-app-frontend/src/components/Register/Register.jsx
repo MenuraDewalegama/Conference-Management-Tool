@@ -7,8 +7,8 @@ import { Card, Button, Form, Col, Raw } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { ExternalUserContext } from '../../context/externalUser.context';
 import axios from '../../service/axios.service';
-
-
+import PhoneInput from 'react-phone-input-2'
+import 'react-phone-input-2/lib/style.css'
 export default class Register extends React.Component {
     // static contextType = ExternalUserContext;
 
@@ -23,20 +23,46 @@ export default class Register extends React.Component {
             type: 'ATTENDEE',
             activityType: null,
             category: null,
-            activityInformation: null
+            activityInformation: null,
+            status: null,
+            imagePath: '',
+            imageFile: null
         };
         this.onSubmit = this.onSubmit.bind(this);
     }
 
-   onSubmit(event) {
-    event.preventDefault();
+
+
+
+
+
+    /** Set image file to the component state when user upload a image file.
+         * @param event */
+    onChangeProductFormFile(event) {
+        console.log(event.target.files[0]);
+        const imageFile = event.target.files[0];
+        this.setState({ imageFile: (imageFile) ? imageFile : null });
+    }
+
+    removeImagePath() {
+        this.setState({
+            pdfPath: ''
+        });
+    }
+
+
+
+    onSubmit(event) {
+        event.preventDefault();
 
         console.log('Submit called!');
         // console.log(this.state);
         const { password } = this.state;
 
-        const externalUserObj =  {
-            email : this.state.email,
+        this.state.status = 'Processing';
+
+        const externalUserObj = {
+            email: this.state.email,
             name: this.state.name,
             contactNo: this.state.contactNo,
             password: this.state.password,
@@ -44,21 +70,65 @@ export default class Register extends React.Component {
             activityType: this.state.activityType,
             category: this.state.activityType,
             activityInformation: this.state.activityInformation,
+            status: this.state.status
         };
 
-       
-        axios.post('http://localhost:3000/externaluser/', externalUserObj)
-        .then(res => {
-            alert('Successfully added');
-            console.log(res);
-            window.location.reload();
 
-        })
-        .catch(err => {
-            alert(err.message)
-        });
+        //for update
+        if (this.state.imageFile) {
+            externalUserObj.imageFile = this.state.imageFile;
+        } else {
+            /* existing imagePath is assigned to the productObject.
+            * That means no image update happens. */
+            externalUserObj.imagePath = this.state.imagePath;
+        }
 
-  
+
+
+        if (externalUserObj.hasOwnProperty('imagePath') && externalUserObj.imagePath.length === 0) {
+            delete externalUserObj.imagePath;
+        }
+
+
+
+
+        let formData = new FormData();
+
+
+
+        formData.append('email', externalUserObj.email);
+        formData.append('productImage', externalUserObj.productImage);
+        formData.append('name', externalUserObj.name);
+        formData.append('contactNo', externalUserObj.contactNo);
+        formData.append('password', externalUserObj.password);
+        formData.append('type', externalUserObj.type);
+        formData.append('activityType', externalUserObj.activityType);
+        formData.append('category', externalUserObj.category);
+        formData.append('activityInformation', externalUserObj.activityInformation);
+        formData.append('status', externalUserObj.status);
+        formData.append('externalUserImage', externalUserObj.imageFile);
+
+
+        if (this.state.password == this.state.password2) {
+            axios.post('http://localhost:3000/externaluser/', formData)
+                .then(res => {
+                    alert('Successfully added');
+                    console.log(res);
+                    window.location.reload();
+
+                })
+                .catch(err => {
+                    alert(err.message)
+                });
+
+        } else {
+            alert('Passwords not matching');
+        }
+
+
+
+
+
     }
 
     /* keep track of changes of the form field values. */
@@ -70,21 +140,7 @@ export default class Register extends React.Component {
 
 
 
-    /** Set image file to the component state when user upload a image file.
-    * @param event */
-    onChangeInternalUserFormFile(event) {
-        const imageFile = event.target.files[0];
-        this.setState({ imageFile: (imageFile) ? imageFile : null });
-    }
 
-    /* Remove Image button process - we just remove the imagePath. */
-    removeImagePath() {
-        this.setState({
-            imagePath: ''
-        });
-    }
-
- 
 
 
     render() {
@@ -140,12 +196,24 @@ export default class Register extends React.Component {
                         <Form.Row>
                             <Form.Group as={Col} controlId="formBasicContactNo">
                                 <Form.Label style={{ color: 'black' }}>Contact No</Form.Label>
-                                <Form.Control type="name"
+                                {/* <Form.Control type="name"
                                     name="contactNo"
                                     placeholder="Ex : 0775488985"
                                     onChange={(event) => this.onChange(event)}
+                                /> */}
+
+                                <PhoneInput
+                                    country={'us'}
+                                    value={this.state.contactNo}
+                                    onChange={contactNo => this.setState({ contactNo })}
                                 />
+
                             </Form.Group>
+
+
+
+
+
                             <Form.Group as={Col} controlId="formBasicDelivery">
                                 <Form.Label style={{ color: 'black' }}>User Type</Form.Label>
                                 <Form.Control name="type" as="select"
@@ -156,7 +224,14 @@ export default class Register extends React.Component {
                                     <option value="PRESENTER">Presenter</option>
                                 </Form.Control>
                             </Form.Group>
+
+
                         </Form.Row>
+
+
+                        <Form.Label style={{ color: 'black' }}> Upload Deliverables</Form.Label>
+                        <Form.File  accept="application/pdf" className="form-control-file" multiple id="id_productImage"
+                            onChange={event => this.onChangeProductFormFile(event)} />
 
 
                         {(this.state.type == "RESEARCHER") ?
@@ -165,9 +240,10 @@ export default class Register extends React.Component {
                                 <Form.Control name="activityType" as="select"
                                     custom
                                     onChange={(event) => this.onChange(event)}>
-                                    <option value="ATTENDEE">Present Results</option>
-                                    <option value="RESEARCHER">Do workshops</option>
-                                    <option value="PRESENTER">Other Activity</option>
+                                    {/* <option value="PresentResults">Present Results</option> */}
+                                    <option value="Workshops">Workshops</option>
+                                    <option value="TechnicalSessions">Technical Sessions (Present Research Results)</option>
+                                    <option value="OtherActivity">Other Activity</option>
                                 </Form.Control>
                             </Form.Group>
 

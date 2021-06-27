@@ -5,12 +5,12 @@ const path = require('path');
 
 /* asestes and internalUser dir */
 
-const assetDir = `${process.cwd()}${path.sep}assets`;
+const assetDir = `${process.cwd()}${path.sep}public/assets`;
 const externalUserDir = `${assetDir}${path.sep}externaluser`;
 
 /** add internalUser */
 
-const addExternalUser = async ({email,name, contactNo, password, type, activityType, category, activityInformation },ctxExternalUserImage) => {
+const addExternalUser = async ({email,name, contactNo, password, type, activityType, category, activityInformation,status },ctxExternalUserImage) => {
     const externalUser = {
         email,
         name,
@@ -20,6 +20,7 @@ const addExternalUser = async ({email,name, contactNo, password, type, activityT
         activityType,
         category,
         activityInformation,
+        status,
         imagePath : null
     }
 
@@ -35,15 +36,18 @@ const addExternalUser = async ({email,name, contactNo, password, type, activityT
 
                 /** set image save path */
                 const desFilePath = `${externalUserDir + path.sep + generateResult.insertedId}.${fileType}`;
-                const dbImagePath = `/assets/externalUsers/${generateResult.insertedId}.${fileType}`;
+                const dbImagePath = `/assets/externaluser/${generateResult.insertedId}.${fileType}`;
 
+                console.log("des path",desFilePath);
+                
+                console.log("db image path",dbImagePath);
                 try {
                     fs.copyFileSync(ctxExternalUserImage?.path, desFilePath);
                     fs.unlinkSync(ctxExternalUserImage?.path);
 
                     try {
                         /** update the image path of internalUser`s */
-                        const result = await externalUserDao.updateExternalUserImagePath(generateResult.insertedId,
+                        const result = await externalUserDao.updateExternaluserImagePath(generateResult.insertedId,
                             { imagePath: dbImagePath });
                         resolve(generateResult);
 
