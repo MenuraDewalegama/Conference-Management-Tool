@@ -20,8 +20,7 @@ const router = new Router({
 router.post('/', async ctx => {
 
     const externalUser = ctx.request.body;
-    console.log("route eke")
-    console.log(externalUser);
+
     if (externalUser?._id || externalUser?._id === '' || externalUser?._id >= 0) {
         ctx.response.type = 'application/json';
         ctx.response.status = 400; // bad request
@@ -38,7 +37,8 @@ router.post('/', async ctx => {
                 type: externalUser.type,
                 activityType:externalUser.activityType,
                 category:externalUser.category,
-                activityInformation:externalUser.activityInformation
+                activityInformation:externalUser.activityInformation,
+                status:externalUser.status
             }, ctx.request.files?.externalUserImage);
             ctx.response.type = 'application/json';
             ctx.response.status = 201; // created
