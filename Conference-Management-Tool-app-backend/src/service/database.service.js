@@ -16,7 +16,7 @@ module.exports = class DatabaseService {
     save(newObject) {
         return new Promise((resolve, reject) => {
             try {
-                console.log(newObject);
+                // console.log(newObject);
                 const result = this.collection.insertOne(newObject);
                 /* successfully inserted ,resolve generated ID. */
                 resolve(result);
