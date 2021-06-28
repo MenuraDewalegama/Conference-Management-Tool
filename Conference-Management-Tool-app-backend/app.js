@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken');
 const koaJWT = require('koa-jwt');
 const unless = require('koa-unless');
 const ms = require('ms');
+const serve = require('koa-static');
 const dotenv = require('dotenv').config();
 require('./src/util/database.util');
 const directoryService = require('./src/service/dir.service');
@@ -22,6 +23,9 @@ app.use(koaBody({ multipart: true }));
 
 /* create assets dir if not exists. */
 directoryService.createDirIfNotExists();
+
+/* koa-static */
+app.use(serve('./public'));
 
 /* routes. */
 const conferencePostRoutes = require('./src/routes/conference-post.route');

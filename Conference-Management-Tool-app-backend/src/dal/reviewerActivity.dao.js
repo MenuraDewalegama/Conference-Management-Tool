@@ -7,6 +7,7 @@ const ExternalUsers = new DatabaseService(collectionName);
 
 const getAllPapers = async () => {
     const papers = await ExternalUsers.findAll();
+    // console.log(papers)
     let research_papers = [];
     if (papers.length > 0) {
         papers.map((paper) => {
@@ -17,7 +18,11 @@ const getAllPapers = async () => {
                 name: paper.name,
                 contactNo: paper.contactNo,
                 type: paper.type,
-                status: paper.status
+                status: paper.status,
+                activityType: paper.activityType,
+                category: paper.category,
+                activityInformation: paper.activityInformation,
+                imagePath: paper.imagePath
             }
             research_papers.push(paperDetails)
             // }
