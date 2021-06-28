@@ -70,12 +70,17 @@ const saveFile = (ctxFile, fileName, destinationPath) => {
 /** Delete file. */
 const deleteFile = (fileRelativePath) => {
     return new Promise((resolve, reject) => {
-        const filePath = path.join(fileRelativePath);
-        try {
-            fs.unlinkSync(filePath);
+        const filePath = path.join(process.cwd(), fileRelativePath);
+
+        if (fs.existsSync(filePath)) {
+            try {
+                fs.unlinkSync(filePath);
+                resolve(true);
+            } catch (error) {
+                reject(error);
+            }
+        } else {
             resolve(true);
-        } catch (error) {
-            reject(error);
         }
     });
 };
@@ -83,5 +88,6 @@ const deleteFile = (fileRelativePath) => {
 module.exports = {
     // getFileExtension,
     // createFileNameWithExtension,
-    saveFile
+    saveFile,
+    deleteFile
 };

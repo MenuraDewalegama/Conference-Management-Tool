@@ -184,11 +184,11 @@ router.del('/:id', async (ctx) => {
     }
 
     try {
-        const result = await conferencePostAPI.getConferencePostByID(conferencePostID);
-        if (result) {
+        const existingRecord = await conferencePostAPI.getConferencePostByID(conferencePostID);
+        if (existingRecord) {
             /* found a matching record for the given ID. */
             try {
-                const result = await conferencePostAPI.deleteConferencePost(conferencePostID);
+                const result = await conferencePostAPI.deleteConferencePost(conferencePostID, existingRecord);
                 if (result?.deletedCount === 1) {
                     /* record delete successfully. */
                     ctx.response.status = 204;

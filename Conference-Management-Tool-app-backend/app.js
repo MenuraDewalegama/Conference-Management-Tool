@@ -28,7 +28,7 @@ directoryService.createDirIfNotExists();
 app.use(serve('./public'));
 
 /* routes. */
-const conferencePostRoutes = require('./src/routes/conference-post.route');
+// const conferencePostRoutes = require('./src/routes/conference-post.route');
 const conferencePostV2Routes = require('./src/routes/conference-post-v2.route');
 const InternalUserRoutes = require('../Conference-Management-Tool-app-backend/src/routes/internalUser.routes');
 
@@ -45,10 +45,10 @@ const researchPaperRoutes = require('./src/routes/reviewerActivity.routes');
 
 /* app routes are set here. */
 /* OLD route for conference-post CRUD. This will be disabled in near future. */
-app.use(conferencePostRoutes.routes()).use(conferencePostRoutes.allowedMethods());
+// app.use(conferencePostRoutes.routes()).use(conferencePostRoutes.allowedMethods());
 
 /* NEW route for conference-post CRUD. */
-app.use(conferencePostV2Routes.routes()).use(conferencePostRoutes.allowedMethods());
+app.use(conferencePostV2Routes.routes()).use(conferencePostV2Routes.allowedMethods());
 
 app.use(InternalUserRoutes.routes()).use(InternalUserRoutes.allowedMethods());
 

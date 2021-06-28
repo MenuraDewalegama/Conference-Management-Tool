@@ -9,7 +9,6 @@
  * @returns errorMessage errors are logged into errorMessage variable as a string.
  * if no errors found then errorMessage object would be a string string. */
 const validateID = (id) => {
-    console.log('awa ID eka: ', id);
     return new Promise((resolve, reject) => {
         let errorMessage = '';
         if (id) {

@@ -128,8 +128,20 @@ const updateConferencePost = (id, conferencePost, uploadedImageFiles, existingCo
 };
 
 /* delete a conference post by ID. */
-const deleteConferencePost = (conferencePostID) => {
-    return conferencePostDAO.deleteConferencePost(conferencePostID);
+const deleteConferencePost = (conferencePostID, existingRecord) => {
+    return new Promise(async (resolve, reject) => {
+        const filePath = path.join(`/public`, existingRecord?.mainImageURI);
+        try {
+            const deleteFileResult = await fileIOHelper.deleteFile(filePath);
+
+            if (deleteFileResult) {
+                const deletedRecordDBResult = await conferencePostDAO.deleteConferencePost(conferencePostID);
+                resolve(deletedRecordDBResult);
+            }
+        } catch (error) {
+            reject(error);
+        }
+    });
 };
 
 module.exports = {
