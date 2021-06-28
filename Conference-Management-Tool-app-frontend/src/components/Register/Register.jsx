@@ -31,7 +31,7 @@ const slideImages = [
 const slideProperties = {
     duration: 2500,
     scale: 0.4,
-    indicators: true
+    arrows: false
 }
 
 export default class Register extends React.Component {
@@ -135,186 +135,206 @@ export default class Register extends React.Component {
 
         // console.log(this.context);
         return (
-            <Card style={{ width: 'auto', height: 'auto', marginLeft: '15%', marginRight: '15%', marginTop: '1%', marginBottom: '10%' }}>
-                <div className="container">
-                    <div >
-                        <br></br>
-                        <div className="slide-container" >
-                            <Zoom autoplay='true' {...slideProperties} style={{ textAlign: 'center' }}>
-                                {slideImages.map((each, index) => (
-                                    <div key={index} style={{ width: "100%" }}>
-                                        <img style={{ objectFit: "inherit", textAlign: "center", width: "100%", height: '7cm', borderRadius: "25px" }} src={each} />
-                                    </div>
-                                ))}
-                            </Zoom>
+            <div style={{ backgroundColor: 'whitesmoke' }}>
+
+
+
+                <div className="slide-container" style={{ width: 'auto', height: 'auto', marginLeft: '30%', marginRight: '30%' }}>
+                    <Zoom autoplay='true' {...slideProperties} style={{ textAlign: 'center', marginTop: '5%' }}>
+                        {slideImages.map((each, index) => (
+                            <div key={index} style={{ width: "100%" }}>
+                                <img style={{ objectFit: "inherit", textAlign: "center", width: "100%", height: '5cm', borderRadius: "25px" }} src={each} />
+                            </div>
+                        ))}
+                    </Zoom>
+                </div>
+
+
+
+                <Card border="dark" style={{ width: 'auto', height: 'auto', marginLeft: '15%', marginRight: '15%', marginTop: '1%', marginBottom: '10%', padding: '10px', backgroundColor: 'white' }}>
+
+                    <div className="card-header card-header-primary card-header-icon">
+                        <div className="card-icon">
+                            <i className="material-icons">people_alt</i>
+                        </div></div>
+
+                    <div className="container">
+                        <div >
+
                         </div>
+                        <br />
+                        <br />
+                        <Form onSubmit={this.onSubmit}>
+                            <Form.Group controlId="formBasicName">
+                                <Form.Label style={{ color: 'black' }}>Email</Form.Label>
+                                <Form.Control name="email"
+                                    required
+                                    type="email"
+                                    placeholder="Ex: examplemail.com"
+                                    onChange={(event) => this.onChange(event)}
+                                />
+                            </Form.Group>
+
+                            <Form.Group controlId="formBasicName">
+                                <Form.Label style={{ color: 'black' }}>Name</Form.Label>
+                                <Form.Control name="name"
+                                    required
+                                    type="name"
+                                    placeholder="Ex : Jhon Carter"
+                                    onChange={(event) => this.onChange(event)}
+                                />
+                            </Form.Group>
+
+                            <Form.Row>
+                                <Form.Group as={Col} controlId="formBasicPassword">
+                                    <Form.Label style={{ color: 'black' }}>Password</Form.Label>
+                                    <Form.Control name="password"
+                                        minLength = '8'
+                                        required
+                                        type="password"
+                                        placeholder="Should have minimum of 8 characters"
+                                        onChange={(event) => this.onChange(event)}
+                                    />
+                                </Form.Group>
+                                <Form.Group as={Col} controlId="formBasicPassword">
+                                    <Form.Label style={{ color: 'black' }}>Re Enter the Password</Form.Label>
+                                    <Form.Control name="password2"
+                                        required
+                                        type="password"
+                                        placeholder="Re type your password"
+                                        onChange={(event) => this.onChange(event)}
+                                    />
+                                </Form.Group>
+                            </Form.Row>
+
+                            <Form.Row>
+                                <Form.Group as={Col} controlId="formBasicContactNo">
+                                    <Form.Label style={{ color: 'black' }}>Contact No</Form.Label>
+                                    <PhoneInput
+                                        required
+                                        country={'us'}
+                                        value={this.state.contactNo}
+                                        onChange={contactNo => this.setState({ contactNo })}
+                                    />
+                                </Form.Group>
+
+                                <Form.Group as={Col} controlId="formBasicDelivery">
+                                    <Form.Label style={{ color: 'black' }}>User Type</Form.Label>
+                                    <Form.Control name="type" as="select"
+                                        custom
+                                        onChange={(event) => this.onChange(event)}>
+                                        <option value="ATTENDEE">Attendee</option>
+                                        <option value="RESEARCHER">Researcher</option>
+                                        <option value="PRESENTER">Presenter</option>
+                                    </Form.Control>
+                                </Form.Group>
+
+
+                            </Form.Row>
+
+
+
+                            {(this.state.type != "ATTENDEE") ?
+
+                                <div>
+                                    <br />
+                                    <Form.Label style={{ color: 'black' }}> Upload Deliverables</Form.Label>
+                                    <Form.File accept="application/pdf" className="form-control-file" multiple id="id_productImage"
+                                        onChange={event => this.onChangeProductFormFile(event)} />
+                                </div>
+
+
+                                :
+                                ''
+                            }
+
+                            {(this.state.type == "RESEARCHER") ?
+                                <Form.Group controlId="formBasicDelivery">
+                                    <Form.Label style={{ color: 'black' }}>Activity Type</Form.Label>
+                                    <Form.Control name="activityType" as="select"
+                                        custom
+                                        onChange={(event) => this.onChange(event)}>
+                                        {/* <option value="PresentResults">Present Results</option> */}
+                                        <option value="Workshops">Workshops</option>
+                                        <option value="TechnicalSessions">Technical Sessions (Present Research Results)</option>
+                                        <option value="OtherActivity">Other Activity</option>
+                                    </Form.Control>
+                                </Form.Group>
+
+                                :
+                                ''
+                            }
+
+                            {(this.state.type != "ATTENDEE") ?
+                                <Form.Group controlId="formBasicDelivery">
+                                    <Form.Label style={{ color: 'black' }}>Category</Form.Label>
+                                    <Form.Control name="activityType" as="select"
+                                        custom
+                                        onChange={(event) => this.onChange(event)}>
+                                        <option value="REACT">React</option>
+                                        <option value="MONGODB">Mongo DB</option>
+                                        <option value="RESTFUL API">Restfull API</option>
+                                        <option value="SPRING">Springboot</option>
+                                        <option value="DOCKER">Docker</option>
+                                        <option value="JAVASCRIPT">Javascript</option>
+
+                                    </Form.Control>
+                                </Form.Group>
+
+                                :
+                                ''
+                            }
+
+                            {(this.state.type != "ATTENDEE") ?
+
+                                <Form.Group controlId="formBasicContactNo">
+                                    <Form.Label style={{ color: 'black' }}>Activity Information</Form.Label>
+                                    <Form.Control as="textarea" rows={3}
+                                        name="activityInformation"
+                                        onChange={(event) => this.onChange(event)}
+                                    />
+                                </Form.Group>
+
+
+                                :
+                                ''
+                            }
+
+                            {(this.state.type == "ATTENDEE") ?
+                                <div className="container" style={{ marginTop: '5%', textAlign: 'center' }}>
+                                    <h5>Registration Fee of Rs 1000 have to be payed</h5>
+                                    <Payment />
+                                </div>
+                                :
+                                ''
+                            }
+                            {(this.state.type == "PRESENTER") ?
+                                <div className="container" style={{ marginTop: '5%', textAlign: 'center' }}>
+                                    <h5>Registration Fee of Rs 3000 have to be payed.</h5>
+                                    <h6 style={{ color: 'red' }}> The amount will be deducted from your account once the proposal is accepted by the management team. We will get back to you through email.</h6>
+                                    <Payment />
+                                </div>
+                                :
+                                ''
+                            }
+
+
+
+                            <br />
+                            <Button type="submit" variant="primary" style={{ marginTop: '5%' }}>Register</Button>
+
+
+                        </Form>
+                        <br />
+
+                        <Link to="/login" style={{ textDecoration: 'none', color: 'black', marginBottom: '10%' }}>Already have an account? Login</Link>
+                        <br />
                     </div>
                     <br />
                     <br />
-                    <Form onSubmit={this.onSubmit}>
-                        <Form.Group controlId="formBasicName">
-                            <Form.Label style={{ color: 'black' }}>Email</Form.Label>
-                            <Form.Control name="email"
-                                type="email"
-                                placeholder="Ex: examplemail.com"
-                                onChange={(event) => this.onChange(event)}
-                            />
-                        </Form.Group>
 
-                        <Form.Group controlId="formBasicName">
-                            <Form.Label style={{ color: 'black' }}>Name</Form.Label>
-                            <Form.Control name="name"
-                                type="name"
-                                placeholder="Ex : Jhon Carter"
-                                onChange={(event) => this.onChange(event)}
-                            />
-                        </Form.Group>
-
-                        <Form.Row>
-                            <Form.Group as={Col} controlId="formBasicPassword">
-                                <Form.Label style={{ color: 'black' }}>Password</Form.Label>
-                                <Form.Control name="password"
-                                    type="password"
-                                    placeholder="Should have minimum of 8 characters"
-                                    onChange={(event) => this.onChange(event)}
-                                />
-                            </Form.Group>
-                            <Form.Group as={Col} controlId="formBasicPassword">
-                                <Form.Label style={{ color: 'black' }}>Re Enter the Password</Form.Label>
-                                <Form.Control name="password2"
-                                    type="password"
-                                    placeholder="Re type your password"
-                                    onChange={(event) => this.onChange(event)}
-                                />
-                            </Form.Group>
-                        </Form.Row>
-
-                        <Form.Row>
-                            <Form.Group as={Col} controlId="formBasicContactNo">
-                                <Form.Label style={{ color: 'black' }}>Contact No</Form.Label>
-                                <PhoneInput
-                                    country={'us'}
-                                    value={this.state.contactNo}
-                                    onChange={contactNo => this.setState({ contactNo })}
-                                />
-                            </Form.Group>
-
-                            <Form.Group as={Col} controlId="formBasicDelivery">
-                                <Form.Label style={{ color: 'black' }}>User Type</Form.Label>
-                                <Form.Control name="type" as="select"
-                                    custom
-                                    onChange={(event) => this.onChange(event)}>
-                                    <option value="ATTENDEE">Attendee</option>
-                                    <option value="RESEARCHER">Researcher</option>
-                                    <option value="PRESENTER">Presenter</option>
-                                </Form.Control>
-                            </Form.Group>
-
-
-                        </Form.Row>
-
-
-
-                        {(this.state.type != "ATTENDEE") ?
-
-                            <div>
-                                <Form.Label style={{ color: 'black' }}> Upload Deliverables</Form.Label>
-                                <Form.File accept="application/pdf" className="form-control-file" multiple id="id_productImage"
-                                    onChange={event => this.onChangeProductFormFile(event)} />
-                            </div>
-
-
-                            :
-                            ''
-                        }
-
-                        {(this.state.type == "RESEARCHER") ?
-                            <Form.Group controlId="formBasicDelivery">
-                                <Form.Label style={{ color: 'black' }}>Activity Type</Form.Label>
-                                <Form.Control name="activityType" as="select"
-                                    custom
-                                    onChange={(event) => this.onChange(event)}>
-                                    {/* <option value="PresentResults">Present Results</option> */}
-                                    <option value="Workshops">Workshops</option>
-                                    <option value="TechnicalSessions">Technical Sessions (Present Research Results)</option>
-                                    <option value="OtherActivity">Other Activity</option>
-                                </Form.Control>
-                            </Form.Group>
-
-                            :
-                            ''
-                        }
-
-                        {(this.state.type != "ATTENDEE") ?
-                            <Form.Group controlId="formBasicDelivery">
-                                <Form.Label style={{ color: 'black' }}>Category</Form.Label>
-                                <Form.Control name="activityType" as="select"
-                                    custom
-                                    onChange={(event) => this.onChange(event)}>
-                                    <option value="REACT">React</option>
-                                    <option value="MONGODB">Mongo DB</option>
-                                    <option value="RESTFUL API">Restfull API</option>
-                                    <option value="SPRING">Springboot</option>
-                                    <option value="DOCKER">Docker</option>
-                                    <option value="JAVASCRIPT">Javascript</option>
-
-                                </Form.Control>
-                            </Form.Group>
-
-                            :
-                            ''
-                        }
-
-                        {(this.state.type != "ATTENDEE") ?
-
-                            <Form.Group controlId="formBasicContactNo">
-                                <Form.Label style={{ color: 'black' }}>Activity Information</Form.Label>
-                                <Form.Control as="textarea" rows={3}
-                                    name="activityInformation"
-                                    onChange={(event) => this.onChange(event)}
-                                />
-                            </Form.Group>
-
-
-                            :
-                            ''
-                        }
-
-                        {(this.state.type == "ATTENDEE") ?
-                            <div className="container" style={{ marginTop: '5%', textAlign: 'center' }}>
-                                <h5>Registration Fee of Rs 1000 have to be payed</h5>
-                                <Payment />
-                            </div>
-                            :
-                            ''
-                        }
-                        {(this.state.type == "PRESENTER") ?
-                            <div className="container" style={{ marginTop: '5%', textAlign: 'center' }}>
-                                <h5>Registration Fee of Rs 3000 have to be payed.</h5>
-                                <h6 style={{color:'red'}}> The amount will be deducted from your account once the proposal is accepted by the management team. We will get back to you through email.</h6>
-                                <Payment />
-                            </div>
-                            :
-                            ''
-                        }
-
-
-
-                        <br />
-                        <Button type="submit" variant="primary" style={{ marginTop: '5%' }}>Register</Button>
-
-
-                    </Form>
-                    <br />
-
-                    <Link to="/login" style={{ textDecoration: 'none', color: 'black', marginBottom: '10%' }}>Already have an account? Login</Link>
-                    <br />
-                </div>
-                <br />
-                <br />
-
-            </Card >
-
+                </Card >
+            </div>
         );
     }
 }
