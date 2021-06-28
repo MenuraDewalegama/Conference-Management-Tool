@@ -18,7 +18,7 @@ const cors = require('@koa/cors');
 app.use(cors());
 
 /* enable koa-body. */
-app.use(koaBody({multipart: true}));
+app.use(koaBody({ multipart: true }));
 
 /* create assets dir if not exists. */
 directoryService.createDirIfNotExists();
@@ -27,6 +27,11 @@ directoryService.createDirIfNotExists();
 const conferencePostRoutes = require('./src/routes/conference-post.route');
 // console.log(conferencePostRoutes);
 const InternalUserRoutes = require('../Conference-Management-Tool-app-backend/src/routes/internalUser.routes');
+
+const externalUserRoutes = require('../Conference-Management-Tool-app-backend/src/routes/externalUser.routes');
+
+const researchPaperRoutes = require('./src/routes/reviewerActivity.routes');
+
 
 /* auth route and assets routes are exposed here. */
 
@@ -38,6 +43,10 @@ const InternalUserRoutes = require('../Conference-Management-Tool-app-backend/sr
 app.use(conferencePostRoutes.routes()).use(conferencePostRoutes.allowedMethods());
 
 app.use(InternalUserRoutes.routes()).use(InternalUserRoutes.allowedMethods());
+
+app.use(externalUserRoutes.routes()).use(externalUserRoutes.allowedMethods());
+
+app.use(researchPaperRoutes.routes()).use(researchPaperRoutes.allowedMethods());
 
 /* server. */
 app.listen(PORT, (error) => {
