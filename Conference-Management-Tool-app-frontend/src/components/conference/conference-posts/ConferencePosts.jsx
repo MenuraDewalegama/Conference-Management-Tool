@@ -4,6 +4,7 @@
 */
 
 import React, {useContext, useState} from 'react';
+import {useHistory} from 'react-router-dom';
 import {ConferencePostContext} from '../../../context/conference-post.context';
 import ConferencePost from './conference-post/ConferencePost';
 import {Button, Col, Container, Row} from 'react-bootstrap';
@@ -11,11 +12,16 @@ import {Button, Col, Container, Row} from 'react-bootstrap';
 const ConferencePosts = () => {
     const context = useContext(ConferencePostContext);
 
+    const history = useHistory();
     const [isShowMore, setIsShowMore] = useState(false);
 
     const toggleIsShowMore = () => {
         setIsShowMore(!isShowMore);
     };
+
+    function redirectToAddConference() {
+        history.push('/conferences/add');
+    }
 
     const showMoreLessButton = () => {
         return (
@@ -40,7 +46,7 @@ const ConferencePosts = () => {
 
     return (
         <div>
-            {(false) ? ( // if the user is an editor = true // TODO: check the user type
+            {(true) ? ( // if the user is an editor = true // TODO: check the user type
                 <Container>
                     <Row>
                         <Col>
@@ -52,7 +58,7 @@ const ConferencePosts = () => {
                             alignItems: 'center'
                         }}>
                             <Button title={'Add New Conference Post'}
-                                    onClick={() => context.addConferencePost()}>ADD</Button>
+                                    onClick={() => redirectToAddConference()}>ADD</Button>
                         </Col>
                     </Row>
                 </Container>

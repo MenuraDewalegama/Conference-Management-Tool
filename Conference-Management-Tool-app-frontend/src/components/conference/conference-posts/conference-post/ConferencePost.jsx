@@ -16,7 +16,7 @@ const ConferencePost = (props) => {
 
     return (
         <Container>
-            {(false) ? ( // if the user is an editor = true // TODO: check the user type
+            {(true) ? ( // if the user is an editor = true // TODO: check the user type
                 <Row>
                     <Col style={{
                         display: 'flex',
@@ -44,7 +44,7 @@ const ConferencePost = (props) => {
             <Row>
                 <Col>
                     <div>
-                        <h2 className="conf_header">{conferencePost.mainHeader}</h2>
+                        <h2 className="conf_header">{conferencePost.topic}</h2>
                         <p>{conferencePost.description}</p>
                     </div>
                     <div>
