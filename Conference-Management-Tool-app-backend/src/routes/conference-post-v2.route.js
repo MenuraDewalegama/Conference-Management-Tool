@@ -73,7 +73,8 @@ router.post('/', async (ctx) => {
             mainImageURI: null, // mainImageURI
             keySpeakersURI: null, // keySpeakerURI
             isApproved: false, // conferencePost.isApproved
-            createdDate: new Date(Date.now()).toISOString()
+            createdDate: new Date(Date.now()).toISOString(),
+            updatedDate: null
         }, ctx.request.files);
 
         if (result.code === 201) {
@@ -98,6 +99,7 @@ router.post('/', async (ctx) => {
 
 /* update an existing conference post. */
 router.put('/:id', async (ctx) => {
+    let existingConferenceRecord;
     const conferencePostID = ctx.request.params.id;
 
     /* check the given id is valid or not. */
@@ -110,9 +112,8 @@ router.put('/:id', async (ctx) => {
         return;
     }
 
-    let existingConferenceRecord;
     const conferencePostBody = ctx.request.body;
-    const conferencePostDetails = JSON.parse(conferencePostBody?.conferencePostDetails);
+    const conferencePostDetails = JSON.parse(conferencePostBody?.conferenceDetails);
     /* validate user input. */
     /* TODO: validate conference-post details. */
 
@@ -132,21 +133,33 @@ router.put('/:id', async (ctx) => {
         return;
     }
 
+    const conferencePostData = {
+        topic: conferencePostDetails.topic,
+        description: conferencePostDetails.description,
+        venue: conferencePostDetails.venue,
+        dateTime: conferencePostDetails.dateTime,
+        mainImageURI: existingConferenceRecord.mainImageURI, // mainImageURI
+        keySpeakersURI: existingConferenceRecord.keySpeakersURI, // keySpeakerURI
+        // isApproved: (conferencePostDetails.isApproved) ? conferencePostDetails.isApproved : false,
+        createdDate: existingConferenceRecord.createdDate,
+        updatedDate: new Date(Date.now()).toISOString()
+    };
+
+    if (ctx.request?.files?.conferencePostImage && conferencePostDetails?.mainImageURI) {
+        ctx.response.status = 400;
+        ctx.response.body = `Invalid: ConferencePostImage and mainImageURI both are provided. Please provide ConferencePostImage only to update the image.`;
+        return;
+    }
+
     try { /* update the product. */
-        const result = await conferencePostAPI.updateConferencePost(conferencePostID, {
-                topic: conferencePostDetails.topic,
-                description: conferencePostDetails.description,
-                venue: conferencePostDetails.venue,
-                dateTime: conferencePostDetails.dateTime,
-                keySpeakers: conferencePostDetails.keySpeakers,
-                organizers: conferencePostDetails.organizers, // array
-                isApproved: false // conferencePost.isApproved
-            }, ctx.request.files,
+        const result = await conferencePostAPI.updateConferencePost(conferencePostID,
+            conferencePostData,
+            ctx.request.files, // uploaded files
             existingConferenceRecord);
-        ctx.response.status = 204;
-        if (result.modifiedCount === 1) {
+        // ctx.response.status = 204;
+        if (result.code === 204) { // NO-CONTENT = 204
             /* update successful. */
-            ctx.response.status = 204;
+            ctx.response.status = result.code;
         }
     } catch (error) {
         /* something wrong with update process. */

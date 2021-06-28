@@ -44,21 +44,38 @@ const saveFile = (ctxFile, fileName, destinationPath) => {
 
             // console.log(`sourcePath`, sourcePath);
             // console.log(`destinationPath`, desPath);
-
             try {
+                /* delete if another file exists. */
+                if (fs.existsSync(desPath)) {
+                    fs.unlinkSync(desPath);
+                }
+
                 fs.copyFileSync(sourcePath, desPath);
                 fs.unlinkSync(ctxFile?.path);
             } catch (error) {
                 reject(error);
             }
 
-            resolve(true);
+            resolve(result);
         } catch (error) {
             reject({
                 code: 500,
                 message: 'Something went wrong, when writing the file to the disk!'
             });
             console.error(error);
+        }
+    });
+};
+
+/** Delete file. */
+const deleteFile = (fileRelativePath) => {
+    return new Promise((resolve, reject) => {
+        const filePath = path.join(fileRelativePath);
+        try {
+            fs.unlinkSync(filePath);
+            resolve(true);
+        } catch (error) {
+            reject(error);
         }
     });
 };

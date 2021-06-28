@@ -28,7 +28,7 @@ const saveConferencePost = (conferencePost, uploadedImageFiles) => {
     return new Promise(async (resolve, reject) => {
         // console.log(conferencePost);
         // console.log(uploadedImageFiles);
-        let isFileIOCompleted = false;
+        let fileIOOperationResult;
         let dataToBeUpdated = {};
 
         try {
@@ -41,16 +41,16 @@ const saveConferencePost = (conferencePost, uploadedImageFiles) => {
                 if (uploadedImage) {
                     /* save conference post image. */
                     try {
-                        isFileIOCompleted = await fileIOHelper.saveFile(uploadedImage,
+                        fileIOOperationResult = await fileIOHelper.saveFile(uploadedImage,
                             generatedResult?.insertedId,
                             conferencePostAssetPath);
 
-                        /* if an image is successfully saved in the file directory. then let's update the mainImageURL */
-                        if (isFileIOCompleted) {
-                            dataToBeUpdated.mainImageURI = `/assets/conference-posts/${generatedResult?.insertedId}`;
+                        /* if an image is successfully saved in the file directory. then let's update the mainImageURI */
+                        if (fileIOOperationResult?.fileNameWithExt) {
+                            dataToBeUpdated.mainImageURI = `/assets/conference-posts/${fileIOOperationResult?.fileNameWithExt}`;
                         }
 
-                        // let's update the key-speakers url segment
+                        // let's update the key-speakers URI segment
                         dataToBeUpdated.keySpeakersURI = `/conferences/${generatedResult?.insertedId}/keyspeakers`;
 
                         /* insertion is successful. then let's update the key-speakers url segment */
@@ -90,7 +90,41 @@ const saveConferencePost = (conferencePost, uploadedImageFiles) => {
 
 /* update a conference post. */
 const updateConferencePost = (id, conferencePost, uploadedImageFiles, existingConferenceRecord) => {
+    return new Promise(async (resolve, reject) => {
 
+        let fileIOOperationResult;
+        const uploadedImage = uploadedImageFiles?.conferencePostImage;
+
+        /* update the uploadedImage. write new Image to the disk. */
+        if (uploadedImage) {
+            try {
+                fileIOOperationResult = await fileIOHelper.saveFile(uploadedImage,
+                    existingConferenceRecord?._id,
+                    conferencePostAssetPath);
+            } catch (error) {
+                reject(error);
+                return;
+            }
+        }
+
+        /* update the newly updated imageURI*/
+        if (fileIOOperationResult?.fileNameWithExt) {
+            conferencePost.mainImageURI = `/assets/conference-posts/${fileIOOperationResult?.fileNameWithExt}`;
+        }
+
+        /* update the record. */
+        try {
+            const result = await conferencePostDAO.updateConferencePost(id, conferencePost);
+            if (result?.modifiedCount > 0) {
+                resolve({
+                    code: 204,
+                    message: ''
+                });
+            }
+        } catch (error) {
+            reject(error);
+        }
+    });
 };
 
 /* delete a conference post by ID. */
