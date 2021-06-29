@@ -4,27 +4,26 @@
 */
 
 const keySpeakerDAO = require('../dal/key-speaker.dao');
-const fs = require('fs');
 const path = require('path');
-const mimeTypes = require('mime-types');
 const fileIOHelper = require('../util/file-io-helper.util');
 const dirService = require('../service/dir.service');
-
-// const keySpeakerAssetPath = path.join(process.cwd(), '/public/assets/conference-posts/key-speakers');
 
 const conferencePostKeySpeakerFullDirPath = path
     .join(process.cwd(), '/public/assets/conference-posts/key-speakers');
 
 const KeySpeakerImageURI = '/assets/conference-posts/key-speakers';
 
+/* Get all key-speakers under conferencePostID. */
 const getAllKeySpeakers = (conferencePostID) => {
     return keySpeakerDAO.getAllKeySpeakers(conferencePostID);
 };
 
+/* Get key-speaker by keySpeakerID. */
 const getKeySpeakerByID = (keySpeakerID) => {
     return keySpeakerDAO.getKeySpeakerByID(keySpeakerID);
 };
 
+/** Create a new key-speaker. */
 const saveKeySpeaker = (conferencePostID, keySpeaker, uploadedImageFiles) => {
     return new Promise(async (resolve, reject) => {
         if (!uploadedImageFiles.hasOwnProperty('keySpeakerImage')) {
@@ -100,12 +99,11 @@ const saveKeySpeaker = (conferencePostID, keySpeaker, uploadedImageFiles) => {
 
 };
 
+/** update key-speaker. */
 const updateKeySpeaker = (keySpeakerID, keySpeaker, uploadedImageFiles, existingKeySpeakerRecord) => {
     return new Promise(async (resolve, reject) => {
         let keySpeakerImage;
-        // console.log('existingKeySpeakerRecord?.keySpeakerImageURI : ', existingKeySpeakerRecord?.keySpeakerImageURI);
         const existingImageFilePath = path.join(`/public`, existingKeySpeakerRecord?.keySpeakerImageURI);
-        // console.log('existingImageFilePath: ', existingImageFilePath);
         let saveImageFileIOResult;
 
         /* get image file. */
@@ -116,9 +114,8 @@ const updateKeySpeaker = (keySpeakerID, keySpeaker, uploadedImageFiles, existing
         /* create new folder. folderName = conferencePostID */
         const newDirPathToBeCreated = path.join(conferencePostKeySpeakerFullDirPath,
             `${existingKeySpeakerRecord?.conferencePostID}`);
-        // console.log('newDirPathToBeCreated(when updating) : ', newDirPathToBeCreated);
 
-        console.log('key speaker Image eka: ', keySpeakerImage);
+
         /* if new image file uploaded, let's handle uploaded image file, and save it. */
         if (keySpeakerImage) { /* create a new dir for the conference-post. */
             try {
@@ -180,11 +177,34 @@ const updateKeySpeaker = (keySpeakerID, keySpeaker, uploadedImageFiles, existing
     });
 };
 
-const deleteKeySpeakerByID = (keySpeakerID, existingRecord) => {
+/** Delete key-speaker by ID. */
+const deleteKeySpeakerByID = (keySpeakerID, existingKeySpeakerRecord) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            /* delete the key-speaker record from DB. */
+            const deleteResult = await keySpeakerDAO.deleteKeySpeakerByID(keySpeakerID);
 
+            if (deleteResult?.deletedCount > 0) {
+                const deleteFilePath = path.join(`/public`,
+                    existingKeySpeakerRecord?.keySpeakerImageURI);
+                try {
+                    /* delete the key-speaker image file from the disk. */
+                    const fileDeleteIOResult = await fileIOHelper.deleteFile(deleteFilePath);
+                    if (fileDeleteIOResult) {
+                        resolve(deleteResult);
+                    }
+                } catch (error) {
+                    reject(error);
+                }
+            }
+
+        } catch (error) {
+            reject(error);
+        }
+    });
 };
 
-
+/* Update the keySpeakerImageURI in the DB. */
 const _updateImageURI = (conferencePostID, keySpeakerID, keySpeakerImageFileName) => {
     return new Promise(async (resolve, reject) => {
         const KeySpeakerImageURIToBeSaved = path
