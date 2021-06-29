@@ -10,6 +10,8 @@ import InternalLoginHolder from '../Login/InternalLogin';
 import DownloadsHolder from '../downloads/DownloadsHolder';
 import RegisterHome from '../Register/RegisterHome';
 import ContactUs from '../ContactUs/ContactUs';
+import AddKeyNoteSpeeches from '../keyNoteSpeeches/AddKeyNoteSpeeches';
+import ViewKeyNoteSpeakers from '../keyNoteSpeeches/ViewKeyNoteSpeakers';
 
 
 /* functional component. */
@@ -26,7 +28,7 @@ const Main = () => {
                     <DashBoardHolder />
                 </Route>
                 <Route exact path="/review" component={ReviewHolder} />
-
+                <Route exact path="/speeches" component={AddKeyNoteSpeeches} />
                 <Route exact path="/downloads" component={DownloadsHolder} />
                 <Route exact path="/register-home" component={RegisterHome} />
                 <Route exact path="/review/research-papers" component={ResearchPaperHolder} />
@@ -34,6 +36,7 @@ const Main = () => {
                 <Route exact path="/internal/login" component={InternalLoginHolder} />
                 <Route path="/review/project-proposals" component={WorkshopHolder} />
                 <Route path="/contact-us" component={ContactUs} />
+                <Route path="/speakers" component={ViewKeyNoteSpeakers} />
 
             </Switch>
         </div>
