@@ -11,7 +11,10 @@ import InternalLoginHolder from '../Login/InternalLogin';
 import DownloadsHolder from '../downloads/DownloadsHolder';
 import RegisterHome from '../Register/RegisterHome';
 import ContactUs from '../ContactUs/ContactUs';
-
+import UserViewResearchPaper from '../UserView/UserViewResearchPaper';
+import UserViewWorkshop from '../UserView/UserViewWorkshop';
+import AddCommitteeMembers from '../committee/CommitteeMembers';
+import CommitteeMembers from '../committee/ViewComMembers';
 
 /* functional component. */
 const Main = () => {
@@ -34,8 +37,6 @@ const Main = () => {
                     <DashBoardHolder/>
                 </Route>
                 <Route exact path="/review" component={ReviewHolder}/>
-
-
                 <Route exact path="/downloads" component={DownloadsHolder} />
                 <Route exact path="/register-home" component={RegisterHome} />
                 <Route exact path="/review/research-papers" component={ResearchPaperHolder} />
@@ -43,6 +44,11 @@ const Main = () => {
                 <Route exact path="/internal/login" component={InternalLoginHolder} />
                 <Route path="/review/project-proposals" component={WorkshopHolder} />
                 <Route path="/contact-us" component={ContactUs} />
+                <Route path="/research-papers" component={UserViewResearchPaper} />
+                <Route path="/workshops" component={UserViewWorkshop} />
+
+                <Route path="/add-members" component={AddCommitteeMembers} />
+                <Route path="/members" component={CommitteeMembers} />
 
                 <Route
                     exact
