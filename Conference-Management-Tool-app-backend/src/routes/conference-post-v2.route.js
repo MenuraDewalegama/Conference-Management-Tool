@@ -79,13 +79,14 @@ router.post('/', async (ctx) => {
     }
 
     /* checks for the conferencePostImage is included. */
-    if (!ctx.request.files.hasOwnProperty('conferencePostImage')) {
+    if (ctx.request.files.hasOwnProperty('conferencePostImage') && ctx.request.files?.conferencePostImage?.size === 0) {
         /* send BAD REQUEST */
         ctx.response.type = 'text/plain';
         ctx.response.status = 400;
-        ctx.response.body = `conferencePostImage is required.`;
+        ctx.response.body = `conferencePostImage is required. Image should be uploaded.`;
         return;
     }
+
 
     /* checks for the conference post details errors. */
     const conferencePostDetails = JSON.parse(conferencePostBody?.conferenceDetails);
