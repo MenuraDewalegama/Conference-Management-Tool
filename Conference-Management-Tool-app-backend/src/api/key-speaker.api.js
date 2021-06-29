@@ -100,8 +100,84 @@ const saveKeySpeaker = (conferencePostID, keySpeaker, uploadedImageFiles) => {
 
 };
 
-const updateKeySpeaker = (id, conferencePost, uploadedImageFiles, existingConferenceRecord) => {
+const updateKeySpeaker = (keySpeakerID, keySpeaker, uploadedImageFiles, existingKeySpeakerRecord) => {
+    return new Promise(async (resolve, reject) => {
+        let keySpeakerImage;
+        // console.log('existingKeySpeakerRecord?.keySpeakerImageURI : ', existingKeySpeakerRecord?.keySpeakerImageURI);
+        const existingImageFilePath = path.join(`/public`, existingKeySpeakerRecord?.keySpeakerImageURI);
+        // console.log('existingImageFilePath: ', existingImageFilePath);
+        let saveImageFileIOResult;
 
+        /* get image file. */
+        if (uploadedImageFiles.hasOwnProperty('keySpeakerImage') && uploadedImageFiles?.keySpeakerImage?.size > 0) {
+            keySpeakerImage = uploadedImageFiles?.keySpeakerImage;
+        }
+
+        /* create new folder. folderName = conferencePostID */
+        const newDirPathToBeCreated = path.join(conferencePostKeySpeakerFullDirPath,
+            `${existingKeySpeakerRecord?.conferencePostID}`);
+        // console.log('newDirPathToBeCreated(when updating) : ', newDirPathToBeCreated);
+
+        console.log('key speaker Image eka: ', keySpeakerImage);
+        /* if new image file uploaded, let's handle uploaded image file, and save it. */
+        if (keySpeakerImage) { /* create a new dir for the conference-post. */
+            try {
+                const createDirResult = await dirService.createNewDirFor(newDirPathToBeCreated);
+
+                /* save the imageFile of the key-speaker. */
+                if (createDirResult) {
+                    try {
+                        /* deleting existing image file. */
+                        await fileIOHelper.deleteFile(existingImageFilePath);
+
+                        // save the imageFile of the key-speaker.
+                        saveImageFileIOResult = await fileIOHelper
+                            .saveFile(keySpeakerImage,
+                                existingKeySpeakerRecord?._id,
+                                newDirPathToBeCreated);
+
+                    } catch (error) {
+                        reject({
+                            code: 500,
+                            message: 'Something went wrong when deleting existing image file.'
+                        });
+                    }
+                } else {
+                    reject({
+                        code: 500,
+                        message: 'Something went wrong when creating new directory.'
+                    });
+                }
+
+            } catch (error) {
+                reject(error);
+            }
+        } // end-save-image
+
+        /* if new image is saved successfully, let's update the new keySpeakerImageURI. */
+        if (keySpeakerImage && saveImageFileIOResult?.fileNameWithExt) {
+            keySpeaker.keySpeakerImageURI
+                = path.join(KeySpeakerImageURI,
+                existingKeySpeakerRecord?.conferencePostID,
+                saveImageFileIOResult?.fileNameWithExt);
+        }
+
+        try { /* save the database record. */
+            const updatedResult = await keySpeakerDAO.updateKeySpeaker(keySpeakerID, keySpeaker);
+
+            if (updatedResult?.modifiedCount > 0) {
+                /* updated successfully. */
+                resolve({
+                    code: 204,
+                    message: ''
+                });
+            }
+
+        } catch (error) {
+            reject(error);
+        }
+
+    });
 };
 
 const deleteKeySpeakerByID = (keySpeakerID, existingRecord) => {

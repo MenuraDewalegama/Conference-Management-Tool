@@ -62,7 +62,7 @@ router.get('/:conferencePostID/keyspeakers/:keySpeakerID', async (ctx) => {
 
     /* Validate KeySpeakerID. */
     try {
-        const validationResult = _validateKeySpeakerID(keySpeakerID, ctx);
+        const validationResult = await _validateKeySpeakerID(keySpeakerID, ctx);
     } catch (errorMessage) {
         console.error(errorMessage);
         ctx.response.status = 400;
@@ -123,7 +123,16 @@ router.post('/:conferencePostID/keyspeakers', async (ctx) => {
         return;
     }
 
-    /* checks for the conference post details errors. */
+    /* keySpeakerImage validation. */
+    if (ctx.request.files.hasOwnProperty('keySpeakerImage') && ctx.request.files?.keySpeakerImage?.size === 0){
+        /* send BAD REQUEST */
+        ctx.response.type = 'text/plain';
+        ctx.response.status = 400;
+        ctx.response.body = `keySpeakerImage is required. keySpeakerImage should be uploaded.`;
+        return;
+    }
+
+    /* checks for the keySpeaker details errors. */
     const keySpeakerDetails = JSON.parse(keySpeakerBody?.keySpeakerDetails);
     /* TODO: validate keySpeakerDetails input. */
     // const errorMessages = keySpeakerValidation.validateKeySpeaker(keySpeakerDetails);
@@ -171,8 +180,115 @@ router.post('/:conferencePostID/keyspeakers', async (ctx) => {
 
 });
 
-router.put('/:conferencePostID/keyspeakers/:keySpeakerID', (ctx) => {
-    console.log('update existing key-speaker.');
+router.put('/:conferencePostID/keyspeakers/:keySpeakerID', async (ctx) => {
+    const conferencePostID = ctx.params?.conferencePostID;
+    const keySpeakerID = ctx.params?.keySpeakerID;
+    /* get request body data. */
+    const keySpeakerBody = ctx.request.body;
+    let conferencePostDBRecord;
+    let keySpeakerDBRecord;
+
+    /* Validate ConferencePostID. */
+    try {
+        const validationResult = await conferencePostV2Route.validateConferencePostID(conferencePostID, ctx);
+    } catch (errorMessage) {
+        console.error(errorMessage);
+        ctx.response.status = 400;
+        ctx.response.body = errorMessage;
+        return;
+    }
+
+    /* Validate KeySpeakerID. */
+    try {
+        const validationResult = await _validateKeySpeakerID(keySpeakerID, ctx);
+    } catch (errorMessage) {
+        console.error(errorMessage);
+        ctx.response.status = 400;
+        ctx.response.body = errorMessage;
+        return;
+    }
+
+    /* Check for the content content type. */
+    if (ctx.request.type !== 'multipart/form-data') {
+        /* send BAD REQUEST */
+        ctx.response.type = 'text/plain';
+        ctx.response.status = 400;
+        ctx.response.body = `Invalid Content-Type: Content-Type should be multipart/form-data`;
+        return;
+    }
+
+    try {
+        /* check for the matching ConferencePost record.
+        if matching record is found. store the retrieve record in conferencePostDBRecord variable. */
+        conferencePostDBRecord = await _getConferencePostByID(conferencePostID, ctx);
+        if (!conferencePostDBRecord) {
+            /* no matching conference post found. */
+            ctx.response.status = 404;
+            ctx.response.body = `Not Found: ConferencePost for ID: ${keySpeakerID}`;
+            return;
+        }
+    } catch (error) {
+        console.error(error);
+        return;
+    }
+
+    try {
+        /* check for the matching KeySpeaker record.
+        if matching record is found, store it in keySpeakerDBRecord variable.  */
+        keySpeakerDBRecord = await keySpeakerAPI.getKeySpeakerByID(keySpeakerID);
+        if (!keySpeakerDBRecord) {
+            /* no matching conference post found. */
+            ctx.response.status = 404;
+            ctx.response.body = `Not Found: KeySpeaker for ID: ${keySpeakerID}`;
+            return;
+        }
+    } catch (error) {
+        console.error(error);
+        return;
+    }
+
+    /* checks for the keySpeaker details errors. */
+    const keySpeakerDetails = JSON.parse(keySpeakerBody?.keySpeakerDetails);
+    /* TODO: validate keySpeakerDetails input. */
+    // const errorMessages = keySpeakerValidation.validateKeySpeaker(keySpeakerDetails);
+    //
+    // if (errorMessages.length !== 0) {
+    //     /* send BAD REQUEST */
+    //     ctx.response.type = 'text/plain';
+    //     ctx.response.status = 400;
+    //     ctx.response.body = errorMessages;
+    //     return;
+    // }
+
+
+    /* update the key-speaker. */
+    try {
+        /* add the conference post. */
+        const result = await keySpeakerAPI.updateKeySpeaker(keySpeakerID, {
+                conferencePostID: keySpeakerDBRecord.conferencePostID,
+                name: keySpeakerDetails.name,
+                title: keySpeakerDetails.title,
+                description: keySpeakerDetails.description,
+                createdDate: keySpeakerDBRecord.createdDate, // keySpeaker record createdDate
+                updatedDate: new Date(Date.now()).toISOString()
+            }, ctx.request.files,
+            keySpeakerDBRecord);
+
+        if (result.code === 204) {
+            ctx.response.status = 204;
+        }
+
+    } catch (error) {
+        if (error?.code && !isNaN(error?.code)) {
+            ctx.response.status = error?.code;
+            ctx.response.body = error?.message;
+        } else {
+            ctx.response.status = 500; // internal server error.
+        }
+        console.error(error);
+    }
+
+    //update-end
 });
 
 router.del('/:conferencePostID/keyspeakers/:keySpeakerID', (ctx) => {
@@ -191,10 +307,10 @@ _getConferencePostByID = (conferencePostID, ctx) => {
             } else {
                 reject({
                     code: 404,
-                    message: `Not Found: ConferencePost for ${conferencePostID}`
+                    message: `Not Found: ConferencePost for ID ${conferencePostID}`
                 });
                 ctx.response.status = 404;
-                ctx.response.body = `Not Found: ConferencePost for ${conferencePostID}`;
+                ctx.response.body = `Not Found: ConferencePost for ID ${conferencePostID}`;
             }
         } catch (error) {
             reject(error);

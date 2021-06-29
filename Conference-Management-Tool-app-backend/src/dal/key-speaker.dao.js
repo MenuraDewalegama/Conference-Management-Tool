@@ -42,10 +42,10 @@ const createKeySpeaker = (keySpeaker) => {
 };
 
 /* update a key-speaker. */
-const updateKeySpeaker = (id, keySpeaker) => {
+const updateKeySpeaker = (keySpeakerID, keySpeaker) => {
     return new Promise(async (resolve, reject) => {
         try {
-            resolve(await KeySpeakerDatabaseService.update(id, keySpeaker));
+            resolve(await KeySpeakerDatabaseService.update(keySpeakerID, keySpeaker));
         } catch (error) {
             reject(error);
         }

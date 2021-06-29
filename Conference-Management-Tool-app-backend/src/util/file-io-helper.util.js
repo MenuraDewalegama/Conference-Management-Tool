@@ -71,7 +71,7 @@ const saveFile = (ctxFile, fileName, destinationPath) => {
 const deleteFile = (fileRelativePath) => {
     return new Promise((resolve, reject) => {
         const filePath = path.join(process.cwd(), fileRelativePath);
-
+        console.log('delete filePath: ', filePath);
         if (fs.existsSync(filePath)) {
             try {
                 fs.unlinkSync(filePath);
