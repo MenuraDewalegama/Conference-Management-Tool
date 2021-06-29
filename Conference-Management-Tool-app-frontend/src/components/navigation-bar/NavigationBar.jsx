@@ -55,10 +55,7 @@ const NavigationBar = () => {
                                     </Link>
 
 
-                                    <Link style={{ margin: 'auto' }} to="/downloads" className="nav-link">
-                                        <h6 className="user_name">| Downloads |</h6>
-                                    </Link>
-
+                                
                                     <h6 className="user_name">Hi {currentUser?.name}</h6>
 
 
