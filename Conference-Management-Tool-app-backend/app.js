@@ -19,7 +19,7 @@ const cors = require('@koa/cors');
 app.use(cors());
 
 /* enable koa-body. */
-app.use(koaBody({ multipart: true }));
+app.use(koaBody({multipart: true}));
 
 /* create assets dir if not exists. */
 directoryService.createDirIfNotExists();
@@ -28,8 +28,8 @@ directoryService.createDirIfNotExists();
 app.use(serve('./public'));
 
 /* routes. */
-const conferencePostRoutes = require('./src/routes/conference-post.route');
-// console.log(conferencePostRoutes);
+// const conferencePostRoutes = require('./src/routes/conference-post.route');
+const conferencePostV2Routes = require('./src/routes/conference-post-v2.route');
 const InternalUserRoutes = require('../Conference-Management-Tool-app-backend/src/routes/internalUser.routes');
 
 const externalUserRoutes = require('../Conference-Management-Tool-app-backend/src/routes/externalUser.routes');
@@ -49,7 +49,11 @@ const contactUsRoutes = require('./src/routes/contactUs.route');
 /* JWT protected routes should place under this line. */
 
 /* app routes are set here. */
-app.use(conferencePostRoutes.routes()).use(conferencePostRoutes.allowedMethods());
+/* OLD route for conference-post CRUD. This will be disabled in near future. */
+// app.use(conferencePostRoutes.routes()).use(conferencePostRoutes.allowedMethods());
+
+/* NEW route for conference-post CRUD. */
+app.use(conferencePostV2Routes.routes()).use(conferencePostV2Routes.allowedMethods());
 
 app.use(InternalUserRoutes.routes()).use(InternalUserRoutes.allowedMethods());
 

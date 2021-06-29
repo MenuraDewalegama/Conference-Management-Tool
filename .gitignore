@@ -35,6 +35,7 @@
 /Conference-Management-Tool-app-frontend/dist
 /Conference-Management-Tool-app-frontend/.parcel-cache
 
+
 # IDE - VSCode
 .vscode/*
 !.vscode/settings.json

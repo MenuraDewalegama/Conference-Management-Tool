@@ -58,7 +58,7 @@ class ConferencePostProvider extends Component {
             conferencePosts: [
                 {
                     id: '60b102411ebcec35400d3d12',
-                    mainHeader: 'Neque vitae tempus quam pellentesque.',
+                    topic: 'Neque vitae tempus quam pellentesque.',
                     description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Neque vitae tempus quam pellentesque. Tellus elementum sagittis vitae et leo duis ut diam. Vel risus commodo viverra maecenas accumsan lacus vel. In hac habitasse platea dictumst quisque.',
                     venue: 'In hac habitasse',
                     dateTime: new Date(Date.now()).toString(),
