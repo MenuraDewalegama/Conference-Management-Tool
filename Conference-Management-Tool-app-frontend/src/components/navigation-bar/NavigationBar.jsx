@@ -49,22 +49,8 @@ const NavigationBar = () => {
                                         <h6 className="user_name">| Home |</h6>
                                     </Link>
 
-                                    {/* Remove this later */}
-                                    {/* <Link style={{ margin: 'auto' }} to="/review" className="nav-link">
-                                        <h6 className="user_name">| Reviewer |</h6>
-                                    </Link> */}
-
-                                    <Link style={{ margin: 'auto' }} to="/downloads" className="nav-link">
-                                        <h6 className="user_name">| Downloads |</h6>
-                                    </Link>
-
-
-                                    <Link style={{ margin: 'auto' }} to="/" className="nav-link">
-                                        <h6 className="user_name">| Speeaches |</h6>
-                                    </Link>
-
-                                    <Link style={{ margin: 'auto' }} to="/contact-us" className="nav-link">
-                                        <h6 className="user_name">| Contact Us |</h6>
+                                    <Link style={{ margin: 'auto' }} to="/speakers" className="nav-link">
+                                        <h6 className="user_name">| Key Note Speakers|</h6>
                                     </Link>
 
                                     <Link style={{ margin: 'auto' }} to="/workshops" className="nav-link">
@@ -83,6 +69,13 @@ const NavigationBar = () => {
                                         <h6 className="user_name">| Research Presentations |</h6>
                                     </Link>
 
+                                    <Link style={{ margin: 'auto' }} to="/downloads" className="nav-link">
+                                        <h6 className="user_name">| Downloads |</h6>
+                                    </Link>
+
+                                    <Link style={{ margin: 'auto' }} to="/contact-us" className="nav-link">
+                                        <h6 className="user_name">| Contact Us |</h6>
+                                    </Link>
 
 
                                     {/* <h6 className="user_name">Hi {currentUser?.name}</h6> */}
@@ -90,13 +83,13 @@ const NavigationBar = () => {
 
                                     {//temporaly added for development purposes
                                     }
-                                
+
                                     <Link style={{ margin: 'auto' }} to="/register-home" className="nav-link">
-                                         Get Registered
+                                        Get Registered
                                     </Link>
 
 
-                                    <Button className="nav-link" variant="danger"   
+                                    <Button className="nav-link" variant="danger"
                                         onClick={() => performLogOut()}>Logout</Button>
                                 </Nav>
 
