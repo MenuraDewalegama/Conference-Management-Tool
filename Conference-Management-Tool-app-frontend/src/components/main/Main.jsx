@@ -5,7 +5,7 @@ import DashBoardHolder from '../dashBoard/DashBoardHolder';
 import ReviewHolder from '../Review/ReviewHolder';
 import ResearchPaperHolder from '../Review/SubReviewer/ResearchPaperHolder';
 import WorkshopHolder from '../Review/SubReviewer/WorkshopHolder';
-
+import DownloadsHolder from '../downloads/DownloadsHolder';
 /* functional component. */
 const Main = () => {
     return (
@@ -20,6 +20,7 @@ const Main = () => {
                     <DashBoardHolder />
                 </Route>
                 <Route exact path="/review" component={ReviewHolder} />
+                <Route exact path="/downloads" component={DownloadsHolder} />
                 <Route exact path="/review/research-papers" component={ResearchPaperHolder} />
                 <Route path="/review/project-proposals" component={WorkshopHolder} />
 

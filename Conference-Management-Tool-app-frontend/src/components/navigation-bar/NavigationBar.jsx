@@ -49,7 +49,12 @@ const NavigationBar = () => {
                                         <h6 className="user_name">| Reviewer |</h6>
                                     </Link>
 
+                                    <Link style={{ margin: 'auto' }} to="/downloads" className="nav-link">
+                                        <h6 className="user_name">| Downloads |</h6>
+                                    </Link>
+
                                     <h6 className="user_name">Hi {currentUser?.name}</h6>
+
                                     <Link style={{ margin: 'auto' }} to="/cart" className="nav-link">
                                         <Bell className="navbar_icon" />
                                     </Link>
