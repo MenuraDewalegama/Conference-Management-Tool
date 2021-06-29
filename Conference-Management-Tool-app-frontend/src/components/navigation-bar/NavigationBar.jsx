@@ -49,10 +49,6 @@ const NavigationBar = () => {
                                         <h6 className="user_name">| Home |</h6>
                                     </Link>
 
-                                    <Link style={{ margin: 'auto' }} to="/speakers" className="nav-link">
-                                        <h6 className="user_name">| Key Note Speakers|</h6>
-                                    </Link>
-
                                     <Link style={{ margin: 'auto' }} to="/workshops" className="nav-link">
                                         <h6 className="user_name">| Workshops |</h6>
                                     </Link>
