@@ -4,13 +4,14 @@ import App from './App';
 import {UserProvider} from './src/context/user.context';
 import {InternalUserProvider} from './src/context/internalUser.context';
 import {ConferencePostProvider} from './src/context/conference-post.context';
+import {ConferencePostAddEditProvider} from './src/context/conference-post-add-edit.context';
 
 render(
-    <ConferencePostProvider>
+    <ConferencePostAddEditProvider><ConferencePostProvider>
         <InternalUserProvider>
             <UserProvider>
                 <App/>
             </UserProvider>
         </InternalUserProvider>
-    </ConferencePostProvider>
+    </ConferencePostProvider></ConferencePostAddEditProvider>
     , document.getElementById('app'));
