@@ -1,32 +1,5 @@
 import axios from './axios.service';
 
-/** Get all internal Users by calling backend services.
-//  * @return Promise promise a result. */
-// const getAllInternalUsers = () => {
-//     return new Promise(async (resolve, reject) => {
-//         try {
-//             const result = await axios.get(`${process.env.CONFERENCE_MANAGEMENT_BACKEND_API_URL}internaluser`);
-//             resolve(result);
-//         } catch (error) {
-//             reject(error);
-//         }
-//     });
-// };
-
-/** Get internal User by internalUserID by calling backend services.
-//  * @param internalUserID ID of the internal Users  that is being retrieved.
-//  * @return Promise promise a result. */
-//  const getInternalUserByID = (internalUserID) => {
-//     return new Promise(async (resolve, reject) => {
-//         try {
-//             const result = await axios.get(`${process.env.CONFERENCE_MANAGEMENT_BACKEND_API_URL}internaluser/${internalUserID}`);
-//             resolve(result);
-//         } catch (error) {
-//             reject(error);
-//         }
-//     });
-// };
-
 
 /** Save a new InernalUser by calling backend services.
  * @param externalUser InernalUser object with and new values but the ID .
@@ -50,36 +23,6 @@ const saveExternalUser = (externalUser) => {
     });
 };
 
-
-// /** Update a existing InternalUser by calling backend services.
-//  * @param InternalUser InternalUser object with the ID and new values.
-//  * @returns Promise promise a result. */
-//  const updateInternalUser = (internalUser) => {
-//     return new Promise(async (resolve, reject) => {
-//         try {
-//             const formData = await configureFormDataObject(false, internalUser);
-
-//             /* send a put request to the backend using axios. */
-//             const response = axios.put(`${process.env.CONFERENCE_MANAGEMENT_BACKEND_API_URL}internaluser/${internalUser?.id}`, formData);
-//             resolve(response);
-//         } catch (error) {
-//             if (error.response) {
-//                 // The request was made and the server responded with a status code
-//                 // that falls out of the range of 2xx
-//             } else if (error.request) {
-//                 // The request was made but no response was received
-//                 // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-//                 // http.ClientRequest in node.js
-//                 console.log(error.request);
-//             } else {
-//                 // Something happened in setting up the request that triggered an Error
-//                 console.log('Error', error.message);
-//             }
-//             console.log(error.config);
-//             reject(error);
-//         }
-//     });
-// };
 
 const configureFormDataObject = (isAdding, externalUser) => {
     return new Promise((resolve, reject) => {

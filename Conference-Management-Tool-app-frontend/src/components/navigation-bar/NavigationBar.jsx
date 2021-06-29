@@ -19,6 +19,7 @@ const NavigationBar = () => {
         /* log out current user. */
         // logOutUser();
         console.log('user is logging out.');
+        window.location = '/login';
         /* redirect to main page. */
 
     };
@@ -45,11 +46,19 @@ const NavigationBar = () => {
                                     </Link>
 
                                     {/* Remove this later */}
-                                    <Link style={{ margin: 'auto' }} to="/review" className="nav-link">
+                                    {/* <Link style={{ margin: 'auto' }} to="/review" className="nav-link">
                                         <h6 className="user_name">| Reviewer |</h6>
+                                    </Link> */}
+
+                                    <Link style={{ margin: 'auto' }} to="/downloads" className="nav-link">
+                                        <h6 className="user_name">| Downloads |</h6>
                                     </Link>
 
+
+                                
                                     <h6 className="user_name">Hi {currentUser?.name}</h6>
+
+
                                     <Link style={{ margin: 'auto' }} to="/cart" className="nav-link">
                                         <Bell className="navbar_icon" />
                                     </Link>

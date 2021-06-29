@@ -1,41 +1,50 @@
 import React from 'react';
-import { Redirect, Route, Switch } from 'react-router-dom';
+import {Redirect, Route, Switch} from 'react-router-dom';
 import ConferenceHolder from '../conference/ConferenceHolder';
 import DashBoardHolder from '../dashBoard/DashBoardHolder';
 import ReviewHolder from '../Review/ReviewHolder';
 import ResearchPaperHolder from '../Review/SubReviewer/ResearchPaperHolder';
 import WorkshopHolder from '../Review/SubReviewer/WorkshopHolder';
 import AddConferencePost from '../conference/conference-posts/conference-post/AddConferencePost';
+import LoginHolder from '../Login/Login';
+import InternalLoginHolder from '../Login/InternalLogin';
+import DownloadsHolder from '../downloads/DownloadsHolder';
 
 /* functional component. */
 const Main = () => {
     return (
-        <div style={{ height: '100%' }}>
+        <div style={{height: '100%'}}>
             <Switch>
-                <Redirect exact from="/" to="/conferences" />
+                <Redirect exact from="/" to="/conferences"/>
                 {/* conferences component */}
                 <Route exact path="/conferences">
-                    <ConferenceHolder />
+                    <ConferenceHolder/>
                 </Route>
-                {(true)? (  // IF user is an editor
+                {(true) ? ( // IF user is an editor
                     <Route exact path="/conferences/add">
-                        <AddConferencePost />
+                        <AddConferencePost/>
                     </Route>
-                ): (
-                    <Redirect exact from="/conferences/add" to="/conferences" />
+                ) : (
+                    <Redirect exact from="/conferences/add" to="/conferences"/>
                 )}
                 <Route path="/dashboard">
-                    <DashBoardHolder />
+                    <DashBoardHolder/>
                 </Route>
-                <Route exact path="/review" component={ReviewHolder} />
-                <Route exact path="/review/research-papers" component={ResearchPaperHolder} />
-                <Route path="/review/project-proposals" component={WorkshopHolder} />
+                <Route exact path="/review" component={ReviewHolder}/>
 
+                <Route exact path="/downloads" component={DownloadsHolder}/>
+
+                <Route
+                    exact
+                    path="/review/research-papers"
+                    component={ResearchPaperHolder}
+                />
+                <Route exact path="/login" component={LoginHolder}/>
+                <Route exact path="/internal/login" component={InternalLoginHolder}/>
+                <Route path="/review/project-proposals" component={WorkshopHolder}/>
             </Switch>
         </div>
     );
 };
 
 export default Main;
-
-

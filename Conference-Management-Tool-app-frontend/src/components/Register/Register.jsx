@@ -16,21 +16,18 @@ import Payment from '../Register/Payment';
 
 //declaring constants
 const slideImages = [
-    'http://p14cdn4static.sharpschool.com/UserFiles/Servers/Server_131208/Image/For%20Families/Online%20Registration%20-%20red%20banner.png',
     'https://www.techedt.com/wp-content/uploads/2019/03/Your-guide-to-top-7-tech-conferences-in-2019.png',
-    'http://p14cdn4static.sharpschool.com/UserFiles/Servers/Server_131208/Image/For%20Families/Online%20Registration%20-%20red%20banner.png',
     'https://sliitacademy.lk/wp-content/uploads/2020/09/business-degree.jpg',
-    'http://p14cdn4static.sharpschool.com/UserFiles/Servers/Server_131208/Image/For%20Families/Online%20Registration%20-%20red%20banner.png',
     'https://bs-uploads.toptal.io/blackfish-uploads/blog/post/seo/og_image_file/og_image/15051/angular-5-tutorial-325403e130ba3b2c367174b73bb7275a.png',
-    'http://p14cdn4static.sharpschool.com/UserFiles/Servers/Server_131208/Image/For%20Families/Online%20Registration%20-%20red%20banner.png',
     'https://res.cloudinary.com/practicaldev/image/fetch/s--THwyjA44--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/i/4kpbveocl2p5qjorilos.png',
-    'http://p14cdn4static.sharpschool.com/UserFiles/Servers/Server_131208/Image/For%20Families/Online%20Registration%20-%20red%20banner.png',
+    'https://miro.medium.com/max/1040/1*0lgunvVYa8gZ_sfMHflyvw.jpeg',
     'https://miro.medium.com/max/1040/1*0lgunvVYa8gZ_sfMHflyvw.jpeg'
+
 ];
 
 const slideProperties = {
     duration: 2500,
-    scale: 0.4,
+    scale: 0.8,
     arrows: false
 }
 
@@ -137,17 +134,28 @@ export default class Register extends React.Component {
         return (
             <div style={{ backgroundColor: 'whitesmoke' }}>
 
+                <div className="row">
+                    <div className="col-md-6">
+                        <div className="slide-container" style={{ width: 'auto', height: 'auto', marginLeft: '35%' }}>
+                            <img style={{ marginTop: '5%', objectFit: "inherit", textAlign: "center", width: "100%", height: '5cm', borderRadius: "10px" }} src="http://p14cdn4static.sharpschool.com/UserFiles/Servers/Server_131208/Image/For%20Families/Online%20Registration%20-%20red%20banner.png"></img>
+                        </div>
 
+                    </div>
+                    <div className="col-md-6">
+                        <div className="slide-container" style={{ width: 'auto', height: 'auto', marginRight: '35%' }}>
+                            <Zoom autoplay='true' {...slideProperties} style={{ textAlign: 'center', marginTop: '5%' }}>
+                                {slideImages.map((each, index) => (
+                                    <div key={index} style={{ width: "100%" }}>
+                                        <img style={{ objectFit: "inherit", textAlign: "center", width: "100%", height: '5cm', borderRadius: "10px" }} src={each} />
+                                    </div>
+                                ))}
+                            </Zoom>
+                        </div>
 
-                <div className="slide-container" style={{ width: 'auto', height: 'auto', marginLeft: '30%', marginRight: '30%' }}>
-                    <Zoom autoplay='true' {...slideProperties} style={{ textAlign: 'center', marginTop: '5%' }}>
-                        {slideImages.map((each, index) => (
-                            <div key={index} style={{ width: "100%" }}>
-                                <img style={{ objectFit: "inherit", textAlign: "center", width: "100%", height: '5cm', borderRadius: "25px" }} src={each} />
-                            </div>
-                        ))}
-                    </Zoom>
+                    </div>
+
                 </div>
+
 
 
 
@@ -165,31 +173,34 @@ export default class Register extends React.Component {
                         <br />
                         <br />
                         <Form onSubmit={this.onSubmit}>
-                            <Form.Group controlId="formBasicName">
-                                <Form.Label style={{ color: 'black' }}>Email</Form.Label>
-                                <Form.Control name="email"
-                                    required
-                                    type="email"
-                                    placeholder="Ex: examplemail.com"
-                                    onChange={(event) => this.onChange(event)}
-                                />
-                            </Form.Group>
 
-                            <Form.Group controlId="formBasicName">
-                                <Form.Label style={{ color: 'black' }}>Name</Form.Label>
-                                <Form.Control name="name"
-                                    required
-                                    type="name"
-                                    placeholder="Ex : Jhon Carter"
-                                    onChange={(event) => this.onChange(event)}
-                                />
-                            </Form.Group>
+                            <Form.Row>
+                                <Form.Group as={Col} controlId="formBasicName">
+                                    <Form.Label style={{ color: 'black' }}>Email</Form.Label>
+                                    <Form.Control name="email"
+                                        required
+                                        type="email"
+                                        placeholder="Ex: examplemail.com"
+                                        onChange={(event) => this.onChange(event)}
+                                    />
+                                </Form.Group>
+
+                                <Form.Group as={Col} controlId="formBasicName">
+                                    <Form.Label style={{ color: 'black' }}>Name</Form.Label>
+                                    <Form.Control name="name"
+                                        required
+                                        type="name"
+                                        placeholder="Ex : Jhon Carter"
+                                        onChange={(event) => this.onChange(event)}
+                                    />
+                                </Form.Group>
+                            </Form.Row>
 
                             <Form.Row>
                                 <Form.Group as={Col} controlId="formBasicPassword">
                                     <Form.Label style={{ color: 'black' }}>Password</Form.Label>
                                     <Form.Control name="password"
-                                        minLength = '8'
+                                        minLength='8'
                                         required
                                         type="password"
                                         placeholder="Should have minimum of 8 characters"
@@ -317,16 +328,13 @@ export default class Register extends React.Component {
                                 :
                                 ''
                             }
-
-
-
-                            <br />
-                            <Button type="submit" variant="primary" style={{ marginTop: '5%' }}>Register</Button>
-
-
+                            <div style={{ marginTop: '5%', textAlign: 'center' }}>
+                                <Button type="submit" variant="primary" >Register</Button>
+                            </div>
                         </Form>
-                        <br />
 
+                        <br />
+                        
                         <Link to="/login" style={{ textDecoration: 'none', color: 'black', marginBottom: '10%' }}>Already have an account? Login</Link>
                         <br />
                     </div>
