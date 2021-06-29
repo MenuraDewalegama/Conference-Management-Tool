@@ -7,6 +7,7 @@ const router = require('./conference-post-v2.route').router;
 const conferencePostV2Route = require('./conference-post-v2.route');
 const conferencePostV2API = require('../api/conference-post-v2.api');
 const commonValidation = require('./validation/common.validation');
+const keySpeakerValidation = require('./validation/key-speakers.validation');
 const keySpeakerAPI = require('../api/key-speaker.api');
 
 // http://localhost:3000/api/v2/conferences/{60b102411ebcec35400d3d12}/keyspeakers
@@ -133,17 +134,29 @@ router.post('/:conferencePostID/keyspeakers', async (ctx) => {
     }
 
     /* checks for the keySpeaker details errors. */
-    const keySpeakerDetails = JSON.parse(keySpeakerBody?.keySpeakerDetails);
-    /* TODO: validate keySpeakerDetails input. */
-    // const errorMessages = keySpeakerValidation.validateKeySpeaker(keySpeakerDetails);
-    //
-    // if (errorMessages.length !== 0) {
-    //     /* send BAD REQUEST */
-    //     ctx.response.type = 'text/plain';
-    //     ctx.response.status = 400;
-    //     ctx.response.body = errorMessages;
-    //     return;
-    // }
+    let keySpeakerDetails;
+    try {
+        keySpeakerDetails = JSON.parse(keySpeakerBody?.keySpeakerDetails);
+    } catch (error) {
+        ctx.response.status = 400;
+        return;
+    }
+
+    /* validate keySpeakerDetails input. */
+    try {
+        const errorMessages = await keySpeakerValidation.validateKeySpeaker(keySpeakerDetails);
+
+        if (errorMessages.length !== 0) {
+            /* send BAD REQUEST */
+            ctx.response.type = 'text/plain';
+            ctx.response.status = 400;
+            ctx.response.body = errorMessages;
+            return;
+        }
+    } catch (error) {
+        console.error(error);
+        return;
+    }
 
 
     /* save the key-speaker. */
@@ -249,16 +262,21 @@ router.put('/:conferencePostID/keyspeakers/:keySpeakerID', async (ctx) => {
 
     /* checks for the keySpeaker details errors. */
     const keySpeakerDetails = JSON.parse(keySpeakerBody?.keySpeakerDetails);
-    /* TODO: validate keySpeakerDetails input. */
-    // const errorMessages = keySpeakerValidation.validateKeySpeaker(keySpeakerDetails);
-    //
-    // if (errorMessages.length !== 0) {
-    //     /* send BAD REQUEST */
-    //     ctx.response.type = 'text/plain';
-    //     ctx.response.status = 400;
-    //     ctx.response.body = errorMessages;
-    //     return;
-    // }
+    /*  validate keySpeakerDetails input. */
+    try {
+        const errorMessages = await keySpeakerValidation.validateKeySpeaker(keySpeakerDetails);
+
+        if (errorMessages.length !== 0) {
+            /* send BAD REQUEST */
+            ctx.response.type = 'text/plain';
+            ctx.response.status = 400;
+            ctx.response.body = errorMessages;
+            return;
+        }
+    } catch (error) {
+        console.error(error);
+        return;
+    }
 
 
     /* update the key-speaker. */

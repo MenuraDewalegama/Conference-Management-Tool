@@ -68,7 +68,7 @@ const validateConferencePost = (conferencePost) => {
     /* detectUnknownFields */
     errorMessages += commonValidation.detectUnknownFields(conferencePost, keys);
 
-    if (errorMessages.length > 0) {
+    if (errorMessages.length === 0) {
         /* topic */
         errorMessages += (validateTopic(conferencePost?.topic).length > 0) ?
             validateTopic(conferencePost?.topic).replace(`{0}`, `topic`) + '\n' : '';
