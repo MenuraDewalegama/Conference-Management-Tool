@@ -6,6 +6,7 @@
 const Router = require('@koa/router');
 const conferencePostAPI = require('../api/conference-post-v2.api');
 const commonValidation = require('./validation/common.validation');
+const conferencePostV2Validation = require('./validation/conference-post-v2.validation');
 
 const router = new Router({
     prefix: '/api/v2/conferences'
@@ -59,9 +60,37 @@ router.get('/:id', async (ctx) => {
 /* create a new conference post. */
 router.post('/', async (ctx) => {
     const conferencePostBody = ctx.request.body;
-    const conferencePostDetails = JSON.parse(conferencePostBody?.conferenceDetails);
 
     /* TODO: validate user input. */
+    /* check for the content content type. */
+    if (ctx.request.type !== 'multipart/form-data') {
+        /* send BAD REQUEST */
+        ctx.response.type = 'text/plain';
+        ctx.response.status = 400;
+        ctx.response.body = `Invalid Content-Type: Content-Type should be multipart/form-data`;
+        return;
+    }
+
+    /* checks for the conferencePostImage is included. */
+    if (!ctx.request.files.hasOwnProperty('conferencePostImage')) {
+        /* send BAD REQUEST */
+        ctx.response.type = 'text/plain';
+        ctx.response.status = 400;
+        ctx.response.body = `conferencePostImage is required.`;
+        return;
+    }
+
+    /* checks for the conference post details errors. */
+    const conferencePostDetails = JSON.parse(conferencePostBody?.conferenceDetails);
+    const errorMessages = conferencePostV2Validation.validateConferencePost(conferencePostDetails);
+
+    if (errorMessages.length !== 0) {
+        /* send BAD REQUEST */
+        ctx.response.type = 'text/plain';
+        ctx.response.status = 400;
+        ctx.response.body = errorMessages;
+        return;
+    }
 
     try {
         /* add the conference post. */
