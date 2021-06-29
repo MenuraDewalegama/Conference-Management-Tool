@@ -3,9 +3,9 @@
 @date : 30/05/2021
 */
 
-const conferencePostAPI = require('../../src/api/conference-post.api');
+/*const conferencePostAPI = require('../../src/api/conference-post.api');
 
-/* expected data. */
+/!* expected data. *!/
 const outputObject = {
     _id: require('mongodb').ObjectID('60b102411ebcec35400d3d12'),
     topic: 'CodeFest SLIIT',
@@ -30,18 +30,18 @@ const outputObject = {
     isApproved: false
 };
 
-/* test case.
-* There is a matching record for given ID. */
+/!* test case.
+* There is a matching record for given ID. *!/
 test('Conference post API - GET record by ID with matching record', () => {
     return expect(conferencePostAPI.getConferencePostByID('60b102411ebcec35400d3d12'))
         .resolves.toEqual(outputObject);
 });
 
 
-/* test case.
-* There is no record for given ID. */
+/!* test case.
+* There is no record for given ID. *!/
 test('conference post API - GET record by ID with no matching record', () => {
     return expect(conferencePostAPI.getConferencePostByID('60b102411ebcec35400d3d18'))
         .resolves.toEqual(null);
-});
+});*/
 

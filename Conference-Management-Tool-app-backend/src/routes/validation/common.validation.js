@@ -26,6 +26,44 @@ const validateID = (id) => {
     });
 };
 
+/** Check if the input is an string, and check whether it is an empty string. */
+const validateStringOnly = (value) => {
+    let errorMessage = '';
+    if (typeof value !== 'string' || value.length <= 0) {
+        errorMessage += '{0} field is required. Accepted only strings.';
+    }
+
+    return errorMessage;
+};
+
+/* Check if the input value(as string) is an integer. */
+const validateIntegerOnly = (value) => {
+    let errorMessage = '';
+    if (typeof value !== 'number' || !Number.isInteger(Number.parseInt(value))) {
+        errorMessage += '{0} field is required. Accepted only an integer.';
+    }
+
+    return errorMessage;
+};
+
+const validateDateIsInISOFormat = (dateString) => {
+    let errorMessage = '';
+    try {
+        const dateParsed = new Date(Date.parse(dateString));
+
+        if (dateParsed.toISOString() !== dateString) {
+            errorMessage += '{0} field is invalid. It should be in ISOString format.';
+        }
+    } catch (error) {
+        errorMessage += '{0} field is invalid. It should be in ISOString format.';
+    }
+
+    return errorMessage;
+};
+
 module.exports = {
-    validateID
+    validateID,
+    validateStringOnly,
+    validateIntegerOnly,
+    validateDateIsInISOFormat
 };

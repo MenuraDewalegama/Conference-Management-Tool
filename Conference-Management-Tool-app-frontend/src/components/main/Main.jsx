@@ -9,6 +9,8 @@ import LoginHolder from '../Login/Login';
 import InternalLoginHolder from '../Login/InternalLogin';
 import DownloadsHolder from '../downloads/DownloadsHolder';
 import RegisterHome from '../Register/RegisterHome';
+import ContactUs from '../ContactUs/ContactUs';
+
 
 /* functional component. */
 const Main = () => {
@@ -31,6 +33,7 @@ const Main = () => {
                 <Route exact path="/login" component={LoginHolder} />
                 <Route exact path="/internal/login" component={InternalLoginHolder} />
                 <Route path="/review/project-proposals" component={WorkshopHolder} />
+                <Route path="/contact-us" component={ContactUs} />
 
             </Switch>
         </div>
