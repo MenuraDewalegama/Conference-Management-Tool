@@ -100,8 +100,75 @@ router.get('/:conferencePostID/keyspeakers/:keySpeakerID', async (ctx) => {
 
 });
 
-router.post('/:conferencePostID/keyspeakers', (ctx) => {
-    console.log('create new key-speaker.');
+router.post('/:conferencePostID/keyspeakers', async (ctx) => {
+    const conferencePostID = ctx.params?.conferencePostID;
+    const keySpeakerBody = ctx.request.body;
+
+    /* Validate ConferencePostID. */
+    try {
+        const validationResult = await conferencePostV2Route.validateConferencePostID(conferencePostID, ctx);
+    } catch (errorMessage) {
+        console.error(errorMessage);
+        ctx.response.status = 400;
+        ctx.response.body = errorMessage;
+        return;
+    }
+
+    /* check for the content content type. */
+    if (ctx.request.type !== 'multipart/form-data') {
+        /* send BAD REQUEST */
+        ctx.response.type = 'text/plain';
+        ctx.response.status = 400;
+        ctx.response.body = `Invalid Content-Type: Content-Type should be multipart/form-data`;
+        return;
+    }
+
+    /* checks for the conference post details errors. */
+    const keySpeakerDetails = JSON.parse(keySpeakerBody?.keySpeakerDetails);
+    /* TODO: validate keySpeakerDetails input. */
+    // const errorMessages = keySpeakerValidation.validateKeySpeaker(keySpeakerDetails);
+    //
+    // if (errorMessages.length !== 0) {
+    //     /* send BAD REQUEST */
+    //     ctx.response.type = 'text/plain';
+    //     ctx.response.status = 400;
+    //     ctx.response.body = errorMessages;
+    //     return;
+    // }
+
+
+    /* save the key-speaker. */
+    try {
+        /* add the conference post. */
+        const result = await keySpeakerAPI.saveKeySpeaker(conferencePostID, {
+            conferencePostID: conferencePostID,
+            name: keySpeakerDetails.name,
+            title: keySpeakerDetails.title,
+            description: keySpeakerDetails.description,
+            keySpeakerImageURI: null, // keySpeakerImageURI
+            createdDate: new Date(Date.now()).toISOString(),
+            updatedDate: null
+        }, ctx.request.files);
+
+        if (result.code === 201) {
+            ctx.response.type = 'application/json';
+            ctx.response.status = 201;
+            ctx.response.body = {
+                'generatedId': result.message
+            };
+        }
+
+    } catch (error) {
+        if (error?.code && !isNaN(error?.code)) {
+            ctx.response.status = error?.code;
+            ctx.response.body = error?.message;
+        } else {
+            ctx.response.status = 500; // internal server error.
+        }
+        console.error(error);
+    }
+
+
 });
 
 router.put('/:conferencePostID/keyspeakers/:keySpeakerID', (ctx) => {

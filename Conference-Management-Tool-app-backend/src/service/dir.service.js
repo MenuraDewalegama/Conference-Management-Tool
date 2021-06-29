@@ -37,9 +37,9 @@ const createDirIfNotExists = () => {
 };
 
 /* Creates a new dir if not exists. */
-const createNewDirFor = (relativePath) => {
+const createNewDirFor = (directoryPath) => {
     return new Promise((resolve, reject) => {
-        const dirPath = path.join(process.cwd(), relativePath);
+        const dirPath = directoryPath;
 
         try {
             if (!fs.existsSync(dirPath)) {

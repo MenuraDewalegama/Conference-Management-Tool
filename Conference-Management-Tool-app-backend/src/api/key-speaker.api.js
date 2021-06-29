@@ -37,6 +37,7 @@ const saveKeySpeaker = (conferencePostID, keySpeaker, uploadedImageFiles) => {
 
         /* create new folder. folderName = conferencePostID */
         const newDirPathToBeCreated = path.join(conferencePostKeySpeakerFullDirPath, `${conferencePostID}`);
+        console.log('newDirPathToBeCreated : ', newDirPathToBeCreated);
 
         /* get image file. */
         const keySpeakerImage = uploadedImageFiles.keySpeakerImage;
@@ -67,7 +68,10 @@ const saveKeySpeaker = (conferencePostID, keySpeaker, uploadedImageFiles) => {
                                         generatedResult?.insertedId, saveImageFileIOResult?.fileNameWithExt);
 
                                     if (updateRecordResult?.modifiedCount > 0) {
-                                        resolve(generatedResult);
+                                        resolve({
+                                            code: 201, // 201 = CREATED
+                                            message: generatedResult?.insertedId
+                                        });
                                     }
                                 } catch (error) {
                                     reject(error);
