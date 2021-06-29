@@ -11,8 +11,6 @@ import InternalLoginHolder from '../Login/InternalLogin';
 import DownloadsHolder from '../downloads/DownloadsHolder';
 import RegisterHome from '../Register/RegisterHome';
 import ContactUs from '../ContactUs/ContactUs';
-import AddKeyNoteSpeeches from '../keyNoteSpeeches/AddKeyNoteSpeeches';
-import ViewKeyNoteSpeakers from '../keyNoteSpeeches/ViewKeyNoteSpeakers';
 import UserViewResearchPaper from '../UserView/UserViewResearchPaper';
 import UserViewWorkshop from '../UserView/UserViewWorkshop';
 import AddCommitteeMembers from '../committee/CommitteeMembers';
@@ -38,7 +36,6 @@ const Main = () => {
                 <Route path="/dashboard">
                     <DashBoardHolder/>
                 </Route>
-                <Route exact path="/speeches" component={AddKeyNoteSpeeches} />
                 <Route exact path="/review" component={ReviewHolder}/>
                 <Route exact path="/downloads" component={DownloadsHolder} />
                 <Route exact path="/register-home" component={RegisterHome} />
@@ -47,7 +44,6 @@ const Main = () => {
                 <Route exact path="/internal/login" component={InternalLoginHolder} />
                 <Route path="/review/project-proposals" component={WorkshopHolder} />
                 <Route path="/contact-us" component={ContactUs} />
-                <Route path="/speakers" component={ViewKeyNoteSpeakers} />
                 <Route path="/research-papers" component={UserViewResearchPaper} />
                 <Route path="/workshops" component={UserViewWorkshop} />
 
