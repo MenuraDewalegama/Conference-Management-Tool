@@ -34,7 +34,7 @@ const InternalUserRoutes = require('../Conference-Management-Tool-app-backend/sr
 
 const externalUserRoutes = require('../Conference-Management-Tool-app-backend/src/routes/externalUser.routes');
 
-const speechesRoutes = require('../Conference-Management-Tool-app-backend/src/routes/speeches.routes');
+const membersRoutes = require('../Conference-Management-Tool-app-backend/src/routes/members.routes');
 
 const researchPaperRoutes = require('./src/routes/reviewerActivity.routes');
 
@@ -65,7 +65,7 @@ app.use(loginRoutes.routes()).use(loginRoutes.allowedMethods());
 
 app.use(contactUsRoutes.routes()).use(contactUsRoutes.allowedMethods());
 
-app.use(speechesRoutes.routes()).use(speechesRoutes.allowedMethods());
+app.use(membersRoutes.routes()).use(membersRoutes.allowedMethods());
 
 
 /* server. */

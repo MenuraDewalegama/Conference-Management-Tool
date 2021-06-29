@@ -2,20 +2,20 @@ import React, { Component } from 'react'
 import axios from 'axios';
 import { Card, Image } from 'react-bootstrap';
 
-export class ViewKeyNoteSpeakers extends Component {
+export class ViewComMembers extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            speakers: []
+            members: []
         }
     }
 
     componentDidMount() {
-        axios.get(`http://localhost:3000/speeches`)
+        axios.get(`http://localhost:3000/members`)
             .then(response => {
-                this.setState({ speakers: response.data })
-                console.log(this.state.speakers)
+                this.setState({ members: response.data })
+                console.log(this.state.members)
             }).catch(error => {
                 alert(error.message)
             })
@@ -25,9 +25,9 @@ export class ViewKeyNoteSpeakers extends Component {
             <div className="container  text-center">
               
                 <br/>
-                <h1 style={{marginTop:'5%'}}>K  e  y    N  o  t  e    S  p  e  a  k  e  r  s</h1>
+                <h1 style={{marginTop:'5%'}}>Organizing Committee</h1>
                 <br />
-                {this.state.speakers.length > 0 && this.state.speakers.map((item, index) => (
+                {this.state.members.length > 0 && this.state.members.map((item, index) => (
                     <div>
                         <Card key={index} className="card mb-3 App" style={{textAlign:'center'}}>
                             <br/>
@@ -59,4 +59,4 @@ export class ViewKeyNoteSpeakers extends Component {
     }
 }
 
-export default ViewKeyNoteSpeakers
+export default ViewComMembers

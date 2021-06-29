@@ -15,6 +15,8 @@ import AddKeyNoteSpeeches from '../keyNoteSpeeches/AddKeyNoteSpeeches';
 import ViewKeyNoteSpeakers from '../keyNoteSpeeches/ViewKeyNoteSpeakers';
 import UserViewResearchPaper from '../UserView/UserViewResearchPaper';
 import UserViewWorkshop from '../UserView/UserViewWorkshop';
+import AddCommitteeMembers from '../committee/CommitteeMembers';
+import CommitteeMembers from '../committee/ViewComMembers';
 
 /* functional component. */
 const Main = () => {
@@ -49,6 +51,8 @@ const Main = () => {
                 <Route path="/research-papers" component={UserViewResearchPaper} />
                 <Route path="/workshops" component={UserViewWorkshop} />
 
+                <Route path="/add-members" component={AddCommitteeMembers} />
+                <Route path="/members" component={CommitteeMembers} />
 
                 <Route
                     exact

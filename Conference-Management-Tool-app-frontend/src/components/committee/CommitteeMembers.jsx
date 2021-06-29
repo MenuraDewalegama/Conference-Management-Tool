@@ -4,7 +4,7 @@ import axios from 'axios';
 
 
 
-export class AddKeyNoteSpeeches extends Component {
+export class CommitteeMembers extends Component {
 
     constructor(props) {
         super(props);
@@ -25,29 +25,29 @@ export class AddKeyNoteSpeeches extends Component {
 
     onSubmit(event) {
         event.preventDefault();
-        let speaker = {
+        let member = {
             name: this.state.name,
             designation: this.state.designation,
             information: this.state.information
         }
-        console.log(speaker);
+        console.log(member);
 
         if (this.state.imageFile) {
-            speaker.imageFile = this.state.imageFile;
+            member.imageFile = this.state.imageFile;
         } else {
-            speaker.imagePath = this.state.imagePath;
+            member.imagePath = this.state.imagePath;
         }
-        if (speaker.hasOwnProperty('imagePath') && speaker.imagePath.length === 0) {
-            delete speaker.imagePath;
+        if (member.hasOwnProperty('imagePath') && member.imagePath.length === 0) {
+            delete member.imagePath;
         }
 
         let formData = new FormData();
-        formData.append('name', speaker.name);
-        formData.append('designation', speaker.designation);
-        formData.append('information', speaker.information);
-        formData.append('speecherImage', speaker.imageFile);
+        formData.append('name', member.name);
+        formData.append('designation', member.designation);
+        formData.append('information', member.information);
+        formData.append('speecherImage', member.imageFile);
 
-        axios.post('http://localhost:3000/speeches', formData)
+        axios.post('http://localhost:3000/members', formData)
             .then((result) => {
                 console.log(result);
                 alert("You have successfully added");
@@ -69,7 +69,7 @@ export class AddKeyNoteSpeeches extends Component {
         return (
             <div className="container" >
                 <div style={{ marginTop: '5%' }}>
-                    <h1 style={{ textAlign: 'center' }}>Add Key Note Speaker</h1>
+                    <h1 style={{ textAlign: 'center' }}>Add Committe AddOrgMembers</h1>
 
 
                     <div className='row'>
@@ -156,4 +156,4 @@ export class AddKeyNoteSpeeches extends Component {
     }
 }
 
-export default AddKeyNoteSpeeches
+export default CommitteeMembers

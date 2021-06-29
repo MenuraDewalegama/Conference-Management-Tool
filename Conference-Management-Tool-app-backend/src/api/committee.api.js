@@ -1,4 +1,4 @@
-const keyNoteSpeechesDao = require('../dal/speeches.dao');
+const committeeDao = require('../dal/committee.dao');
 const mineTypes = require('mime-types');
 const fs = require('fs');
 const path = require('path');
@@ -6,17 +6,17 @@ const path = require('path');
 /* asestes and internalUser dir */
 
 const assetDir = `${process.cwd()}${path.sep}public/assets`;
-const speechesDir = `${assetDir}${path.sep}speeches`;
+const memberDIr = `${assetDir}${path.sep}members`;
 
 
-const getSpeakers = async () => {
-    return await keyNoteSpeechesDao.getAllSpeakers();
+const getAllMembers = async () => {
+    return await committeeDao.getAllMembers();
 };
 
 /** add internalUser */
 
-const addKeyNoteSpeech = async ({  name, designation, information }, ctxSpeecherImage) => {
-    const keyNoteSpeech = {
+const addMember = async ({  name, designation, information }, ctxSpeecherImage) => {
+    const member = {
         name,
         designation,
         information,
@@ -25,7 +25,7 @@ const addKeyNoteSpeech = async ({  name, designation, information }, ctxSpeecher
 
     return new Promise(async (resolve, reject) => {
         try {
-            const generateResult = await keyNoteSpeechesDao.addKeyNoteSpeeches(keyNoteSpeech);
+            const generateResult = await committeeDao.addMember(member);
 
             /* check the admin has upload an image*/
             if (ctxSpeecherImage) {
@@ -34,8 +34,8 @@ const addKeyNoteSpeech = async ({  name, designation, information }, ctxSpeecher
                 const fileType = mineTypes.extension(ctxSpeecherImage?.type);
 
                 /** set image save path */
-                const desFilePath = `${speechesDir + path.sep + generateResult.insertedId}.${fileType}`;
-                const dbImagePath = `/assets/speeches/${generateResult.insertedId}.${fileType}`;
+                const desFilePath = `${memberDIr + path.sep + generateResult.insertedId}.${fileType}`;
+                const dbImagePath = `/assets/members/${generateResult.insertedId}.${fileType}`;
 
                 console.log("des path", desFilePath);
 
@@ -46,7 +46,7 @@ const addKeyNoteSpeech = async ({  name, designation, information }, ctxSpeecher
 
                     try {
                         /** update the image path of internalUser`s */
-                        const result = await keyNoteSpeechesDao.updateKeyNoteSpeechesImagePath(generateResult.insertedId,
+                        const result = await committeeDao.UpdateMemberImagePath(generateResult.insertedId,
                             { imagePath: dbImagePath });
                         resolve(result);
 
@@ -73,6 +73,6 @@ const addKeyNoteSpeech = async ({  name, designation, information }, ctxSpeecher
 
 
 module.exports = {
-    addKeyNoteSpeech,getSpeakers
+    addMember,getAllMembers
 }
 
