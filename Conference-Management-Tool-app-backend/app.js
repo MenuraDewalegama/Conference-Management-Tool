@@ -36,6 +36,7 @@ const externalUserRoutes = require('../Conference-Management-Tool-app-backend/sr
 
 const researchPaperRoutes = require('./src/routes/reviewerActivity.routes');
 
+const loginRoutes = require('../Conference-Management-Tool-app-backend/src/routes/login.routes');
 
 /* auth route and assets routes are exposed here. */
 
@@ -51,6 +52,8 @@ app.use(InternalUserRoutes.routes()).use(InternalUserRoutes.allowedMethods());
 app.use(externalUserRoutes.routes()).use(externalUserRoutes.allowedMethods());
 
 app.use(researchPaperRoutes.routes()).use(researchPaperRoutes.allowedMethods());
+
+app.use(loginRoutes.routes()).use(loginRoutes.allowedMethods());
 
 /* server. */
 app.listen(PORT, (error) => {
