@@ -11,7 +11,8 @@ import InternalLoginHolder from '../Login/InternalLogin';
 import DownloadsHolder from '../downloads/DownloadsHolder';
 import RegisterHome from '../Register/RegisterHome';
 import ContactUs from '../ContactUs/ContactUs';
-
+import UserViewResearchPaper from '../UserView/UserViewResearchPaper';
+import UserViewWorkshop from '../UserView/UserViewWorkshop';
 
 /* functional component. */
 const Main = () => {
@@ -43,6 +44,8 @@ const Main = () => {
                 <Route exact path="/internal/login" component={InternalLoginHolder} />
                 <Route path="/review/project-proposals" component={WorkshopHolder} />
                 <Route path="/contact-us" component={ContactUs} />
+                <Route path="/research-papers" component={UserViewResearchPaper} />
+                <Route path="/workshops" component={UserViewWorkshop} />
 
                 <Route
                     exact

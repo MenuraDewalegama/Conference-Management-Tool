@@ -67,8 +67,12 @@ const NavigationBar = () => {
                                         <h6 className="user_name">| Contact Us |</h6>
                                     </Link>
 
-                                    <Link style={{ margin: 'auto' }} to="/" className="nav-link">
+                                    <Link style={{ margin: 'auto' }} to="/workshops" className="nav-link">
                                         <h6 className="user_name">| Workshops |</h6>
+                                    </Link>
+
+                                    <Link style={{ margin: 'auto' }} to="/research-papers" className="nav-link">
+                                        <h6 className="user_name">| Research Papers |</h6>
                                     </Link>
 
                                     <Link style={{ margin: 'auto' }} to="/" className="nav-link">
