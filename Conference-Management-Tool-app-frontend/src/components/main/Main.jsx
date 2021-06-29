@@ -5,9 +5,9 @@ import DashBoardHolder from '../dashBoard/DashBoardHolder';
 import ReviewHolder from '../Review/ReviewHolder';
 import ResearchPaperHolder from '../Review/SubReviewer/ResearchPaperHolder';
 import WorkshopHolder from '../Review/SubReviewer/WorkshopHolder';
-// import DownloadsHolder from '../downloads/DownloadsHolder';
 import LoginHolder from '../Login/Login';
 import InternalLoginHolder from '../Login/InternalLogin';
+import DownloadsHolder from '../downloads/DownloadsHolder';
 
 /* functional component. */
 const Main = () => {
@@ -23,7 +23,9 @@ const Main = () => {
                     <DashBoardHolder />
                 </Route>
                 <Route exact path="/review" component={ReviewHolder} />
-                {/* <Route exact path="/downloads" component={DownloadsHolder} /> */}
+
+                <Route exact path="/downloads" component={DownloadsHolder} />
+                  
                 <Route exact path="/review/research-papers" component={ResearchPaperHolder} />
                 <Route exact path="/login" component={LoginHolder} />
                 <Route exact path="/internal/login" component={InternalLoginHolder} />
