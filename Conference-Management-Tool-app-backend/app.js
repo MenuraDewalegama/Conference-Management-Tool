@@ -38,6 +38,8 @@ const researchPaperRoutes = require('./src/routes/reviewerActivity.routes');
 
 const loginRoutes = require('../Conference-Management-Tool-app-backend/src/routes/login.routes');
 
+const contactUsRoutes = require('./src/routes/contactUs.route');
+
 /* auth route and assets routes are exposed here. */
 
 /* JWT - 401 error handling. */
@@ -58,6 +60,9 @@ app.use(externalUserRoutes.routes()).use(externalUserRoutes.allowedMethods());
 app.use(researchPaperRoutes.routes()).use(researchPaperRoutes.allowedMethods());
 
 app.use(loginRoutes.routes()).use(loginRoutes.allowedMethods());
+
+app.use(contactUsRoutes.routes()).use(contactUsRoutes.allowedMethods());
+
 
 /* server. */
 app.listen(PORT, (error) => {
