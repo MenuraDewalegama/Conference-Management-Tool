@@ -30,7 +30,7 @@ const NavigationBar = () => {
             <div>
                 <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
                     <Link to="/" className="nav-link">
-                        <Navbar.Brand className='header_font'>Code 4 Conference</Navbar.Brand>
+                        <Navbar.Brand className='header_font' style={{ color: 'white' }}>Code 4 Conference</Navbar.Brand>
                     </Link>
 
                     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
@@ -45,6 +45,10 @@ const NavigationBar = () => {
                                         <h6 className="user_name">| DashBoard |</h6>
                                     </Link>
 
+                                    <Link style={{ margin: 'auto' }} to="/" className="nav-link">
+                                        <h6 className="user_name">| Home |</h6>
+                                    </Link>
+
                                     {/* Remove this later */}
                                     {/* <Link style={{ margin: 'auto' }} to="/review" className="nav-link">
                                         <h6 className="user_name">| Reviewer |</h6>
@@ -54,29 +58,41 @@ const NavigationBar = () => {
                                         <h6 className="user_name">| Downloads |</h6>
                                     </Link>
 
+
+                                    <Link style={{ margin: 'auto' }} to="/" className="nav-link">
+                                        <h6 className="user_name">| Speeaches |</h6>
+                                    </Link>
+
                                     <Link style={{ margin: 'auto' }} to="/contact-us" className="nav-link">
                                         <h6 className="user_name">| Contact Us |</h6>
                                     </Link>
 
-
-                                
-                                    <h6 className="user_name">Hi {currentUser?.name}</h6>
-
-
-                                    <Link style={{ margin: 'auto' }} to="/cart" className="nav-link">
-                                        <Bell className="navbar_icon" />
+                                    <Link style={{ margin: 'auto' }} to="/" className="nav-link">
+                                        <h6 className="user_name">| Workshops |</h6>
                                     </Link>
+
+                                    <Link style={{ margin: 'auto' }} to="/" className="nav-link">
+                                        <h6 className="user_name">| Tech Sessions |</h6>
+                                    </Link>
+
+                                    <Link style={{ margin: 'auto' }} to="/" className="nav-link">
+                                        <h6 className="user_name">| Research Presentations |</h6>
+                                    </Link>
+
+
+
+                                    {/* <h6 className="user_name">Hi {currentUser?.name}</h6> */}
 
 
                                     {//temporaly added for development purposes
                                     }
-
-                                    <Link style={{ margin: 'auto' }} to="/register" className="nav-link">
-                                        <PencilSquare className="navbar_icon" />
+                                
+                                    <Link style={{ margin: 'auto' }} to="/register-home" className="nav-link">
+                                         Get Registered
                                     </Link>
 
 
-                                    <Button className="nav-link" variant="danger"
+                                    <Button className="nav-link" variant="danger"   
                                         onClick={() => performLogOut()}>Logout</Button>
                                 </Nav>
 

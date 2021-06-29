@@ -8,7 +8,9 @@ import WorkshopHolder from '../Review/SubReviewer/WorkshopHolder';
 import LoginHolder from '../Login/Login';
 import InternalLoginHolder from '../Login/InternalLogin';
 import DownloadsHolder from '../downloads/DownloadsHolder';
+import RegisterHome from '../Register/RegisterHome';
 import ContactUs from '../ContactUs/ContactUs';
+
 
 /* functional component. */
 const Main = () => {
@@ -26,7 +28,7 @@ const Main = () => {
                 <Route exact path="/review" component={ReviewHolder} />
 
                 <Route exact path="/downloads" component={DownloadsHolder} />
-                  
+                <Route exact path="/register-home" component={RegisterHome} />
                 <Route exact path="/review/research-papers" component={ResearchPaperHolder} />
                 <Route exact path="/login" component={LoginHolder} />
                 <Route exact path="/internal/login" component={InternalLoginHolder} />
