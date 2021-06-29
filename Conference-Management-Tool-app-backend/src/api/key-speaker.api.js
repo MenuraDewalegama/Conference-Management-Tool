@@ -21,7 +21,7 @@ const getAllKeySpeakers = (conferencePostID) => {
     return keySpeakerDAO.getAllKeySpeakers(conferencePostID);
 };
 
-const getKeySpeakerByID = (conferencePostID,keySpeakerID) => {
+const getKeySpeakerByID = (keySpeakerID) => {
     return keySpeakerDAO.getKeySpeakerByID(keySpeakerID);
 };
 

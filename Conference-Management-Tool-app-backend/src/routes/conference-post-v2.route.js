@@ -275,8 +275,8 @@ _validateConferencePostID = (id, ctx) => {
         } catch (errorMessage) {
             /* found errors. */
             errorMessage = errorMessage.replace(`ID`, `ConferencePostID`);
-            ctx.response.status = 400;
-            ctx.response.body = errorMessage;
+            // ctx.response.status = 400;
+            // ctx.response.body = errorMessage;
             reject(errorMessage);
         }
     });
