@@ -74,6 +74,22 @@ module.exports = class DatabaseService {
         });
     }
 
+    /** find the records.
+     * @return Promise with requested record(s), if found.
+     * If nothing found without errors, then returns a empty array.,
+     * otherwise return rejected error. */
+    find(newObject) {
+
+        return new Promise((resolve, reject) => {
+            try {
+                const cursor = this.collection.find(newObject);
+                resolve(cursor.toArray());
+            } catch (error) {
+                reject(error);
+            }
+        });
+    }
+
     /** find all the records.
      * @return Promise with requested record(s), if found.
      * If nothing found without errors, then returns a empty array.,
@@ -109,4 +125,4 @@ module.exports = class DatabaseService {
         });
     }
 
-}
+};

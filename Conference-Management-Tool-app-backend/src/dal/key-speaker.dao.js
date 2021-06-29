@@ -7,10 +7,12 @@ const DatabaseService = require('../service/database.service');
 const KeySpeakerDatabaseService = new DatabaseService('KeySpeakers');
 
 /* get all conference posts. */
-const getAllKeySpeakers = () => {
+const getAllKeySpeakers = (conferencePostID) => {
     return new Promise(async (resolve, reject) => {
         try {
-            resolve(await KeySpeakerDatabaseService.findAll());
+            resolve(await KeySpeakerDatabaseService.find({
+                conferencePostID: conferencePostID
+            }));
         } catch (error) {
             reject(error);
         }
