@@ -10,7 +10,7 @@ const externalUserDir = `${assetDir}${path.sep}externaluser`;
 
 /** add internalUser */
 
-const addExternalUser = async ({email,name, contactNo, password, type, activityType, category, activityInformation,status },ctxExternalUserImage) => {
+const addExternalUser = async ({ email, name, contactNo, password, type, activityType, category, activityInformation, status }, ctxExternalUserImage) => {
     const externalUser = {
         email,
         name,
@@ -21,7 +21,7 @@ const addExternalUser = async ({email,name, contactNo, password, type, activityT
         category,
         activityInformation,
         status,
-        imagePath : null
+        imagePath: null
     }
 
     return new Promise(async (resolve, reject) => {
@@ -38,9 +38,9 @@ const addExternalUser = async ({email,name, contactNo, password, type, activityT
                 const desFilePath = `${externalUserDir + path.sep + generateResult.insertedId}.${fileType}`;
                 const dbImagePath = `/assets/externaluser/${generateResult.insertedId}.${fileType}`;
 
-                console.log("des path",desFilePath);
-                
-                console.log("db image path",dbImagePath);
+                console.log("des path", desFilePath);
+
+                console.log("db image path", dbImagePath);
                 try {
                     fs.copyFileSync(ctxExternalUserImage?.path, desFilePath);
                     fs.unlinkSync(ctxExternalUserImage?.path);
@@ -70,6 +70,7 @@ const addExternalUser = async ({email,name, contactNo, password, type, activityT
         };
     });
 };
+
 
 
 module.exports = {

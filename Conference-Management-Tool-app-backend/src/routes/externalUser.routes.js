@@ -4,7 +4,8 @@ const path = require('path');
 const fs = require('fs');
 const mimeTypes = require('mime-types');
 
-const { addExternalUser } = require('../api/externalUser.api')
+const { addExternalUser } = require('../api/externalUser.api');
+const { getPasswordbyEmail } = require('../dal/externalUser.dao');
 
 /* assets and products dir */
 const assetDir = `${process.cwd()}${path.sep}assets`;
@@ -28,28 +29,28 @@ router.post('/', async ctx => {
         return;
     }
 
-        try { /* add the externaluser. */
-            const generatedResult = await addExternalUser({
-                email: externalUser.email,
-                name: externalUser.name,
-                contactNo : externalUser.contactNo,
-                password: externalUser.password,
-                type: externalUser.type,
-                activityType:externalUser.activityType,
-                category:externalUser.category,
-                activityInformation:externalUser.activityInformation,
-                status:externalUser.status
-            }, ctx.request.files?.externalUserImage);
-            ctx.response.type = 'application/json';
-            ctx.response.status = 201; // created
-            ctx.response.body = {
-                "generatedId": generatedResult.insertedId
-            };
+    try { /* add the externaluser. */
+        const generatedResult = await addExternalUser({
+            email: externalUser.email,
+            name: externalUser.name,
+            contactNo: externalUser.contactNo,
+            password: externalUser.password,
+            type: externalUser.type,
+            activityType: externalUser.activityType,
+            category: externalUser.category,
+            activityInformation: externalUser.activityInformation,
+            status: externalUser.status
+        }, ctx.request.files?.externalUserImage);
+        ctx.response.type = 'application/json';
+        ctx.response.status = 201; // created
+        ctx.response.body = {
+            "generatedId": generatedResult.insertedId
+        };
 
-        } catch (error) {
-            ctx.response.status = 500; // internal server error.
-            console.error(error);
-        }
+    } catch (error) {
+        ctx.response.status = 500; // internal server error.
+        console.error(error);
+    }
 
 });
 
