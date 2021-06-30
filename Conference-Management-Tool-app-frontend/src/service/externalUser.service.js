@@ -5,7 +5,7 @@ import axios from './axios.service';
  const getAllExternalUsers = () => {
     return new Promise(async (resolve, reject) => {
         try {
-            const result = await axios.get(`${process.env.CONFERENCE_MANAGEMENT_BACKEND_API_URL}internaluser`);
+            const result = await axios.get(`${process.env.CONFERENCE_MANAGEMENT_BACKEND_API_URL}externaluser`);
             resolve(result);
         } catch (error) {
             reject(error);

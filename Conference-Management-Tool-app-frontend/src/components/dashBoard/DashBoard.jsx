@@ -75,17 +75,38 @@ export default class DashBoard extends React.Component {
                             </div>
                             <div className="col-lg-3">
                                 <div className="card card-stats">
-                                    <div className="card-header card-header-success card-header-icon">
+                                    <div className="card-header card-header-warning card-header-icon">
                                         <div className="card-icon">
-                                            <i className="material-icons">store</i>
+                                            <i className="material-icons">people_alt</i>
+                                            <br />
+                                            <br />
+                                            <br />
+                                            <i className="material-icons">science</i>
+                                            <br />
+                                            <br />
+                                            <br />
+                                            <i className="material-icons">border_color</i>
                                         </div>
-                                        <p className="card-category">Work Shops</p>
-                                        <h3 className="card-title">12</h3>
+                                        <br />
+                                        <div>
+                                            <p className="card-category">Total External Users</p>
+                                            <h3 className="card-title">{userCount.length}</h3>
+                                        </div>
+                                        <hr />
+                                        <div>
+                                            <p className="card-category">Reseacher Count</p>
+                                            <h3 className="card-title">{reviewerCount.length}</h3>
+                                        </div>
+                                        <hr />
+                                        <div>
+                                            <p className="card-category">Editor Count</p>
+                                            <h3 className="card-title">{writerCount.length}</h3>
+                                        </div>
                                     </div>
                                     <div className="card-footer">
-                                        <div className="stats">
-                                            <i className="material-icons">date_range</i> Up-Comming...
-                  </div>
+                                        <div className="center">
+                                            <Link to="/dashboard/externalusers" className="btn btn-info">View Users</Link>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

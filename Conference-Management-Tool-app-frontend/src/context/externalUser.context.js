@@ -16,7 +16,7 @@ class ExternalUserProvider extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            externalUser: []
+            externalUsers: []
         };
     }
 
