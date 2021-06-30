@@ -33,19 +33,52 @@ class ConferencePostProvider extends Component {
         });
     }
 
+    _getConferencePostByID(conferencePostID) {
+        return new Promise(async (resolve, reject) => {
+            try {
+                /* TODO: check response. */
+                const response = await conferencePostService.getConferencePostByID(conferencePostID);
+                resolve(response);
+            } catch (error) {
+                reject(error);
+            }
+        });
+    }
+
     /** add a conference post. */
     _addConferencePost(conferencePost) {
         console.log('Add conference post using context!');
+        return new Promise(async (resolve, reject) => {
+            try {
+                resolve(await conferencePostService.saveConferencePost(conferencePost).data);
+            } catch (error) {
+                reject(error);
+            }
+        });
     }
 
     /** edit a conference post. */
-    _editConferencePost(conferencePost) {
+    _editConferencePost(conferencePostID, conferencePost) {
         console.log('Edit conference post using context!');
+        return new Promise(async (resolve, reject) => {
+            try {
+                resolve(await conferencePostService.updateConferencePost(conferencePostID, conferencePost));
+            } catch (error) {
+                reject(error);
+            }
+        });
     }
 
     /** delete a conference post by ID. */
     _deleteConferencePost(conferencePostID) {
         console.log('Delete conference post using context!');
+        return new Promise(async (resolve, reject) => {
+            try {
+                resolve(await conferencePostService.deleteConferencePost(conferencePostID));
+            } catch (error) {
+                reject(error);
+            }
+        });
     }
 
     render() {
@@ -57,6 +90,7 @@ class ConferencePostProvider extends Component {
                         addConferencePost: this._addConferencePost.bind(this),
                         editConferencePost: this._editConferencePost.bind(this),
                         deleteConferencePost: this._deleteConferencePost.bind(this),
+                        getConferencePostByID: this._getConferencePostByID.bind(this)
                     }
                 }>
                 {this.props.children}

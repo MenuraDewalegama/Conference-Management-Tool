@@ -25,7 +25,8 @@ const getConferencePostByID = (conferencePostID) => {
         try {
             // If the given base URL or the resulting URL are not valid URLs, the JavaScript TypeError exception is thrown.
             const getConferencePostByIDURL = new URL(`/api/v2/conferences/${conferencePostID}`, baseURL);
-            resolve(await axios.get(getConferencePostByIDURL.href));
+            const response = await axios.get(getConferencePostByIDURL.href);
+            resolve(response);
         } catch (error) {
             reject(error);
         }
@@ -48,11 +49,11 @@ const saveConferencePost = (conferencePost) => {
     });
 };
 
-const updateConferencePost = (conferencePost) => {
+const updateConferencePost = (conferencePostID, conferencePost) => {
     return new Promise(async (resolve, reject) => {
         try {
             // If the given base URL or the resulting URL are not valid URLs, the JavaScript TypeError exception is thrown.
-            const putConferencePostURL = new URL(`/api/v2/conferences/${conferencePost?.id}`, baseURL);
+            const putConferencePostURL = new URL(`/api/v2/conferences/${conferencePostID}`, baseURL);
 
             /* send a put request to the backend using axios. */
             const response = axios.put(putConferencePostURL.href, conferencePost);
