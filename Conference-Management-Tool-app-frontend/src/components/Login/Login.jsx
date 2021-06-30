@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import { Card, Button, Form } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import axios from '../../service/axios.service';
-
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 export class Login extends Component {
     constructor(props) {
         super(props);
@@ -33,14 +34,38 @@ export class Login extends Component {
                     .then(res => {
                         console.log(res);
                         if (res.data == this.state.password) {
-                            alert('Successfully loged in');
-                            window.location = '/';
+                            toast.success('Login successfull!', {
+                                position: 'top-right',
+                                autoClose: 2000,
+                                hideProgressBar: false,
+                                closeOnClick: true,
+                                pauseOnHover: true,
+                                draggable: true,
+                                progress: undefined,
+                            });
+                            setTimeout(function () {  window.location = '/'; }, 2000);
+                           
                         } else {
-                            alert('Invalid Credentials')
-                        }
+                            toast.warning('Login Unsuccessfull!', {
+                                position: 'top-right',
+                                autoClose: 2000,
+                                hideProgressBar: false,
+                                closeOnClick: true,
+                                pauseOnHover: true,
+                                draggable: true,
+                                progress: undefined,
+                            });                        }
                     })
                     .catch(err => {
-                        alert('Invalid credentials')
+                        toast.warning('Login Unsuccessfull!', {
+                            position: 'top-right',
+                            autoClose: 2000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                        }); 
                     });
             }
         } else {
