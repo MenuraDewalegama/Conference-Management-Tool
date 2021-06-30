@@ -27,7 +27,7 @@ export default class ExternalUsers extends React.Component {
 
     render() {
         const { externalUsers } = this.props;
-        console.log(this.props);
+        // console.log(this.props);
         return (
             <div className="container" style={{ padding: "2rem 0" }}>
                 {/* header. */}
