@@ -8,16 +8,15 @@ import axios from 'axios';
 const baseURL = process.env.CONFERENCE_MANAGEMENT_BACKEND_API_URL;
 
 const getAllConferencePosts = () => {
-    return new Promise((resolve, reject) => {
-        return new Promise(async (resolve, reject) => {
-            try {
-                // If the given base URL or the resulting URL are not valid URLs, the JavaScript TypeError exception is thrown.
-                const getAllConferencePostsURL = new URL(`/api/v1/conferences`, baseURL);
-                resolve(await axios.get(getAllConferencePostsURL.href));
-            } catch (error) {
-                reject(error);
-            }
-        });
+    return new Promise(async (resolve, reject) => {
+        try {
+            // If the given base URL or the resulting URL are not valid URLs, the JavaScript TypeError exception is thrown.
+            const getAllConferencePostsURL = new URL(`/api/v2/conferences`, baseURL);
+            const response = (await axios.get(getAllConferencePostsURL.href));
+            resolve(response.data);
+        } catch (error) {
+            reject(error);
+        }
     });
 };
 
@@ -25,7 +24,7 @@ const getConferencePostByID = (conferencePostID) => {
     return new Promise(async (resolve, reject) => {
         try {
             // If the given base URL or the resulting URL are not valid URLs, the JavaScript TypeError exception is thrown.
-            const getConferencePostByIDURL = new URL(`/api/v1/conferences/${conferencePostID}`, baseURL);
+            const getConferencePostByIDURL = new URL(`/api/v2/conferences/${conferencePostID}`, baseURL);
             resolve(await axios.get(getConferencePostByIDURL.href));
         } catch (error) {
             reject(error);
@@ -38,7 +37,7 @@ const saveConferencePost = (conferencePost) => {
     return new Promise(async (resolve, reject) => {
         try {
             // If the given base URL or the resulting URL are not valid URLs, the JavaScript TypeError exception is thrown.
-            const postConferencePostURL = new URL(`/api/v1/conferences`, baseURL);
+            const postConferencePostURL = new URL(`/api/v2/conferences`, baseURL);
 
             /* send a post request to the backend using axios. */
             resolve(await axios.post(postConferencePostURL.href, conferencePost));
@@ -53,7 +52,7 @@ const updateConferencePost = (conferencePost) => {
     return new Promise(async (resolve, reject) => {
         try {
             // If the given base URL or the resulting URL are not valid URLs, the JavaScript TypeError exception is thrown.
-            const putConferencePostURL = new URL(`/api/v1/conferences/${conferencePost?.id}`, baseURL);
+            const putConferencePostURL = new URL(`/api/v2/conferences/${conferencePost?.id}`, baseURL);
 
             /* send a put request to the backend using axios. */
             const response = axios.put(putConferencePostURL.href, conferencePost);
@@ -85,7 +84,7 @@ const deleteConferencePost = (conferencePostID) => {
     return new Promise((resolve, reject) => {
         try {
             // If the given base URL or the resulting URL are not valid URLs, the JavaScript TypeError exception is thrown.
-            const deleteConferencePostURL = new URL(`/api/v1/conferences/${conferencePostID}`, baseURL);
+            const deleteConferencePostURL = new URL(`/api/v2/conferences/${conferencePostID}`, baseURL);
 
             /* send a delete request to the backend using axios. */
             const result = axios.delete(deleteConferencePostURL.href);

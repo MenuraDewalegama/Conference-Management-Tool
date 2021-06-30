@@ -65,10 +65,12 @@ const ConferencePosts = () => {
             ) : ''}
 
             {context.conferencePosts.map((conferencePost, idx) => {
+                // console.log(conferencePost);
+                console.log('context',context.conferencePosts);
                 return (
-                    <div key={conferencePost?.id}>
-                        {((isShowMore && context.conferencePosts.length > 1) || (idx === 0 && context.conferencePosts.length > 1)) ?
-                            (<ConferencePost key={conferencePost?.id} conferencePost={conferencePost}
+                    <div key={conferencePost?._id}>
+                        {((isShowMore && context.conferencePosts.length > 1) || (idx === 0 && context.conferencePosts.length >= 1)) ?
+                            (<ConferencePost key={conferencePost?._id} conferencePost={conferencePost}
                                              isShowMore={isShowMore}/>)
                             : ''
                         }
