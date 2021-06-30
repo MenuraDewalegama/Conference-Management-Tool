@@ -24,11 +24,15 @@ export default function ExternalUserListItem(props) {
                     </div>
                     <div className="card-body center">
                         {/* Todo: should add imge view */}
-                        <h4 className="text-center"><b className="text-light">Contact: </b>{externalUser.name}</h4>
-                        <h4 className="text-center"><b className="text-light">Email: </b>{externalUser.name}</h4>
-                        <h4 className="text-center"><b className="text-light">User Type: </b>{externalUser.name}</h4>
+                        <h4 className="text-center"><b className="text-light">Contact: </b>{externalUser.contactNo}</h4>
+                        <h4 className="text-center"><b className="text-light">Email: </b>{externalUser.email}</h4>
+                        <h4 className="text-center"><b className="text-light">User Type: </b>{externalUser.type}</h4>
                         {/* <h4 className="text-center"><b className="text-light">password: </b>{internalUser.password}</h4> */}
-                        <h4 className="text-center"><b className="text-light">image URL</b>{externalUser.name}</h4>
+                        <h4 className="text-center"><b className="text-light">image URL</b>{externalUser.imagePath}</h4>
+                        <h4 className="text-center"><b className="text-light">Activity Type</b>{externalUser.activityType}</h4>
+                        <h4 className="text-center"><b className="text-light">Category</b>{externalUser.category}</h4>
+                        <h4 className="text-center"><b className="text-light">Activity Information</b>{externalUser.activityInformation}</h4>
+                        <h4 className="text-center"><b className="text-light">Status</b>{externalUser.status}</h4>
                     </div>
                     <div className="card-footer center">
                         <button className="btn btn-info"

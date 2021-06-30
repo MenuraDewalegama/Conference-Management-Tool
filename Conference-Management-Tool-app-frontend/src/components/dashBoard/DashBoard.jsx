@@ -6,24 +6,34 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './DashBoard.css';
-import { InternalUserContext } from '../../context/internalUser.context';
-
+import { DashboardContext } from '../../context/dashboard.context';
+// import { InternalUserContext } from '../../context/internalUser.context';
 
 export default class DashBoard extends React.Component {
-    static contextType = InternalUserContext;
+    // static contextType = InternalUserContext;
+    static contextType = DashboardContext;
     constructor(props) {
         super(props);
     }
 
     render() {
+        console.log(this.context);
         const userCount = this.context?.internalUsers;
-        const writerCount = [];
+        const editorCount = [];
         const reviewerCount = [];
 
+        const extrenalUserCount = this.context?.externalUsers;
+        const PrasenterUserCount = [];
+        const ResearcherCount = [];
+        const AttendeeCount = [];
+
+        console.log("extrenalUserCount");
+        console.log(extrenalUserCount);
+
         for (let index = 0; index < userCount.length; index++) {
-            if (userCount[index].type == "Writer") {
-                writerCount.push(userCount[index])
-            } else {
+            if (userCount[index].type == "Editor") {
+                editorCount.push(userCount[index])
+            } else if (userCount[index].type == "Reviewer"){
                 reviewerCount.push(userCount[index])
             }
 
@@ -63,7 +73,7 @@ export default class DashBoard extends React.Component {
                                         <hr />
                                         <div>
                                             <p className="card-category">Writers Count</p>
-                                            <h3 className="card-title">{writerCount.length}</h3>
+                                            <h3 className="card-title">{editorCount.length}</h3>
                                         </div>
                                     </div>
                                     <div className="card-footer">
@@ -90,7 +100,7 @@ export default class DashBoard extends React.Component {
                                         <br />
                                         <div>
                                             <p className="card-category">Total External Users</p>
-                                            <h3 className="card-title">{userCount.length}</h3>
+                                            <h3 className="card-title">{extrenalUserCount.length}</h3>
                                         </div>
                                         <hr />
                                         <div>
@@ -100,7 +110,7 @@ export default class DashBoard extends React.Component {
                                         <hr />
                                         <div>
                                             <p className="card-category">Editor Count</p>
-                                            <h3 className="card-title">{writerCount.length}</h3>
+                                            <h3 className="card-title">{editorCount.length}</h3>
                                         </div>
                                     </div>
                                     <div className="card-footer">

@@ -15,7 +15,7 @@ export default class CreateEditUserView extends React.Component {
             fullName: '',
             contactNo: '',
             email: '',
-            type: 'Writer',
+            type: 'Editor',
             password: '',
             internalUserId: 0,
             isInternalUserIdValid: false,
@@ -200,7 +200,7 @@ export default class CreateEditUserView extends React.Component {
                                         <div className="form-group">
                                             <label>select Type</label>
                                             <select className="form-control" name="type" value={this.state.type} onChange={event => { this.onChange(event) }} id="exampleFormControlSelect1">
-                                                <option>Writer</option>
+                                                <option>Editor</option>
                                                 <option>Reviewer</option>
                                             </select>
                                         </div>
