@@ -53,21 +53,21 @@ test('validateDateTime test input with some string value', () => {
 });
 
 
-test('detectUnknownFields test input with conference post values', () => {
-    expect(conferencePostValidation.detectUnknownFields({
-        topic: 'Testing topic',
-        description: 'Testing description',
-        venue: 'SLIIT Auditorium',
-        dateTime: '2021-05-05'
-    })).toBe('');
-});
-
-test('detectUnknownFields test input with unknown age field', () => {
-    expect(conferencePostValidation.detectUnknownFields({
-        topic: 'Testing topic',
-        description: 'Testing description',
-        venue: 'SLIIT Auditorium',
-        dateTime: '2021-05-05',
-        age: 10
-    })).toBe(`Invalid Key Field Detected: age\n`);
-});
+// test('detectUnknownFields test input with conference post values', () => {
+//     expect(conferencePostValidation.detectUnknownFields({
+//         topic: 'Testing topic',
+//         description: 'Testing description',
+//         venue: 'SLIIT Auditorium',
+//         dateTime: '2021-05-05'
+//     })).toBe('');
+// });
+//
+// test('detectUnknownFields test input with unknown age field', () => {
+//     expect(conferencePostValidation.detectUnknownFields({
+//         topic: 'Testing topic',
+//         description: 'Testing description',
+//         venue: 'SLIIT Auditorium',
+//         dateTime: '2021-05-05',
+//         age: 10
+//     })).toBe(`Invalid Key Field Detected: age\n`);
+// });

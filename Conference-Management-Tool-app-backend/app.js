@@ -30,13 +30,18 @@ app.use(serve('./public'));
 /* routes. */
 // const conferencePostRoutes = require('./src/routes/conference-post.route');
 const conferencePostV2Routes = require('./src/routes/conference-post-v2.route');
+const keySpeakerRoutes = require('./src/routes/key-speaker.routes');
 const InternalUserRoutes = require('../Conference-Management-Tool-app-backend/src/routes/internalUser.routes');
 
 const externalUserRoutes = require('../Conference-Management-Tool-app-backend/src/routes/externalUser.routes');
 
+const membersRoutes = require('../Conference-Management-Tool-app-backend/src/routes/members.routes');
+
 const researchPaperRoutes = require('./src/routes/reviewerActivity.routes');
 
 const loginRoutes = require('../Conference-Management-Tool-app-backend/src/routes/login.routes');
+
+const contactUsRoutes = require('./src/routes/contactUs.route');
 
 /* auth route and assets routes are exposed here. */
 
@@ -49,7 +54,9 @@ const loginRoutes = require('../Conference-Management-Tool-app-backend/src/route
 // app.use(conferencePostRoutes.routes()).use(conferencePostRoutes.allowedMethods());
 
 /* NEW route for conference-post CRUD. */
-app.use(conferencePostV2Routes.routes()).use(conferencePostV2Routes.allowedMethods());
+app.use(conferencePostV2Routes.router.routes()).use(conferencePostV2Routes.router.allowedMethods());
+
+app.use(keySpeakerRoutes.routes()).use(keySpeakerRoutes.allowedMethods());
 
 app.use(InternalUserRoutes.routes()).use(InternalUserRoutes.allowedMethods());
 
@@ -58,6 +65,11 @@ app.use(externalUserRoutes.routes()).use(externalUserRoutes.allowedMethods());
 app.use(researchPaperRoutes.routes()).use(researchPaperRoutes.allowedMethods());
 
 app.use(loginRoutes.routes()).use(loginRoutes.allowedMethods());
+
+app.use(contactUsRoutes.routes()).use(contactUsRoutes.allowedMethods());
+
+app.use(membersRoutes.routes()).use(membersRoutes.allowedMethods());
+
 
 /* server. */
 app.listen(PORT, (error) => {

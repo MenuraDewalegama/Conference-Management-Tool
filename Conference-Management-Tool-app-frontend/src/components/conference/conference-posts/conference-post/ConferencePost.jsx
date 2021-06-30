@@ -2,17 +2,29 @@
 @author : Dhanusha Perera
 @date : 17/06/2021
 */
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Col, Container, Image, Row} from 'react-bootstrap';
-import KeySpeakers from '../../key-speakers/KeySpeakers';
 import {PencilSquare, Trash} from 'react-bootstrap-icons';
 import {ConferencePostContext} from '/src/context/conference-post.context';
+import KeySpeakerService from '/src/service/key-speaker.service';
+import KeySpeakers from '../../key-speakers/KeySpeakers';
 
 const ConferencePost = (props) => {
 
     const context = useContext(ConferencePostContext);
-
+    const [backendURL, setBackendURL] = useState(process.env.CONFERENCE_MANAGEMENT_BACKEND_API_URL);
+    const [baseURL, setBaseURL] = useState(backendURL);
     const [conferencePost, setConferencePost] = useState(props.conferencePost);
+    const [keySpeakers, setKeySpeakers] = useState([]);
+
+
+    useEffect(() => {
+        KeySpeakerService.getAllKeySpeakers(conferencePost?._id).then(keySpeakersDB => {
+            setKeySpeakers(keySpeakersDB);
+        }).catch(reason => {
+            console.error('Something went wrong when retrieving keySpeakers from the backend.', reason);
+        });
+    }, [conferencePost]);
 
     return (
         <Container>
@@ -36,7 +48,7 @@ const ConferencePost = (props) => {
                                 color: 'crimson',
                                 fontSize: '1.2rem',
                                 cursor: 'pointer'
-                            }} onClick={(event) => context.deleteConferencePost(conferencePost?.id)}
+                            }} onClick={(event) => context.deleteConferencePost(conferencePost?._id)}
                             /></div>
                     </Col>
                 </Row>
@@ -54,18 +66,20 @@ const ConferencePost = (props) => {
 
                     <div>
                         <h5 className="conf_header">DATE AND TIME</h5>
-                        <p>{conferencePost.dateTime}</p>
+                        <p>{(new Date(conferencePost.dateTime).toString()) ?
+                            new Date(conferencePost.dateTime).toString() : conferencePost.dateTime}</p>
                     </div>
                 </Col>
                 <Col style={{marginBottom: '1rem'}}>
                     <Image style={{minWidth: '400px', width: '100%'}}
-                           src={(conferencePost.mainImageURL) ? conferencePost.mainImageURL : 'https://via.placeholder.com/1920x1080'}/>
+                           src={(conferencePost.mainImageURI) ?
+                               (new URL(`${conferencePost.mainImageURI}`, baseURL).href) : 'https://via.placeholder.com/1920x1080'}/>
                 </Col>
             </Row>
             <Row style={{padding: '1.5rem 0'}}>
                 <Col>
                     <h5 className="conf_header">KEY SPEAKERS</h5>
-                    <KeySpeakers keySpeakers={conferencePost.keySpeakers}/>
+                    <KeySpeakers keySpeakers={keySpeakers}/>
                 </Col>
             </Row>
 

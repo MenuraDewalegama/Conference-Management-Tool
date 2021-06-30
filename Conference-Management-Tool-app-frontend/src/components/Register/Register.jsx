@@ -21,7 +21,8 @@ const slideImages = [
     'https://bs-uploads.toptal.io/blackfish-uploads/blog/post/seo/og_image_file/og_image/15051/angular-5-tutorial-325403e130ba3b2c367174b73bb7275a.png',
     'https://res.cloudinary.com/practicaldev/image/fetch/s--THwyjA44--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/i/4kpbveocl2p5qjorilos.png',
     'https://miro.medium.com/max/1040/1*0lgunvVYa8gZ_sfMHflyvw.jpeg',
-    'https://miro.medium.com/max/1040/1*0lgunvVYa8gZ_sfMHflyvw.jpeg'
+    'https://worldskillsconference.com/application/files/4016/0259/6543/conference-teaser2019-1.jpg'
+
 
 ];
 
@@ -334,7 +335,7 @@ export default class Register extends React.Component {
                         </Form>
 
                         <br />
-                        
+
                         <Link to="/login" style={{ textDecoration: 'none', color: 'black', marginBottom: '10%' }}>Already have an account? Login</Link>
                         <br />
                     </div>
@@ -342,7 +343,10 @@ export default class Register extends React.Component {
                     <br />
 
                 </Card >
+                <br />
+
             </div>
+
         );
     }
 }

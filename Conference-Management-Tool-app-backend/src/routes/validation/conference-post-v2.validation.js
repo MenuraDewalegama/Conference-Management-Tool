@@ -4,6 +4,7 @@
 */
 
 const commonValidation = require('./common.validation');
+const keys = ['topic', 'description', 'venue', 'dateTime'];
 
 const validateTopic = (value) => {
     const errorMessage = commonValidation.validateStringOnly(value);
@@ -25,35 +26,35 @@ const validateDateTime = (dateString) => {
     return (errorMessage.length !== 0) ? errorMessage : '';
 };
 
-const detectUnknownFields = (conferencePost) => {
-    let errorMessages = '';
-    const keys = ['topic', 'description', 'venue', 'dateTime'];
-    let fieldNotDetected = [...keys];
-    Object.keys(conferencePost).forEach((key, index) => {
-        let isKnownField = false;
-        for (let i = 0; i < keys.length; i++) {
-            if (key === keys[i]) {
-                isKnownField = true;
-                fieldNotDetected = fieldNotDetected.filter(elem => elem !== key);
-                break;
-            }
-        }
-
-        /*if this key field is NOT a known field. */
-        if (!isKnownField) {
-            errorMessages += `Invalid Key Field Detected: ${key}\n`;
-        }
-    });
-
-    /* if some field are missing, then */
-    if (fieldNotDetected.length !== 0) {
-        fieldNotDetected.forEach(field => {
-            errorMessages += `${field} key field is required.\n`;
-        });
-    }
-
-    return errorMessages;
-};
+// const detectUnknownFields = (conferencePost, keys) => {
+//     let errorMessages = '';
+//     // const keys = ['topic', 'description', 'venue', 'dateTime'];
+//     let fieldNotDetected = [...keys];
+//     Object.keys(conferencePost).forEach((key, index) => {
+//         let isKnownField = false;
+//         for (let i = 0; i < keys.length; i++) {
+//             if (key === keys[i]) {
+//                 isKnownField = true;
+//                 fieldNotDetected = fieldNotDetected.filter(elem => elem !== key);
+//                 break;
+//             }
+//         }
+//
+//         /*if this key field is NOT a known field. */
+//         if (!isKnownField) {
+//             errorMessages += `Invalid Key Field Detected: ${key}\n`;
+//         }
+//     });
+//
+//     /* if some field are missing, then */
+//     if (fieldNotDetected.length !== 0) {
+//         fieldNotDetected.forEach(field => {
+//             errorMessages += `${field} key field is required.\n`;
+//         });
+//     }
+//
+//     return errorMessages;
+// };
 
 // detectUnknownFields({
 //     topic: 'batman',
@@ -65,9 +66,9 @@ const detectUnknownFields = (conferencePost) => {
 const validateConferencePost = (conferencePost) => {
     let errorMessages = '';
     /* detectUnknownFields */
-    errorMessages += detectUnknownFields(conferencePost);
+    errorMessages += commonValidation.detectUnknownFields(conferencePost, keys);
 
-    if (errorMessages.length > 0) {
+    if (errorMessages.length === 0) {
         /* topic */
         errorMessages += (validateTopic(conferencePost?.topic).length > 0) ?
             validateTopic(conferencePost?.topic).replace(`{0}`, `topic`) + '\n' : '';
@@ -95,6 +96,6 @@ module.exports = {
     validateDescription,
     validateVenue,
     validateDateTime,
-    detectUnknownFields,
+    // detectUnknownFields,
     validateConferencePost
 };

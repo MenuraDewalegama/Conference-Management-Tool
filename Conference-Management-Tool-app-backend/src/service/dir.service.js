@@ -36,6 +36,25 @@ const createDirIfNotExists = () => {
     }
 };
 
+/* Creates a new dir if not exists. */
+const createNewDirFor = (directoryPath) => {
+    return new Promise((resolve, reject) => {
+        const dirPath = directoryPath;
+
+        try {
+            if (!fs.existsSync(dirPath)) {
+                /* creating products dir. */
+                fs.mkdirSync(dirPath);
+            }
+
+            resolve(fs.existsSync(dirPath));
+        } catch (error) {
+            reject(error);
+        }
+    });
+};
+
 module.exports = {
-    createDirIfNotExists
+    createDirIfNotExists,
+    createNewDirFor
 };

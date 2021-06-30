@@ -3,7 +3,7 @@
 @date : 17/06/2021
 */
 
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Carousel} from 'react-bootstrap';
 import KeySpeaker from './key-speaker/KeySpeaker';
 
@@ -15,14 +15,18 @@ const KeySpeakers = (props) => {
         setIndex(selectedIndex);
     };
 
+    useEffect(() => {
+        setKeySpeakers(props.keySpeakers);
+    });
+
     return (
         <Carousel activeIndex={index} onSelect={handleSelect}>
             {keySpeakers.map(keySpeaker => {
                 return (
-                    <Carousel.Item key={keySpeaker?.id}>
-                        <KeySpeaker key={keySpeaker?.id} keySpeaker={keySpeaker}/>
+                    <Carousel.Item key={keySpeaker?._id}>
+                        <KeySpeaker key={keySpeaker?._id} keySpeaker={keySpeaker}/>
                     </Carousel.Item>
-                )
+                );
             })}
         </Carousel>
     );

@@ -31,13 +31,20 @@ router.get('/:id', async (ctx) => {
 
     /* validate input. */
     try {
-        const validationResult = await commonValidation.validateID(id);
+        const validationResult = await _validateConferencePostID(id, ctx);
     } catch (errorMessage) {
-        /* found errors. */
-        ctx.response.status = 400;
-        ctx.response.body = errorMessage;
+        console.error(errorMessage);
         return;
     }
+
+    // try {
+    //     const validationResult = await commonValidation.validateID(id);
+    // } catch (errorMessage) {
+    //     /* found errors. */
+    //     ctx.response.status = 400;
+    //     ctx.response.body = errorMessage;
+    //     return;
+    // }
 
     try {
         ctx.response.type = 'application/json';
@@ -72,13 +79,14 @@ router.post('/', async (ctx) => {
     }
 
     /* checks for the conferencePostImage is included. */
-    if (!ctx.request.files.hasOwnProperty('conferencePostImage')) {
+    if (ctx.request.files.hasOwnProperty('conferencePostImage') && ctx.request.files?.conferencePostImage?.size === 0) {
         /* send BAD REQUEST */
         ctx.response.type = 'text/plain';
         ctx.response.status = 400;
-        ctx.response.body = `conferencePostImage is required.`;
+        ctx.response.body = `conferencePostImage is required. Image should be uploaded.`;
         return;
     }
+
 
     /* checks for the conference post details errors. */
     const conferencePostDetails = JSON.parse(conferencePostBody?.conferenceDetails);
@@ -132,14 +140,22 @@ router.put('/:id', async (ctx) => {
     const conferencePostID = ctx.request.params.id;
 
     /* check the given id is valid or not. */
+    /* validate input. */
     try {
-        const validationResult = await commonValidation.validateID(conferencePostID);
+        const validationResult = await _validateConferencePostID(conferencePostID, ctx);
     } catch (errorMessage) {
-        /* found errors. */
-        ctx.response.status = 400;
-        ctx.response.body = errorMessage;
+        console.error(errorMessage);
         return;
     }
+
+    // try {
+    //     const validationResult = await commonValidation.validateID(conferencePostID);
+    // } catch (errorMessage) {
+    //     /* found errors. */
+    //     ctx.response.status = 400;
+    //     ctx.response.body = errorMessage;
+    //     return;
+    // }
 
     const conferencePostBody = ctx.request.body;
     const conferencePostDetails = JSON.parse(conferencePostBody?.conferenceDetails);
@@ -204,13 +220,21 @@ router.del('/:id', async (ctx) => {
     const conferencePostID = ctx.params.id;
 
     /* check the given id is valid or not. */
+    /* validate input. */
     try {
-        await commonValidation.validateID(conferencePostID);
-    } catch (error) {
-        ctx.response.status = 400;
-        ctx.response.body = error;
+        const validationResult = await _validateConferencePostID(conferencePostID, ctx);
+    } catch (errorMessage) {
+        console.error(errorMessage);
         return;
     }
+
+    // try {
+    //     await commonValidation.validateID(conferencePostID);
+    // } catch (error) {
+    //     ctx.response.status = 400;
+    //     ctx.response.body = error;
+    //     return;
+    // }
 
     try {
         const existingRecord = await conferencePostAPI.getConferencePostByID(conferencePostID);
@@ -241,4 +265,31 @@ router.del('/:id', async (ctx) => {
     }
 });
 
-module.exports = router;
+
+_validateConferencePostID = (id, ctx) => {
+    return new Promise(async (resolve, reject) => {
+        /* validate input. */
+        try {
+            const validationResult = await commonValidation.validateID(id);
+
+            resolve(validationResult);
+        } catch (errorMessage) {
+            /* found errors. */
+            errorMessage = errorMessage.replace(`ID`, `ConferencePostID`);
+            // ctx.response.status = 400;
+            // ctx.response.body = errorMessage;
+            reject(errorMessage);
+        }
+    });
+};
+
+// _isRecordExists = (conferencePostID) => {
+//     return new Promise((resolve, reject) => {
+//
+//     });
+// };
+
+module.exports = {
+    router,
+    validateConferencePostID: _validateConferencePostID,
+};

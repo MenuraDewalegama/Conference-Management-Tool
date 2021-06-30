@@ -60,9 +60,41 @@ const validateDateIsInISOFormat = (dateString) => {
     return errorMessage;
 };
 
+
+const detectUnknownFields = (entityObject, keys) => {
+    let errorMessages = '';
+    // const keys = ['topic', 'description', 'venue', 'dateTime'];
+    let fieldNotDetected = [...keys];
+    Object.keys(entityObject).forEach((key, index) => {
+        let isKnownField = false;
+        for (let i = 0; i < keys.length; i++) {
+            if (key === keys[i]) {
+                isKnownField = true;
+                fieldNotDetected = fieldNotDetected.filter(elem => elem !== key);
+                break;
+            }
+        }
+
+        /*if this key field is NOT a known field. */
+        if (!isKnownField) {
+            errorMessages += `Invalid Key Field Detected: ${key}\n`;
+        }
+    });
+
+    /* if some field are missing, then */
+    if (fieldNotDetected.length !== 0) {
+        fieldNotDetected.forEach(field => {
+            errorMessages += `${field} key field is required.\n`;
+        });
+    }
+
+    return errorMessages;
+};
+
 module.exports = {
     validateID,
     validateStringOnly,
     validateIntegerOnly,
-    validateDateIsInISOFormat
+    validateDateIsInISOFormat,
+    detectUnknownFields
 };
