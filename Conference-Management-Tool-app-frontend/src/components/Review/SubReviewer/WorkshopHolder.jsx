@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import { Button } from 'react-bootstrap';
-
+import EmailService from '../../../service/email.service'
 import axios from 'axios'
 
-
 export class WorkshopHolder extends Component {
+
     constructor(props) {
         super(props);
         this.state = {
@@ -17,10 +17,12 @@ export class WorkshopHolder extends Component {
         axios.get('http://localhost:3000/research-papers')
             .then(res => {
                 this.setState({ workshops: res.data })
-            })
+            }).catch((err) => {
+                console.log(`Something went wrong ${err}`);
+            });
     }
 
-    statusUpdate(event, research_paper_id, index) {
+    statusUpdate(event, research_paper_id, index, email, name) {
         if (index == 1) {
             let review = {
                 status: "Approved"
@@ -29,7 +31,12 @@ export class WorkshopHolder extends Component {
             axios.put(`http://localhost:3000/research-papers/${research_paper_id}`, review)
                 .then((result) => {
                     alert('Successfully updated the status');
-                    window.location.reload();
+                    // window.location.reload();
+
+                    console.log(`this.${email}`);
+                    const mailMessage = "We have approved your workshop proposal"
+                    this.sendMail(email, name, mailMessage)
+
                 }).catch((err) => {
                     alert(err)
                 });
@@ -41,13 +48,38 @@ export class WorkshopHolder extends Component {
             axios.put(`http://localhost:3000/research-papers/${research_paper_id}`, review)
                 .then((result) => {
                     alert('Successfully updated the status');
-                    window.location.reload();
+                    // window.location.reload();
+
+                    const mailMessage = "We have rejected your workshop proposal"
+                    this.sendMail(email, name, mailMessage)
+
                 }).catch((err) => {
                     alert(err)
                 });
         }
 
     }
+
+
+    sendMail(email, name, mailMessage) {
+        EmailService.sendEmail({
+            user_id: 'user_Swzja6hgJOB3MOMfn8x53',
+            service_id: 'service_727resg',
+            template_id: 'template_3cvmc3f',
+            template_params: {
+                from_name: 'CMT - SYSTEM',
+                to_name: name,
+                reply_to: email,
+                message: mailMessage
+            },
+            accessToken: '6ceb240ee4e4e409d19845b2e08cd7fa'
+        }).then(response => {
+            window.location.reload();
+            console.log(response);
+        }).catch(reason => {
+            console.error(reason);
+        });
+    };
 
     render() {
         return (
@@ -101,16 +133,6 @@ export class WorkshopHolder extends Component {
                                             })()
                                         }
 
-
-
-
-
-
-
-
-
-
-
                                         <div className="card-header">
                                             <div className="p-3 card-body mb-3">
                                                 <h5></h5>
@@ -130,23 +152,27 @@ export class WorkshopHolder extends Component {
                                                     (() => {
                                                         if (workshop.status == 'Approved') {
                                                             return (
-                                                                <button type="button" className="btn btn-danger" onClick={event => this.statusUpdate(event, workshop.id, 0)}>
+                                                                <button type="button" className="btn btn-danger"
+                                                                    onClick={event => this.statusUpdate(event, workshop.id, 0, workshop.email, workshop.name)}>
                                                                     Reject
                                                                 </button>
                                                             )
                                                         } else if (workshop.status == 'Rejected') {
                                                             return (
-                                                                <button type="button" className="btn btn-success" onClick={event => this.statusUpdate(event, workshop.id, 1)}>
+                                                                <button type="button" className="btn btn-success"
+                                                                    onClick={event => this.statusUpdate(event, workshop.id, 1, workshop.email, workshop.name)}>
                                                                     Approve
                                                                 </button>
                                                             )
                                                         } else {
                                                             return (
                                                                 <div>
-                                                                    <button type="button" className="btn btn-danger" onClick={event => this.statusUpdate(event, workshop.id, 0)}>
+                                                                    <button type="button" className="btn btn-danger"
+                                                                        onClick={event => this.statusUpdate(event, workshop.id, 0, workshop.email, workshop.name)}>
                                                                         Reject
                                                                     </button>
-                                                                    <button type="button" className="btn btn-success" onClick={event => this.statusUpdate(event, workshop.id, 1)}>
+                                                                    <button type="button" className="btn btn-success"
+                                                                        onClick={event => this.statusUpdate(event, workshop.id, 1, workshop.email, workshop.name)}>
                                                                         Approve
                                                                     </button>
                                                                 </div>
@@ -155,23 +181,6 @@ export class WorkshopHolder extends Component {
                                                         }
                                                     })()
                                                 }
-
-                                                {/* <button type="button" className="btn btn-danger" onClick={event => this.statusUpdate(event, workshop.id, 0)}>
-                                                    Reject
-                                                </button>
-                                                <button type="button" className="btn btn-success" onClick={event => this.statusUpdate(event, workshop.id, 1)}>
-                                                    Approve
-                                                </button> */}
-
-                                                {/* {
-                                                    (workshop.status == 'Approved') ?
-                                                        <h6 style={{ textAlign: 'unset', color: 'green' }}>Approved</h6>
-                                                        :
-                                                        (workshop.status == 'Rejected') ?
-                                                            <h6 style={{ textAlign: 'unset', color: 'red' }}>Rejected</h6>
-                                                            :
-                                                            <h6 style={{ textAlign: 'unset', color: 'blue' }}>Processing</h6>
-                                                } */}
                                             </div>
                                         </div>
 
