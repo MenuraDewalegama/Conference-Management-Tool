@@ -7,6 +7,7 @@ const Router = require('@koa/router');
 const conferencePostAPI = require('../api/conference-post-v2.api');
 const commonValidation = require('./validation/common.validation');
 const conferencePostV2Validation = require('./validation/conference-post-v2.validation');
+const { approvePost } = require('../api/conference-post-v2.api')
 
 const router = new Router({
     prefix: '/api/v2/conferences'
@@ -133,6 +134,57 @@ router.post('/', async (ctx) => {
     }
 });
 
+
+
+/** update the internalUser by given ID. */
+router.put('/approve/:id', async ctx => {
+    const conferencePostID = ctx.request.params.id;
+    let existingInternalUserRecord;
+    console.log(ctx.request.body);
+
+
+    /* check whether there is a matching record for the given id. */
+    try {
+        const result = await approvePost(id);
+        existingInternalUserRecord = result;
+        if (!result) {
+            /* if no record found. */
+            ctx.response.status = 404;
+        }
+    } catch (error) {
+        /* something went wrong when finding a matching record. */
+        ctx.response.status = 500;
+        console.error(error);
+        return;
+    }
+
+    /* read the request body and get the internalUser details. */
+    let internalUser = ctx.request.body;
+
+  
+        try { /* update the internalUser. */
+            const result = await updateInternalUser(id, {
+                fullName: internalUser.fullName,
+                contactNo: internalUser.contactNo,
+                email: internalUser.email,
+                type: internalUser.type,
+                password: internalUser.password,
+                    imagePath: (internalUser?.imagePath?.length === 0) ? null : internalUser?.imagePath
+                },
+                ctx.request.files?.internalUserImage,
+                existingInternalUserRecord);
+            ctx.response.status = 204;
+            if (result.modifiedCount === 1) {
+                /* update successful. */
+                ctx.response.status = 204;
+            }
+        } catch (error) {
+            /* something wrong with update process. */
+            ctx.response.status = 500; // internal server error.
+            console.error(error);
+        }
+
+});
 
 /* update an existing conference post. */
 router.put('/:id', async (ctx) => {

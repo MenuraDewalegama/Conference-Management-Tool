@@ -42,6 +42,18 @@ const ConferencePost = (props) => {
         });
     };
 
+    const handleClickOnApprove = (conferencePostID) => {
+        context.approveConferencePost(conferencePostID).then(response => {
+            console.log(response);
+            console.log('response status', response?.status);
+            window.location = '/';
+            alert('Conference Post approve successfully!');
+        }).catch(reason => {
+            console.error(reason);
+            alert('Conference Post approve failed!');
+        });
+    };
+
     useEffect(() => {
         KeySpeakerService.getAllKeySpeakers(conferencePost?._id).then(keySpeakersDB => {
             setKeySpeakers(keySpeakersDB);
@@ -59,6 +71,17 @@ const ConferencePost = (props) => {
                         justifyContent: 'flex-end',
                         padding: '2rem'
                     }}>
+                        <div title={'Edit this conference-post'}>
+                            <PencilSquare style={{
+                                margin: '0 1rem',
+                                color: 'blue',
+                                fontSize: '1.2rem',
+                                cursor: 'pointer'
+                            }} onClick={(event) => {
+                                console.log('approve icon clicked!')
+                                handleClickOnApprove(conferencePost?._id);
+                            }}/>
+                        </div>
                         <div title={'Edit this conference-post'}>
                             <PencilSquare style={{
                                 margin: '0 1rem',

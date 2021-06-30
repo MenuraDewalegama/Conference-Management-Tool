@@ -23,6 +23,12 @@ const getConferencePostByID = (conferencePostID) => {
     return conferencePostDAO.getConferencePost(conferencePostID);
 };
 
+/* get a conference post by ID. */
+const approvePost = (conferencePostID) => {
+    return conferencePostDAO.updateConferencePost(conferencePostID, { isApproved:true });
+};
+
+
 /* creates a new save conference post. */
 const saveConferencePost = (conferencePost, uploadedImageFiles) => {
     return new Promise(async (resolve, reject) => {
@@ -149,5 +155,6 @@ module.exports = {
     getConferencePostByID,
     saveConferencePost,
     updateConferencePost,
-    deleteConferencePost
+    deleteConferencePost,
+    approvePost
 };

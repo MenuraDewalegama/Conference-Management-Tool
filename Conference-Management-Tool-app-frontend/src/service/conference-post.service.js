@@ -95,6 +95,23 @@ const deleteConferencePost = (conferencePostID) => {
         }
     });
 };
+const approveConferencePost = (conferencePostID) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+        
+            try { /* send a post request to the backend using axios. */
+                const response = await axios.post(`${process.env.CONFERENCE_MANAGEMENT_BACKEND_API_URL}api/v2/conferences/approve/${conferencePostID}`);
+                resolve(response);
+            } catch (error) {
+                reject(error);
+            }
+
+        } catch (error) {
+            reject(error);
+        }
+
+    });
+};
 
 
 module.exports = {
@@ -102,5 +119,6 @@ module.exports = {
     getConferencePostByID,
     saveConferencePost,
     updateConferencePost,
-    deleteConferencePost
+    deleteConferencePost,
+    approveConferencePost
 };

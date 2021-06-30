@@ -209,14 +209,14 @@ export default class DashBoard extends React.Component {
                                         <div className="ct-chart" id="dailySalesChart"></div>
                                     </div>
                                     <div className="card-body">
-                                        <h4 className="card-title">Daily Sales</h4>
+                                        <h4 className="card-title">Conference</h4>
                                         <p className="card-category">
                                             <span className="text-success"><i className="fa fa-long-arrow-up"></i> 55% </span> increase in today sales.</p>
                                     </div>
                                     <div className="card-footer">
-                                        <div className="stats">
-                                            <i className="material-icons">access_time</i> updated 4 minutes ago
-                  </div>
+                                        <div className="center">
+                                            <Link to="/review" className="btn btn-danger">View Research Papers Details</Link>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
