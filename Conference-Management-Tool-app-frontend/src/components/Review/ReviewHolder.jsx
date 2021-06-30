@@ -21,13 +21,12 @@ export class ReviewHolder extends Component {
         }
     }
 
+    // Call the endpoint when starting the relevent page 
     componentDidMount() {
         axios.get('http://localhost:3000/papers')
             .then((result) => {
                 this.setState({ papers: result.data });
-
                 if (this.state.papers.length > 0) {
-
                     let count1 = 0;
                     let count1_processing = 0;
                     let count1_approoved = 0;
@@ -38,10 +37,8 @@ export class ReviewHolder extends Component {
                     let count2_rejected = 0;
 
                     this.state.papers.forEach(paper => {
-
                         if (paper.type == 'RESEARCHER') {
                             count1 = count1 + 1;
-
                             if (paper.status == 'Processing') {
                                 count1_processing = count1_processing + 1;
                             } else if (paper.status == 'Approved') {
@@ -52,7 +49,6 @@ export class ReviewHolder extends Component {
 
                         } else if (paper.type == 'PRESENTER') {
                             count2 = count2 + 1;
-
                             if (paper.status == 'Processing') {
                                 count2_processing = count2_processing + 1;
                             } else if (paper.status == 'Approved') {
@@ -62,8 +58,6 @@ export class ReviewHolder extends Component {
                             }
                         }
                     });
-
-
 
                     this.setState({
                         research_paper_count: count1,
@@ -75,8 +69,6 @@ export class ReviewHolder extends Component {
                         workshop_count_approved: count2_approoved,
                         workshop_count_rejectd: count2_rejected
                     });
-                    // this.setState({ workshop_count: count2 });
-
                 }
             }).catch((err) => {
                 console.log(`Something went wrong ${err}`);
@@ -94,27 +86,22 @@ export class ReviewHolder extends Component {
     render() {
         return (
             <div className="container" >
-
-
                 <div style={{ marginTop: 'auto-align', textAlign: 'center' }}>
-
                     <h2 style={{ fontFamily: 'roboto' }}>Manage User Research Paper and Worksop Proposals</h2>
-
                     <div style={{ margin: 'auto-align' }}>
                         <Button href="/review/research-papers">Research Papers</Button>
                         <Button href="/review/project-proposals">Project Proposals</Button>
                     </div>
-
                 </div>
 
 
                 <div style={{ marginTop: '5%' }}>
 
                     <div className='p-5 card bg-dark'>
+
+                        {/* Research Papers Section */}
                         <h3>Research Papers</h3>
-
                         <div className="row">
-
                             <div className="col-lg-3">
                                 <div className="card card-stats bg-light">
                                     <div className="card-header card-header card-header-icon">
@@ -126,7 +113,6 @@ export class ReviewHolder extends Component {
                                     </div>
                                     <div className="card-footer">
                                         <div className="stats">
-                                            {/* <i className="material-icons">local_offer</i> View More... */}
                                         </div>
                                     </div>
                                 </div>
@@ -143,7 +129,6 @@ export class ReviewHolder extends Component {
                                     </div>
                                     <div className="card-footer">
                                         <div className="stats">
-                                            {/* <i className="material-icons">local_offer</i> View More... */}
                                         </div>
                                     </div>
                                 </div>
@@ -160,7 +145,6 @@ export class ReviewHolder extends Component {
                                     </div>
                                     <div className="card-footer">
                                         <div className="stats">
-                                            {/* <i className="material-icons">local_offer</i> View More... */}
                                         </div>
                                     </div>
                                 </div>
@@ -177,28 +161,18 @@ export class ReviewHolder extends Component {
                                     </div>
                                     <div className="card-footer">
                                         <div className="stats">
-                                            {/* <i className="material-icons">local_offer</i> View More... */}
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
-
-
                         </div>
-
-
                     </div>
-
-
-
 
                     <div className='p-5 card bg-dark'>
 
-                        <h3>Workshop</h3>
-
+                        {/* Workshop Proposals Section */}
+                        <h3>Workshop Proposals</h3>
                         <div className="row" style={{ marginTop: '2%' }}>
-
                             <div className="col-lg-3">
                                 <div className="card card-stats bg-light">
                                     <div className="card-header card-header card-header-icon">
@@ -210,7 +184,6 @@ export class ReviewHolder extends Component {
                                     </div>
                                     <div className="card-footer">
                                         <div className="stats">
-                                            {/* <i className="material-icons">local_offer</i> View More... */}
                                         </div>
                                     </div>
                                 </div>
@@ -227,7 +200,6 @@ export class ReviewHolder extends Component {
                                     </div>
                                     <div className="card-footer">
                                         <div className="stats">
-                                            {/* <i className="material-icons">local_offer</i> View More... */}
                                         </div>
                                     </div>
                                 </div>
@@ -244,7 +216,6 @@ export class ReviewHolder extends Component {
                                     </div>
                                     <div className="card-footer">
                                         <div className="stats">
-                                            {/* <i className="material-icons">date_range</i> Up-Comming... */}
                                         </div>
                                     </div>
                                 </div>
@@ -261,23 +232,18 @@ export class ReviewHolder extends Component {
                                     </div>
                                     <div className="card-footer">
                                         <div className="stats">
-                                            {/* <i className="material-icons">local_offer</i> View More... */}
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
 
-
-
                     <div className='p-5 card bg-dark'>
 
+                        {/* Contact Us Section */}
                         <h3>Contct Us Messages</h3>
-
                         <div className="row" style={{ marginTop: '2%' }}>
-
                             <div className="col-lg-3">
                                 <div className="card card-stats bg-light">
                                     <div className="card-header card-header card-header-icon">
@@ -301,18 +267,10 @@ export class ReviewHolder extends Component {
                                 </div>
                             </div>
                         </div>
-
-
                     </div>
-
-
-
                 </div>
-
-
                 <div></div>
                 <div></div>
-
                 <br />
                 <br />
             </div>

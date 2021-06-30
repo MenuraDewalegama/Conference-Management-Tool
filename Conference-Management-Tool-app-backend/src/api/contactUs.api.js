@@ -3,7 +3,7 @@ const mineTypes = require('mime-types');
 const fs = require('fs');
 const path = require('path');
 
-
+// Inserting a message 
 const insertMessage = async ({ email, name, subject, message }) => {
     const contactInfo = {
         email,
@@ -22,10 +22,12 @@ const insertMessage = async ({ email, name, subject, message }) => {
     });
 };
 
+// Get all messages
 const getAllMessages = async () => {
     return await contactUsDao.getAllMessages();
 }
 
+// Deleting a message
 const deleteMessage = async id => {
     return new Promise(async (resolve, reject) => {
         try {

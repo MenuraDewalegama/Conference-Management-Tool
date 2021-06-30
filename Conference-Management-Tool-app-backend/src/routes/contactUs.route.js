@@ -2,12 +2,12 @@ const Router = require('@koa/router');
 
 const { insertMessage, getAllMessages, deleteMessage } = require('../api/contactUs.api');
 
-
+// Prefix of the route
 const router = new Router({
     prefix: '/contact'
 });
 
-
+// Route to insert a message 
 router.post('/', async ctx => {
 
     const contactInfo = ctx.request.body;
@@ -31,7 +31,6 @@ router.post('/', async ctx => {
         ctx.response.body = {
             result
         };
-
     } catch (error) {
         ctx.response.status = 500;
         console.error(error);
@@ -39,6 +38,7 @@ router.post('/', async ctx => {
 
 });
 
+// Route to get all the messages
 router.get('/', async ctx => {
     try {
         const messages = await getAllMessages();
@@ -50,7 +50,7 @@ router.get('/', async ctx => {
     }
 });
 
-
+// Route to delete a message
 router.del('/:id', async ctx => {
     const id = ctx.params.id;
     try {

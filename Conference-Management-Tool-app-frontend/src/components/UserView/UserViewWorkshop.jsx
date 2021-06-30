@@ -12,6 +12,7 @@ export class UserViewWorkshop extends Component {
         }
     }
 
+    // Call the endpoint when starting the relevent page 
     componentDidMount() {
         axios.get('http://localhost:3000/papers')
             .then(res => {
@@ -31,7 +32,6 @@ export class UserViewWorkshop extends Component {
                             (workshop.type == "PRESENTER" && workshop.status == "Approved") ?
                                 <div className="col-md-6">
                                     <div className="card bg-dark">
-
                                         <div className="card-header card-header-light card-header-icon">
                                             <div className="card-icon">
                                                 <i className="material-icons">mic</i>

@@ -1,12 +1,6 @@
-// import axios from './axios.service';
 const axios = require('axios');
 
-/**
- * Send email using emailJS web service.
- * "user_id": "user_Swzja6hgJOB3MOMfn8x53"
- * "service_id": "service_727resg"
- * "template_id": "template_7yqrsnk"
- * */
+// Service to send a email 
 const sendEmail = ({
     user_id,
     service_id,

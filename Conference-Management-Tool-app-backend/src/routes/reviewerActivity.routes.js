@@ -4,11 +4,12 @@ const fs = require('fs');
 const mimeTypes = require('mime-types');
 const { getAllPapers, updateStatus } = require('../api/reviewerActivity.api');
 
+// Prefix of the route
 const router = new Router({
     prefix: '/papers'
 });
 
-/** get all research papers. */
+// Route to get all pappers
 router.get('/', async ctx => {
     try {
         const papers = await getAllPapers();
@@ -21,6 +22,7 @@ router.get('/', async ctx => {
     }
 });
 
+// Route to update the status
 router.put('/:id', async ctx => {
     const id = ctx.params.id;
     const review = ctx.request.body;
