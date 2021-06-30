@@ -8,6 +8,7 @@ const membersRoutes = require('../routes/members.routes');
 app.use(membersRoutes.routes()).use(membersRoutes.allowedMethods());
 
 
+//test commiitee member post function
 describe("testing-committe-member-endpoints", () => {
   it("GET /members - success", async () => {
     const { body } = await request(app).get("/members"); //uses the request function that calls on express app instance

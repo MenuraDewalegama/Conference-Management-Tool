@@ -3,22 +3,22 @@ const mineTypes = require('mime-types');
 const fs = require('fs');
 const path = require('path');
 
-/* asestes and internalUser dir */
+/* asestes and committee member dir */
 
 const assetDir = `${process.cwd()}${path.sep}public/assets`;
 const memberDIr = `${assetDir}${path.sep}members`;
 
-
+/* Get all committee members*/ 
 const getAllMembers = async () => {
     return await committeeDao.getAllMembers();
 };
 
-
+/* Get a committee members by passing the ID*/ 
 const getMember = async id =>{
     return await committeeDao.getMember(id);
 }
 
-
+/* Update a committee members by passing the ID*/ 
 const updateMember = async (id,
     { name, designation, information }) => {
 
@@ -30,7 +30,7 @@ const updateMember = async (id,
         return new Promise(async (resolve, reject) => {
 
             try {
-                /* updating the internalUser. */
+                /* updating the member. */
                 const result = await committeeDao.updateMember(id, member);
                 resolve(result);
     
@@ -41,6 +41,7 @@ const updateMember = async (id,
         })
 };
 
+/* Delete a committee members by passing the ID*/ 
 const deleteMember = async id=>{
     return new Promise(async (resolve, reject) =>{
         try {
@@ -52,8 +53,7 @@ const deleteMember = async id=>{
     }) 
 };
 
-/** add internalUser */
-
+/** add Committee member */
 const addMember = async ({  name, designation, information }, ctxSpeecherImage) => {
     const member = {
         name,
@@ -84,7 +84,7 @@ const addMember = async ({  name, designation, information }, ctxSpeecherImage) 
                     fs.unlinkSync(ctxSpeecherImage?.path);
 
                     try {
-                        /** update the image path of internalUser`s */
+                        /** update the image path of member`s */
                         const result = await committeeDao.UpdateMemberImagePath(generateResult.insertedId,
                             { imagePath: dbImagePath });
                         resolve(result);

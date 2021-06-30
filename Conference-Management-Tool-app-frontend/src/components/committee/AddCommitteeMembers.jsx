@@ -1,14 +1,9 @@
+//imports
 import React, { Component } from 'react'
 import { Button, Form } from 'react-bootstrap';
 import axios from 'axios';
-
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
-
-// const toastMsg =
-
-
 export class AddCommitteeMembers extends Component {
 
     constructor(props) {
@@ -24,13 +19,7 @@ export class AddCommitteeMembers extends Component {
     }
 
     componentDidMount() {
-
-        console.log("awa");
-        console.log(this.props.match.params.id);
-        console.log('ID coming from update' + this.props.match.params.id);
-
-
-        //get details of the vehicle if the ID
+        //get details of the member if the ID comes as a parameter
         if (this.props.match.params.id) {
             axios.get(`http://localhost:3000/members/${this.props.match.params.id}`)
                 .then(res => {
@@ -45,7 +34,6 @@ export class AddCommitteeMembers extends Component {
                     console.log(error);
                 })
         }
-
     }
 
     onChange(event) {
@@ -53,6 +41,7 @@ export class AddCommitteeMembers extends Component {
         this.setState({ [name]: value });
     }
 
+    //on submit form
     onSubmit(event) {
         event.preventDefault();
         let member = {
@@ -60,8 +49,6 @@ export class AddCommitteeMembers extends Component {
             designation: this.state.designation,
             information: this.state.information
         }
-        console.log(member);
-
         if (this.state.imageFile) {
             member.imageFile = this.state.imageFile;
         } else {
@@ -70,15 +57,14 @@ export class AddCommitteeMembers extends Component {
         if (member.hasOwnProperty('imagePath') && member.imagePath.length === 0) {
             delete member.imagePath;
         }
-
+        //add data to formData object to pass along with axios post request body
         let formData = new FormData();
         formData.append('name', member.name);
         formData.append('designation', member.designation);
         formData.append('information', member.information);
         formData.append('speecherImage', member.imageFile);
-
-
         if (this.props.match.params.id) {
+            //update
             axios.put(`http://localhost:3000/members/${this.props.match.params.id}`, member)
                 .then(res => {
                     toast.success('Member Updated Successfully', {
@@ -89,7 +75,7 @@ export class AddCommitteeMembers extends Component {
                         pauseOnHover: true,
                         draggable: true,
                         progress: undefined,
-                    });                    
+                    });
                     setTimeout(function () { window.location = '/members'; }, 2000);
                 })
                 .catch(err => {
@@ -98,9 +84,10 @@ export class AddCommitteeMembers extends Component {
         } else {
             axios.post('http://localhost:3000/members', formData)
                 .then((result) => {
+                    //save
                     toast.success('Member Added Successfully', {
                         position: 'top-right',
-                        autoClose: 5000,
+                        autoClose: 2000,
                         hideProgressBar: false,
                         closeOnClick: true,
                         pauseOnHover: true,
@@ -109,9 +96,10 @@ export class AddCommitteeMembers extends Component {
                     });
                     this.setState({
                         name: '',
-                        designation:'',
+                        designation: '',
                         information: ''
                     });
+                    setTimeout(function () { window.location = '/members'; }, 2000);
                 }).catch((err) => {
                     alert(err)
                 });
@@ -130,17 +118,14 @@ export class AddCommitteeMembers extends Component {
     }
 
     render() {
-
         return (
             <div className="container" >
                 <div style={{ marginTop: '5%' }}>
+
                     <h1 style={{ textAlign: 'center' }}>Add Committe Members</h1>
 
-
                     <div className='row'>
-
                         <div className='col-md-6'>
-
                             <div className="card bg-light">
 
                                 <div className="card-header card-header-primary card-header-icon">
@@ -151,11 +136,7 @@ export class AddCommitteeMembers extends Component {
                                 </div>
 
                                 <div className="p-5 card-body mb-3">
-
-
-
                                     <Form onSubmit={this.onSubmit}>
-
                                         <Form.Group controlId="formBasicSubject">
                                             <Form.Label style={{ color: 'black' }}>Name</Form.Label>
                                             <Form.Control name="name"
@@ -197,26 +178,14 @@ export class AddCommitteeMembers extends Component {
                                         <Button type="submit" variant="primary" onClick={() => {
                                         }}>Submit</Button>
 
-
                                     </Form>
-
                                 </div>
-
-
-
                             </div>
-
-
-
                         </div>
                         <div className='col-md-6' style={{ marginTop: '5%' }}>
-
                             <img src="https://assets.entrepreneur.com/content/3x2/2000/20160303162410-businesswoman-speaker-speech-presentation-meeting-conference-talk-seminar-guest.jpeg" style={{ height: '60%', width: '100%' }}></img>
-
                         </div>
-
                     </div>
-
                 </div>
             </div>
         )

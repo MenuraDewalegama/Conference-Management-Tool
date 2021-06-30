@@ -1,9 +1,7 @@
 const Router = require('@koa/router');
-
 const path = require('path');
 const fs = require('fs');
 const mimeTypes = require('mime-types');
-
 const { addExternalUser, getExternalUsers } = require('../api/externalUser.api');
 const { getPasswordbyEmail } = require('../dal/externalUser.dao');
 
@@ -12,12 +10,13 @@ const assetDir = `${process.cwd()}${path.sep}assets`;
 const externalUserDir = `${assetDir}${path.sep}externaluser`;
 const externalUserDefaultDir = `${assetDir}${path.sep}externaluser${path.sep}default.jpg`;
 
+//prefix for the url of external users backend
 const router = new Router({
     prefix: '/externaluser'
 });
 
 
-/** insert a internalUser. */
+/** insert an external user. */
 router.post('/', async ctx => {
 
     const externalUser = ctx.request.body;
@@ -54,7 +53,7 @@ router.post('/', async ctx => {
 
 });
 
-/** get all internalUsers. */
+/** get all external users. */
 router.get('/', async ctx => {
     try {
         const post = await getExternalUsers();

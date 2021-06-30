@@ -1,6 +1,6 @@
 import axios from './axios.service';
 
-/** Get all internal Users by calling backend services.
+/** Get all external Users by calling backend services.
  * @return Promise promise a result. */
  const getAllExternalUsers = () => {
     return new Promise(async (resolve, reject) => {
@@ -13,8 +13,8 @@ import axios from './axios.service';
     });
 };
 
-/** Save a new InernalUser by calling backend services.
- * @param externalUser InernalUser object with and new values but the ID .
+/** Save a new external user by calling backend services.
+ * @param externalUser ExternalUser object with and new values but the ID .
  * @returns Promise promise a result. */
 const saveExternalUser = (externalUser) => {
     return new Promise(async (resolve, reject) => {
@@ -35,7 +35,7 @@ const saveExternalUser = (externalUser) => {
     });
 };
 
-
+//configuring form data object
 const configureFormDataObject = (isAdding, externalUser) => {
     return new Promise((resolve, reject) => {
         try {
@@ -75,10 +75,9 @@ const configureFormDataObject = (isAdding, externalUser) => {
 };
 
 
-/**implemented Add internal User Method into context */
+/**implemented Add external User Method into context */
 
 module.exports = {
-
     saveExternalUser,
     getAllExternalUsers
 };
