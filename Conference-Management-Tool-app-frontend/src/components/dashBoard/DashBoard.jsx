@@ -202,7 +202,12 @@ export default class DashBoard extends React.Component {
                             </div>
                         </div>
                         <hr />
-                        <div className="row">
+                        <div className="row bg-dark text-light">
+                            <div className="container">
+                                <h2 className="center">Post Summery</h2>
+                            </div>
+                        </div>
+                        <div className="row bg-dark">
                             <div className="col-md-4">
                                 <div className="card card-chart">
                                     <div className="card-header card-header-success">
@@ -210,45 +215,13 @@ export default class DashBoard extends React.Component {
                                     </div>
                                     <div className="card-body">
                                         <h4 className="card-title">Conference</h4>
-                                        <p className="card-category">
-                                            <span className="text-success"><i className="fa fa-long-arrow-up"></i> 55% </span> increase in today sales.</p>
+                                        {/* <p className="card-category">
+                                            <span className="text-success"><i className="fa fa-long-arrow-up"></i> 55% </span> increase in today sales.</p> */}
                                     </div>
                                     <div className="card-footer">
                                         <div className="center">
                                             <Link to="/review" className="btn btn-danger">View Research Papers Details</Link>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col-md-4">
-                                <div className="card card-chart">
-                                    <div className="card-header card-header-warning">
-                                        <div className="ct-chart" id="websiteViewsChart"></div>
-                                    </div>
-                                    <div className="card-body">
-                                        <h4 className="card-title">Email Subscriptions</h4>
-                                        <p className="card-category">Last Campaign Performance</p>
-                                    </div>
-                                    <div className="card-footer">
-                                        <div className="stats">
-                                            <i className="material-icons">access_time</i> campaign sent 2 days ago
-                  </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col-md-4">
-                                <div className="card card-chart">
-                                    <div className="card-header card-header-danger">
-                                        <div className="ct-chart" id="completedTasksChart"></div>
-                                    </div>
-                                    <div className="card-body">
-                                        <h4 className="card-title">Completed Tasks</h4>
-                                        <p className="card-category">Last Campaign Performance</p>
-                                    </div>
-                                    <div className="card-footer">
-                                        <div className="stats">
-                                            <i className="material-icons">access_time</i> campaign sent 2 days ago
-                  </div>
                                     </div>
                                 </div>
                             </div>
