@@ -36,8 +36,6 @@ Tech behind the E-Commerce web application:
 ### Prerequisites
 - Required NodeJs version v16.2.0 installed in the system.
 - Required MongoDB installed in the system.
-- Required MongoDB installed IntegrationStudio in the system.
-- Required MongoDB installed WSO2 enterprise integrator in the system.
 
 
 ### Cloning the project
