@@ -14,7 +14,7 @@ export class WorkshopHolder extends Component {
     }
 
     componentDidMount() {
-        axios.get('http://localhost:3000/research-papers')
+        axios.get('http://localhost:3000/papers')
             .then(res => {
                 this.setState({ workshops: res.data })
             }).catch((err) => {
@@ -28,7 +28,7 @@ export class WorkshopHolder extends Component {
                 status: "Approved"
             }
             console.log(research_paper_id);
-            axios.put(`http://localhost:3000/research-papers/${research_paper_id}`, review)
+            axios.put(`http://localhost:3000/papers/${research_paper_id}`, review)
                 .then((result) => {
                     alert('Successfully updated the status');
                     // window.location.reload();
@@ -45,7 +45,7 @@ export class WorkshopHolder extends Component {
                 status: "Rejected"
             }
             console.log(research_paper_id);
-            axios.put(`http://localhost:3000/research-papers/${research_paper_id}`, review)
+            axios.put(`http://localhost:3000/papers/${research_paper_id}`, review)
                 .then((result) => {
                     alert('Successfully updated the status');
                     // window.location.reload();
@@ -152,27 +152,35 @@ export class WorkshopHolder extends Component {
                                                     (() => {
                                                         if (workshop.status == 'Approved') {
                                                             return (
-                                                                <button type="button" className="btn btn-danger"
-                                                                    onClick={event => this.statusUpdate(event, workshop.id, 0, workshop.email, workshop.name)}>
+                                                                <button className="btn btn-danger"
+                                                                    onClick={(e) => { if (window.confirm('Are you sure to reject this document?')) this.statusUpdate(event, workshop.id, 0, workshop.email, workshop.name) }} >
                                                                     Reject
                                                                 </button>
                                                             )
                                                         } else if (workshop.status == 'Rejected') {
                                                             return (
-                                                                <button type="button" className="btn btn-success"
-                                                                    onClick={event => this.statusUpdate(event, workshop.id, 1, workshop.email, workshop.name)}>
+                                                                <button className="btn btn-success"
+                                                                    onClick={(e) => { if (window.confirm('Are you sure to approve this document?')) this.statusUpdate(event, workshop.id, 1, workshop.email, workshop.name) }} >
                                                                     Approve
                                                                 </button>
                                                             )
                                                         } else {
                                                             return (
                                                                 <div>
-                                                                    <button type="button" className="btn btn-danger"
+                                                                    {/* <button type="button" className="btn btn-danger"
                                                                         onClick={event => this.statusUpdate(event, workshop.id, 0, workshop.email, workshop.name)}>
                                                                         Reject
+                                                                    </button> */}
+                                                                    <button className="btn btn-danger"
+                                                                        onClick={(e) => { if (window.confirm('Are you sure to reject this document?')) this.statusUpdate(event, workshop.id, 0, workshop.email, workshop.name) }} >
+                                                                        Reject
                                                                     </button>
-                                                                    <button type="button" className="btn btn-success"
+                                                                    {/* <button type="button" className="btn btn-success"
                                                                         onClick={event => this.statusUpdate(event, workshop.id, 1, workshop.email, workshop.name)}>
+                                                                        Approve
+                                                                    </button> */}
+                                                                    <button className="btn btn-success"
+                                                                        onClick={(e) => { if (window.confirm('Are you sure to approve this document?')) this.statusUpdate(event, workshop.id, 1, workshop.email, workshop.name) }} >
                                                                         Approve
                                                                     </button>
                                                                 </div>

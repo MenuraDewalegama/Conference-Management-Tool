@@ -12,6 +12,7 @@ import 'react-phone-input-2/lib/style.css'
 import 'react-slideshow-image/dist/styles.css'
 import { Zoom } from 'react-slideshow-image';
 import Payment from '../Register/Payment';
+import { toast } from 'react-toastify';
 
 
 //declaring constants
@@ -31,6 +32,19 @@ const slideProperties = {
     scale: 0.8,
     arrows: false
 }
+
+
+const notify = () =>
+    toast.error('All the items Removed from Cart', {
+        position: 'top-right',
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+    });
+
 
 export default class Register extends React.Component {
 
@@ -110,15 +124,32 @@ export default class Register extends React.Component {
         if (this.state.password == this.state.password2) {
             axios.post('http://localhost:3000/externaluser/', formData)
                 .then(res => {
-                    alert('Successfully added');
+                    toast.success('User Registratrion Successfull!', {
+                        position: 'top-right',
+                        autoClose: 2000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                    });
                     console.log(res);
-                    window.location.reload();
+                    
+                    setTimeout(function () { window.location = '/'; }, 2000);
                 })
                 .catch(err => {
                     alert(err.message)
                 });
         } else {
-            alert('Passwords not matching');
+            toast.error('Passwords not matching!', {
+                position: 'top-right',
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
         }
     }
 

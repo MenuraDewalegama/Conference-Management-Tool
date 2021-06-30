@@ -4,7 +4,7 @@ const path = require('path');
 const fs = require('fs');
 const mimeTypes = require('mime-types');
 
-const { addExternalUser } = require('../api/externalUser.api');
+const { addExternalUser, getExternalUsers } = require('../api/externalUser.api');
 const { getPasswordbyEmail } = require('../dal/externalUser.dao');
 
 /* assets and products dir */
@@ -54,5 +54,16 @@ router.post('/', async ctx => {
 
 });
 
+/** get all internalUsers. */
+router.get('/', async ctx => {
+    try {
+        const post = await getExternalUsers();
+        ctx.response.status = 200;
+        ctx.response.type = 'application/json';
+        ctx.response.body = JSON.stringify(post);
+    } catch (error) {
+        ctx.response.status = 500;
+    }
+});
 
 module.exports = router;

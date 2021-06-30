@@ -26,17 +26,17 @@ export class RegisterHome extends Component {
                 <div className="slide-container" style={{ width: 'auto', height: 'auto', marginRight: '20%', marginLeft: '20%' }}>
                     <Slide  {...slideProperties}>
                         <div className="each-slide">
-                            <div style={{ 'backgroundImage': `url(${slideImages[0]})`, width: '100%', height: '10cm', objectFit: "inherit", textAlign: "center" }}>
+                            <div style={{ 'backgroundImage': `url(${slideImages[0]})`, width: '100%', height: '10cm', objectFit: "inherit", textAlign: "center",borderRadius:'5%' }}>
                                 <span>Slide 1</span>
                             </div>
                         </div>
                         <div className="each-slide">
-                            <div style={{ 'backgroundImage': `url(${slideImages[1]})`, width: '100%', height: '10cm', objectFit: "inherit", textAlign: "center" }}>
+                            <div style={{ 'backgroundImage': `url(${slideImages[1]})`, width: '100%', height: '10cm', objectFit: "inherit", textAlign: "center" ,borderRadius:'5%'}}>
                                 <span>Slide 2</span>
                             </div>
                         </div>
                         <div className="each-slide">
-                            <div style={{ 'backgroundImage': `url(${slideImages[2]})`, width: '100%', height: '10cm', objectFit: "inherit" }}>
+                            <div style={{ 'backgroundImage': `url(${slideImages[2]})`, width: '100%', height: '10cm', objectFit: "inherit",textAlign: "center", borderRadius:'5%' }}>
                                 <span>Slide 3</span>
                             </div>
                         </div>
@@ -46,20 +46,17 @@ export class RegisterHome extends Component {
                 <h1>
                     Hurry Up! Reserve your Seat Now!
                 </h1>
-                <hr></hr>
-                <div style={{ marginLeft: '20%', marginRight: '20%' }}>
+                <div style={{ marginLeft: '20%', marginRight: '20%',backgroundColor:'white', padding:'1%',borderRadius:'10%' }}>
                     <Countdown />
                 </div>
-                <hr></hr>
                 <br></br>
-                {/* <img style={{ marginTop: '1%', marginBottom: '2%', objectFit: "inherit", textAlign: "center", width: "15cm", height: '5cm', borderRadius: "10px" }} src="https://www.marsdd.com/wp-content/uploads/2020/01/blog-tech-conferences.jpg"></img> */}
 
 
                 <div className="slide-container">
 
                 </div>
-                <Button style={{ fontSize: '25px' }} onClick={() => performRegister()}>
-                    Register
+                <Button style={{ fontSize: '25px', boxShadow:'2px 5px 10px purple' }} onClick={() => performRegister()}>
+                    Register Now
                 </Button>
 
                 <div className="container" style={{marginTop:'2%'}}>

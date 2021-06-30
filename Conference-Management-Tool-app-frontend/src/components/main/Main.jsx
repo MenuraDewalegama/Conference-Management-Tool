@@ -18,10 +18,10 @@ import CommitteeMembers from '../committee/ViewComMembers';
 import AdminViewComMembers from '../committee/AdminViewComMembers';
 import NoMatchingRecordFound from '../common/NoMatchingRecordFound';
 import {ConferencePostContext} from '../../context/conference-post.context';
+import ReviewContactUS from '../ContactUs/ReviewContactUS';
 
 /* functional component. */
 const Main = () => {
-
     const context = useContext(ConferencePostContext);
 
     return (
@@ -32,16 +32,14 @@ const Main = () => {
                 <Route exact path="/conferences">
                     <ConferenceHolder/>
                 </Route>
-                <Route exact path="/conferences/add"
-                       render={(props) => ((true) ? // IF user is an editor = true
-                           <AddEditConferencePost {...props} isAdding={true}
-                                                  saveOrUpdate={context.addConferencePost}/> :
-                           <Redirect to="/"/>)}/>
-                <Route exact path="/conferences/:conferencePostID/edit"
-                       render={(props) => ((true) ? // IF user is an editor = true
-                           <AddEditConferencePost {...props} isAdding={false}
-                                                  saveOrUpdate={context.editConferencePost}/> :
-                           <Redirect to="/"/>)}/>
+                <Route exact path="/conferences/add" render={(props) => (true) ? (  // IF user is an editor = true
+                        <AddEditConferencePost{...props} isAdding={true} saveOrUpdate={context.addConferencePost}/>) :
+                    (<Redirect to="/"/>)}
+                />
+                <Route exact path="/conferences/:conferencePostID/edit" render={(props) => (true) ? ( // IF user is an editor = true
+                        <AddEditConferencePost{...props} isAdding={false} saveOrUpdate={context.editConferencePost}/>) :
+                    (<Redirect to="/"/>)}
+                />
                 <Route exact path="/no-matching-record-found">
                     <NoMatchingRecordFound/>
                 </Route>
@@ -66,6 +64,7 @@ const Main = () => {
                 <Route exact path="/login" component={LoginHolder}/>
                 <Route exact path="/internal/login" component={InternalLoginHolder}/>
                 <Route path="/review/project-proposals" component={WorkshopHolder}/>
+                <Route path="/review/contact-us" component={ReviewContactUS}/>
             </Switch>
         </div>
     );
