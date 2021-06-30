@@ -12,6 +12,11 @@ const DashboardContext = React.createContext({
     },
     getAllExternalUsers: () => {
     },
+    getInternalUserByemail:  (email) => {
+    },
+    getExternalUserByemail:  (email) => {
+    },
+    
 });
 
 class DashboardProvider extends Component {
@@ -19,7 +24,8 @@ class DashboardProvider extends Component {
         super(props);
         this.state = {
             internalUsers: [],
-            externalUsers: []
+            externalUsers: [],
+            loginUser: null
         };
     }
 
@@ -30,7 +36,7 @@ class DashboardProvider extends Component {
             await this.getAllInternalUsers();
             await this.getAllExternalUsers();
         } catch (error) {
-            console.log(error);
+            console.log(this.state.loginUser);
         }
     }
 
@@ -69,6 +75,52 @@ class DashboardProvider extends Component {
             }
         });
     }
+
+    getInternalUserByemail(email) {
+        return new Promise(async (resolve, reject) => {
+
+            const requestedInternalUser = this.state.internalUsers.find(internalUserElem => (internalUserElem?.email === email));
+            if (requestedInternalUser) {
+                resolve(requestedInternalUser);
+            } else {
+                try {
+                    const response = await InternalUserService.getInternalUserByEmail(email);
+                    /* if matching record found. then resolve it. */
+                    if (response.status === 200) {
+                        /* 200 - OK. */
+                        const retrievedInternalUser = JSON.parse(response.data);
+                        this.setState(((prevState) => prevState.internalUsers.unshift(retrievedInternalUser)));
+                        resolve(retrievedInternalUser);
+                    }
+                } catch (error) {
+                    reject(error);
+                }
+            }
+        });
+    }
+
+    getExternalUserByemail(email) {
+        return new Promise(async (resolve, reject) => {
+
+            const requestedExternalUser = this.state.externalUsers.find(externalUserElem => (externalUserElem?.email === email));
+            if (requestedExternalUser) {
+                resolve(requestedExternalUser);
+            } else {
+                try {
+                    const response = await ExternalUserService.getExternalUserByEmail(email);
+                    /* if matching record found. then resolve it. */
+                    if (response.status === 200) {
+                        /* 200 - OK. */
+                        const retrievedInternalUser = JSON.parse(response.data);
+                        this.setState(((prevState) => prevState.internalUsers.unshift(retrievedInternalUser)));
+                        resolve(retrievedInternalUser);
+                    }
+                } catch (error) {
+                    reject(error);
+                }
+            }
+        });
+    }
     render() {
         return (
             <DashboardContext.Provider value={{
@@ -76,6 +128,8 @@ class DashboardProvider extends Component {
                 externalUsers: this.state.externalUsers,
                 getAllInternalUsers: this.getAllInternalUsers.bind(this),
                 getAllExternalUsers: this.getAllExternalUsers.bind(this),
+                getInternalUserByemail: this.getInternalUserByemail.bind(this),
+                getExternalUserByemail: this.getExternalUserByemail.bind(this),
             }
             }>
                 {this.props.children}

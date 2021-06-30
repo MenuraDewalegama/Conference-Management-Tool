@@ -2,9 +2,10 @@ import React, { Component } from 'react'
 import { Card, Button, Form } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import axios from '../../service/axios.service';
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { DashboardContext } from '../../context/dashboard.context'
+
 export class Login extends Component {
+    static contextType = DashboardContext;
     constructor(props) {
         super(props);
         this.state = {
@@ -30,44 +31,21 @@ export class Login extends Component {
                 window.location = '/dashboard';
 
             } else {
-                axios.get(`http://localhost:3000/login/${this.state.email}`)
-                    .then(res => {
-                        console.log(res);
-                        if (res.data == this.state.password) {
-                            toast.success('Login successfull!', {
-                                position: 'top-right',
-                                autoClose: 1000,
-                                hideProgressBar: false,
-                                closeOnClick: true,
-                                pauseOnHover: true,
-                                draggable: true,
-                                progress: undefined,
-                            });
-                            setTimeout(function () { window.location = '/'; }, 1000);
+                this.context.getExternalUserByemail(this.state.email).then(internalUserElem => {
+                    console.log(internalUserElem);
+                    this.context.loginUser = this.state.email;
+                    if (internalUserElem.password == this.state.password) {
+                        alert('Successfully loged in');
+                        localStorage.setItem('User', internalUserElem.name);
+                        localStorage.setItem('UserType', this.state.type);
+                        window.location = '/';
 
-                        } else {
-                            toast.warning('Login Unsuccessfull!', {
-                                position: 'top-right',
-                                autoClose: 2000,
-                                hideProgressBar: false,
-                                closeOnClick: true,
-                                pauseOnHover: true,
-                                draggable: true,
-                                progress: undefined,
-                            });
-                        }
-                    })
-                    .catch(err => {
-                        toast.warning('Login Unsuccessfull!', {
-                            position: 'top-right',
-                            autoClose: 2000,
-                            hideProgressBar: false,
-                            closeOnClick: true,
-                            pauseOnHover: true,
-                            draggable: true,
-                            progress: undefined,
-                        });
-                    });
+                    } else {
+                        alert('Invalid Credentials')
+                    }
+                }).catch(err => {
+                    alert('Invalid credentials')
+                });
             }
         } else {
             alert('Please Enter values');
@@ -77,7 +55,7 @@ export class Login extends Component {
     render() {
         return (
             <div>
-                <Card border="dark" style={{ width: 'auto', height: 'auto', marginLeft: '40%', marginRight: '40%', marginTop: '5%', marginBottom: '10%', padding: '10px', backgroundColor: 'white' }}>
+                <Card border="dark" style={{ width: 'auto', height: 'auto', marginLeft: '40%', marginRight: '40%', marginTop: '10%', marginBottom: '10%', padding: '10px', backgroundColor: 'white' }}>
                     <div className="card-header card-header-primary card-header-icon">
                         <div className="card-icon">
                             <h3>Login</h3>
@@ -110,7 +88,6 @@ export class Login extends Component {
                         </div>
                     </Form>
                 </Card>
-
             </div>
         )
     }

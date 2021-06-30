@@ -2,8 +2,13 @@ import React, { Component } from 'react'
 import { Card, Button, Form } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import axios from '../../service/axios.service';
+import { DashboardContext } from '../../context/dashboard.context'
 
 export class InternalLogin extends Component {
+    
+    static contextType = DashboardContext;
+ 
+
     constructor(props) {
         super(props);
         this.state = {
@@ -23,24 +28,25 @@ export class InternalLogin extends Component {
     onSubmit() {
         event.preventDefault();
         if (this.state.password != '' && this.state.email != '') {
-            axios.get(`http://localhost:3000/login/internal/${this.state.email}`)
-                .then(res => {
-                    console.log(res.data);
-                    if (res.data.password == this.state.password) {
+                this.context.getInternalUserByemail(this.state.email).then(internalUserElem => {
+                    console.log(internalUserElem);
+                    if (internalUserElem.password == this.state.password) {
                         alert('Successfully loged in');
-                        if (res.data.type == 'admin') {
+                        if (internalUserElem.type == 'Admin') {
                             window.location = '/dashboard';
-                        } else if (res.data.type == 'Writer') {
+                        } else if (internalUserElem.type == 'Editor') {
                             //should be edited
                             window.location = '/';
-                        } else if (res.data.type == 'Reviewer') {
+                        } else if (internalUserElem.type == 'Reviewer') {
                             window.location = '/review';
                         }
+                        localStorage.setItem('User', internalUserElem.firstName);
+                        localStorage.setItem('UserType', this.state.type);
+                        console.log(this.context.loginUser );
                     } else {
                         alert('Invalid Credentials')
                     }
-                })
-                .catch(err => {
+                }).catch(err => {
                     alert('Invalid credentials')
                 });
 
