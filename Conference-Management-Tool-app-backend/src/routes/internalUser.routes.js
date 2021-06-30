@@ -48,7 +48,10 @@ router.get('/:id', async ctx => {
 
 /** insert a internalUser. */
 router.post('/', async ctx => {
+
     const internalUser = ctx.request.body;
+    console.log("route eke")
+    console.log(internalUser);
     if (internalUser?._id || internalUser?._id === '' || internalUser?._id >= 0) {
         ctx.response.type = 'application/json';
         ctx.response.status = 400; // bad request
@@ -61,6 +64,7 @@ router.post('/', async ctx => {
                 fullName: internalUser.fullName,
                 contactNo: internalUser.contactNo,
                 email: internalUser.email,
+                password: internalUser.password,
                 type: internalUser.type
             }, ctx.request.files?.internalUserImage);
             ctx.response.type = 'application/json';
@@ -85,7 +89,7 @@ router.put('/:id', async ctx => {
 
     /* check whether there is a matching record for the given id. */
     try {
-        const result = await getInternalUsers(id);
+        const result = await getInternalUser(id);
         existingInternalUserRecord = result;
         if (!result) {
             /* if no record found. */
@@ -108,6 +112,7 @@ router.put('/:id', async ctx => {
                 contactNo: internalUser.contactNo,
                 email: internalUser.email,
                 type: internalUser.type,
+                password: internalUser.password,
                     imagePath: (internalUser?.imagePath?.length === 0) ? null : internalUser?.imagePath
                 },
                 ctx.request.files?.internalUserImage,
@@ -138,7 +143,7 @@ router.del('/:id', async ctx => {
                 const result = await deleteInternalUser(id);
                 if (result?.deletedCount === 1) {
                     /* record delete successfully. */
-                    ctx.response.status = 204;
+                    ctx.response.status = 200;
                 } else {
                     /* something went wrong with delete operation. */
                     ctx.response.status = 500;

@@ -1,0 +1,6 @@
+.title_styles{
+    text-transform: capitalize;
+    font-weight: 200;
+    position: relative;
+    bottom: 0.5rem;
+}
