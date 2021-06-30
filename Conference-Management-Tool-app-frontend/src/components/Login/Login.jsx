@@ -36,15 +36,15 @@ export class Login extends Component {
                         if (res.data == this.state.password) {
                             toast.success('Login successfull!', {
                                 position: 'top-right',
-                                autoClose: 2000,
+                                autoClose: 1000,
                                 hideProgressBar: false,
                                 closeOnClick: true,
                                 pauseOnHover: true,
                                 draggable: true,
                                 progress: undefined,
                             });
-                            setTimeout(function () {  window.location = '/'; }, 2000);
-                           
+                            setTimeout(function () { window.location = '/'; }, 1000);
+
                         } else {
                             toast.warning('Login Unsuccessfull!', {
                                 position: 'top-right',
@@ -54,7 +54,8 @@ export class Login extends Component {
                                 pauseOnHover: true,
                                 draggable: true,
                                 progress: undefined,
-                            });                        }
+                            });
+                        }
                     })
                     .catch(err => {
                         toast.warning('Login Unsuccessfull!', {
@@ -65,7 +66,7 @@ export class Login extends Component {
                             pauseOnHover: true,
                             draggable: true,
                             progress: undefined,
-                        }); 
+                        });
                     });
             }
         } else {
@@ -76,7 +77,7 @@ export class Login extends Component {
     render() {
         return (
             <div>
-                <Card border="dark" style={{ width: 'auto', height: 'auto', marginLeft: '40%', marginRight: '40%', marginTop: '10%', marginBottom: '10%', padding: '10px', backgroundColor: 'white' }}>
+                <Card border="dark" style={{ width: 'auto', height: 'auto', marginLeft: '40%', marginRight: '40%', marginTop: '5%', marginBottom: '10%', padding: '10px', backgroundColor: 'white' }}>
                     <div className="card-header card-header-primary card-header-icon">
                         <div className="card-icon">
                             <h3>Login</h3>
@@ -109,6 +110,7 @@ export class Login extends Component {
                         </div>
                     </Form>
                 </Card>
+
             </div>
         )
     }

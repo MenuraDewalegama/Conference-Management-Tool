@@ -1,9 +1,7 @@
 const Router = require('@koa/router');
-
 const path = require('path');
 const fs = require('fs');
 const mimeTypes = require('mime-types');
-
 const { addMember, getMember, getAllMembers,updateMember ,deleteMember} = require('../api/committee.api');
 
 /* assets and products dir */
@@ -11,24 +9,22 @@ const assetDir = `${process.cwd()}${path.sep}assets`;
 const speechesDir = `${assetDir}${path.sep}speeches`;
 const speechesDefaultDir = `${assetDir}${path.sep}speeches${path.sep}default.jpg`;
 
+//define prefix for members in backend
 const router = new Router({
     prefix: '/members'
 });
 
 
-/** insert a internalUser. */
+/** insert a member. */
 router.post('/', async ctx => {
-
     const member = ctx.request.body;
-
     if (member?._id || member?._id === '' || member?._id >= 0) {
         ctx.response.type = 'application/json';
         ctx.response.status = 400; // bad request
         ctx.response.message = 'Error: Key note member id should not be specified.';
         return;
     }
-
-    try { /* add the externaluser. */
+    try { 
         const generatedResult = await addMember({
             name: member.name,
             designation: member.designation,
@@ -47,6 +43,7 @@ router.post('/', async ctx => {
 
 });
 
+//get member
 router.get('/', async ctx => {
     try {
         const post = await getAllMembers();
@@ -58,15 +55,12 @@ router.get('/', async ctx => {
     }
 });
 
-
+//update member
 router.put('/:id', async ctx => {
     const id = ctx.params.id;
-
-    /* read the request body and get the internalUser details. */
+    /* read the request body and get the member details. */
     let member = ctx.request.body;
-
-
-    try { /* update the internalUser. */
+    try { /* update the member. */
         const result = await updateMember(id, {
             name: member.name,
             designation: member.designation,
@@ -82,9 +76,9 @@ router.put('/:id', async ctx => {
         ctx.response.status = 500; // internal server error.
         console.error(error);
     }
-
 });
 
+//get member by ID
 router.get('/:id', async ctx => {
     const id = ctx.params.id;
     try {
@@ -98,7 +92,6 @@ router.get('/:id', async ctx => {
         }
     } catch (error) {
         ctx.response.status = 500;
-        // console.log(error);
         console.log(ctx.params.id);
     }
 });
@@ -108,7 +101,6 @@ router.get('/:id', async ctx => {
 /** delete a member  by given ID. */
 router.del('/:id', async ctx => {
     const id = ctx.params.id;
-
     try {
         const result = await getMember(id);
         console.log(result);

@@ -10,12 +10,13 @@ const addExternalUser = async ({ email, name, contactNo, password, type, activit
     return await ExternalUsers.save({ email, name, contactNo, password, type, activityType, category, activityInformation, status, imagePath })
 }
 
-
+//update external user image path
 const updateExternaluserImagePath = async (id, { imagePath }) => {
     return await ExternalUsers.update(id, { imagePath });
 };
 
-const getAllExternalUsers = async ()=>{
+//get all external users
+const getAllExternalUsers = async () => {
     return await ExternalUsers.findAll();
 };
 

@@ -3,12 +3,12 @@ const mineTypes = require('mime-types');
 const fs = require('fs');
 const path = require('path');
 
-/* asestes and internalUser dir */
+/* asestes and externaluser dir */
 
 const assetDir = `${process.cwd()}${path.sep}public/assets`;
 const externalUserDir = `${assetDir}${path.sep}externaluser`;
 
-/** add internalUser */
+/** add external user */
 
 const addExternalUser = async ({ email, name, contactNo, password, type, activityType, category, activityInformation, status }, ctxExternalUserImage) => {
     const externalUser = {
@@ -46,7 +46,7 @@ const addExternalUser = async ({ email, name, contactNo, password, type, activit
                     fs.unlinkSync(ctxExternalUserImage?.path);
 
                     try {
-                        /** update the image path of internalUser`s */
+                        /** update the image path of external user`s */
                         const result = await externalUserDao.updateExternaluserImagePath(generateResult.insertedId,
                             { imagePath: dbImagePath });
                         resolve(generateResult);
@@ -71,9 +71,12 @@ const addExternalUser = async ({ email, name, contactNo, password, type, activit
     });
 };
 
+/**get all external users */
 const getExternalUsers = async () => {
     return await externalUserDao.getAllExternalUsers();
 };
+
+
 
 module.exports = {
     addExternalUser,
