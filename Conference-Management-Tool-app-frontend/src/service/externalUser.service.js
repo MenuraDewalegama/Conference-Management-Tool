@@ -1,5 +1,17 @@
 import axios from './axios.service';
 
+/** Get all internal Users by calling backend services.
+ * @return Promise promise a result. */
+ const getAllExternalUsers = () => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const result = await axios.get(`${process.env.CONFERENCE_MANAGEMENT_BACKEND_API_URL}internaluser`);
+            resolve(result);
+        } catch (error) {
+            reject(error);
+        }
+    });
+};
 
 /** Save a new InernalUser by calling backend services.
  * @param externalUser InernalUser object with and new values but the ID .
@@ -67,6 +79,6 @@ const configureFormDataObject = (isAdding, externalUser) => {
 
 module.exports = {
 
-    saveExternalUser
-
+    saveExternalUser,
+    getAllExternalUsers
 };
