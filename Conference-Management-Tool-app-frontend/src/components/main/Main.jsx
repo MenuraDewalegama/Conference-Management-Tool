@@ -13,8 +13,9 @@ import RegisterHome from '../Register/RegisterHome';
 import ContactUs from '../ContactUs/ContactUs';
 import UserViewResearchPaper from '../UserView/UserViewResearchPaper';
 import UserViewWorkshop from '../UserView/UserViewWorkshop';
-import AddCommitteeMembers from '../committee/CommitteeMembers';
+import AddCommitteeMembers from '../committee/AddCommitteeMembers';
 import CommitteeMembers from '../committee/ViewComMembers';
+import AdminViewComMembers from '../committee/AdminViewComMembers';
 
 /* functional component. */
 const Main = () => {
@@ -46,15 +47,11 @@ const Main = () => {
                 <Route path="/contact-us" component={ContactUs} />
                 <Route path="/research-papers" component={UserViewResearchPaper} />
                 <Route path="/workshops" component={UserViewWorkshop} />
-
-                <Route path="/add-members" component={AddCommitteeMembers} />
+                <Route exact path="/add-members/:id" component={AddCommitteeMembers} />
+                <Route path="/add-members/" component={AddCommitteeMembers} />
                 <Route path="/members" component={CommitteeMembers} />
-
-                <Route
-                    exact
-                    path="/review/research-papers"
-                    component={ResearchPaperHolder}
-                />
+                <Route path="/internal/members" component={AdminViewComMembers} />
+                <Route exact path="/review/research-papers"component={ResearchPaperHolder}/>
                 <Route exact path="/login" component={LoginHolder}/>
                 <Route exact path="/internal/login" component={InternalLoginHolder}/>
                 <Route path="/review/project-proposals" component={WorkshopHolder}/>

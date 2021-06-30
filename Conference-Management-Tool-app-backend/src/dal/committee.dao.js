@@ -19,7 +19,23 @@ const getAllMembers = async ()=>{
     return await Members.findAll();
 };
 
+const deleteMember = async id =>{
+    return await Members.delete(id);
+}
+
+const getMember = async id =>{
+    return await Members.findById(id);
+}
+
+const updateMember = async(id, {name, designation, information })=>{
+    const member = {
+        name, 
+        designation, 
+        information, 
+         }
+    return await Members.update(id,member);
+}
 
 module.exports = {
-    addMember, UpdateMemberImagePath,getAllMembers
+    addMember, UpdateMemberImagePath,getAllMembers,deleteMember,getMember,updateMember
 }
