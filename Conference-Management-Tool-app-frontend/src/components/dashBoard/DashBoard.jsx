@@ -33,7 +33,7 @@ export default class DashBoard extends React.Component {
         for (let index = 0; index < userCount.length; index++) {
             if (userCount[index].type == "Editor") {
                 editorCount.push(userCount[index])
-            } else if (userCount[index].type == "Reviewer"){
+            } else if (userCount[index].type == "Reviewer") {
                 reviewerCount.push(userCount[index])
             }
         }
@@ -41,9 +41,9 @@ export default class DashBoard extends React.Component {
         for (let index = 0; index < extrenalUserCount.length; index++) {
             if (extrenalUserCount[index].type == "ATTENDEE") {
                 AttendeeCount.push(extrenalUserCount[index])
-            } else if (extrenalUserCount[index].type == "PRESENTER"){
+            } else if (extrenalUserCount[index].type == "PRESENTER") {
                 PrasenterCount.push(extrenalUserCount[index])
-            } else if (extrenalUserCount[index].type == "RESEARCHER"){
+            } else if (extrenalUserCount[index].type == "RESEARCHER") {
                 ResearcherCount.push(extrenalUserCount[index])
             }
         }
@@ -54,10 +54,118 @@ export default class DashBoard extends React.Component {
             <div className="container">
                 <div className="row">
                     <div className="col-md-12">
-                        <div className="row">
-                            <div className="col-md-3">
+                        <hr />
+                        <div className="row bg-dark text-light">
+                            <div className="container">
+                                <h2 className="center">Research Papers & Workshops Summary</h2>
+                            </div>
+                        </div>
+                        <div className="row bg-dark">
+                            <div className="col-lg-4">
                                 <div className="card card-stats">
-                                    <div className="card-header card-header-dark card-header-icon">
+                                    <div className="card-header card-header-danger card-header-icon">
+                                        <div className="card-icon">
+                                            <i className="material-icons">info_outline</i>
+                                        </div>
+                                        <p className="card-category text-danger">Reseach Papers</p>
+                                        <h3 className="card-title text-danger">{ResearcherCount.length}</h3>
+                                    </div>
+                                    <div className="card-footer">
+                                        <div className="center">
+                                            <Link to="/review" className="btn btn-danger">View Research Papers Details</Link>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-lg-4">
+                                <div className="card card-stats">
+                                    <div className="card-header card-header-info card-header-icon">
+                                        <div className="card-icon">
+                                            <i className="fa fa-user-circle"></i>
+                                        </div>
+                                        <p className="card-category text-info">Work Shops</p>
+                                        <h3 className="card-title text-info">{PrasenterCount.length}</h3>
+                                    </div>
+                                    <div className="card-footer">
+                                        <div className="center">
+                                            <Link to="/review" className="btn btn-info">View Work Shops Details</Link>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-lg-4">
+                                <div className="card card-stats">
+                                    <div className="card-header card-header-success card-header-icon">
+                                        <div className="card-icon">
+                                            <i className="fa fa-user-circle"></i>
+                                        </div>
+                                        <p className="card-category text-success">User Feedback</p>
+                                        <h3 className="card-title text-success">{PrasenterCount.length}</h3>
+                                    </div>
+                                    <div className="card-footer">
+                                        <div className="center">
+                                            <Link to="/review" className="btn btn-success">User Feedback Summery</Link>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr />
+                        <div className="row bg-dark text-light">
+                            <div className="container">
+                                <h2 className="center">Internal & External Users Summary</h2>
+                            </div>
+                        </div>
+                        <div className="row bg-dark">
+                            <div className="col-lg-6">
+                                <div className="card card-stats">
+                                    <div className="card-header card-header-warning card-header-icon">
+                                        <div className="card-icon">
+                                            <i className="material-icons">people_alt</i>
+                                            <br />
+                                            <br />
+                                            <br />
+                                            <i className="material-icons">science</i>
+                                            <br />
+                                            <br />
+                                            <br />
+                                            <i className="material-icons">border_color</i>
+                                            <br />
+                                            <br />
+                                            <br />
+                                            <i className="material-icons">border_color</i>
+                                        </div>
+                                        <br />
+                                        <div>
+                                            <p className="card-category">Total External Users</p>
+                                            <h3 className="card-title">{extrenalUserCount.length}</h3>
+                                        </div>
+                                        <hr />
+                                        <div>
+                                            <p className="card-category">Attendee Count</p>
+                                            <h3 className="card-title">{AttendeeCount.length}</h3>
+                                        </div>
+                                        <hr />
+                                        <div>
+                                            <p className="card-category">Prasenter Count</p>
+                                            <h3 className="card-title">{PrasenterCount.length}</h3>
+                                        </div>
+                                        <hr />
+                                        <div>
+                                            <p className="card-category">Researcher Count</p>
+                                            <h3 className="card-title">{ResearcherCount.length}</h3>
+                                        </div>
+                                    </div>
+                                    <div className="card-footer">
+                                        <div className="center">
+                                            <Link to="/dashboard/externalusers" className="btn btn-warning">View Users</Link>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-md-6">
+                                <div className="card card-stats">
+                                    <div className="card-header card-header-primary card-header-icon">
                                         <div className="card-icon">
                                             <i className="material-icons">people_alt</i>
                                             <br />
@@ -87,86 +195,13 @@ export default class DashBoard extends React.Component {
                                     </div>
                                     <div className="card-footer">
                                         <div className="center">
-                                            <Link to="/dashboard/internalusers" className="btn btn-info">View Users</Link>
+                                            <Link to="/dashboard/internalusers" className="btn btn-primary">View Users</Link>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col-lg-3">
-                                <div className="card card-stats">
-                                    <div className="card-header card-header-warning card-header-icon">
-                                        <div className="card-icon">
-                                            <i className="material-icons">people_alt</i>
-                                            <br />
-                                            <br />
-                                            <br />
-                                            <i className="material-icons">science</i>
-                                            <br />
-                                            <br />
-                                            <br />
-                                            <i className="material-icons">border_color</i>
-                                        </div>
-                                        <br />
-                                        <div>
-                                            <p className="card-category">Total External Users</p>
-                                            <h3 className="card-title">{extrenalUserCount.length}</h3>
-                                        </div>
-                                        <hr />
-                                        <div>
-                                            <p className="card-category">Attendee Count</p>
-                                            <h3 className="card-title">{AttendeeCount.length}</h3>
-                                        </div>
-                                        <hr />
-                                        <div>
-                                            <p className="card-category">Prasenter Count</p>
-                                            <h3 className="card-title">{PrasenterCount.length}</h3>
-                                        </div>
-                                        <hr />
-                                        <div>
-                                            <p className="card-category">Researcher Count</p>
-                                            <h3 className="card-title">{ResearcherCount.length}</h3>
-                                        </div>
-                                    </div>
-                                    <div className="card-footer">
-                                        <div className="center">
-                                            <Link to="/dashboard/externalusers" className="btn btn-info">View Users</Link>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col-lg-3">
-                                <div className="card card-stats">
-                                    <div className="card-header card-header-danger card-header-icon">
-                                        <div className="card-icon">
-                                            <i className="material-icons">info_outline</i>
-                                        </div>
-                                        <p className="card-category">Reseach Papers</p>
-                                        <h3 className="card-title">75</h3>
-                                    </div>
-                                    <div className="card-footer">
-                                        <div className="stats">
-                                            <i className="material-icons">local_offer</i> View More...
-                  </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col-lg-3">
-                                <div className="card card-stats">
-                                    <div className="card-header card-header-info card-header-icon">
-                                        <div className="card-icon">
-                                            <i className="fa fa-user-circle"></i>
-                                        </div>
-                                        <p className="card-category">Followers</p>
-                                        <h3 className="card-title">+245</h3>
-                                    </div>
-                                    <div className="card-footer">
-                                        <div className="stats">
-                                            <i className="material-icons">update</i> Just Updated
-                  </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <hr />
                         <div className="row">
                             <div className="col-md-4">
                                 <div className="card card-chart">
