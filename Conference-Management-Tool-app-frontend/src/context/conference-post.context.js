@@ -81,6 +81,18 @@ class ConferencePostProvider extends Component {
         });
     }
 
+        /** approve a conference post by ID. */
+        _approveConferencePost(conferencePostID) {
+            console.log('Approve conference post using context!');
+            return new Promise(async (resolve, reject) => {
+                try {
+                    resolve(await conferencePostService.approveConferencePost(conferencePostID));
+                } catch (error) {
+                    reject(error);
+                }
+            });
+        }
+
     render() {
         return (
             <ConferencePostContext.Provider
@@ -90,7 +102,8 @@ class ConferencePostProvider extends Component {
                         addConferencePost: this._addConferencePost.bind(this),
                         editConferencePost: this._editConferencePost.bind(this),
                         deleteConferencePost: this._deleteConferencePost.bind(this),
-                        getConferencePostByID: this._getConferencePostByID.bind(this)
+                        getConferencePostByID: this._getConferencePostByID.bind(this),
+                        approveConferencePost: this._approveConferencePost.bind(this)
                     }
                 }>
                 {this.props.children}

@@ -7,6 +7,7 @@ const Router = require('@koa/router');
 const conferencePostAPI = require('../api/conference-post-v2.api');
 const commonValidation = require('./validation/common.validation');
 const conferencePostV2Validation = require('./validation/conference-post-v2.validation');
+const { approvePost } = require('../api/conference-post-v2.api')
 
 const router = new Router({
     prefix: '/api/v2/conferences'
@@ -133,6 +134,33 @@ router.post('/', async (ctx) => {
     }
 });
 
+
+
+/** update the internalUser by given ID. */
+router.put('/approve/:id', async ctx => {
+    const conferencePostID = ctx.request.params.id;
+    let existingInternalUserRecord;
+    console.log(ctx.request.body);
+
+
+    /* check whether there is a matching record for the given id. */
+    try {
+        const result = await approvePost(conferencePostID);
+        existingInternalUserRecord = result;
+        if (!result) {
+            /* if no record found. */
+            ctx.response.status = 200;
+        }
+    } catch (error) {
+        /* something went wrong when finding a matching record. */
+        ctx.response.status = 500;
+        console.error(error);
+        return;
+    }
+
+  
+
+});
 
 /* update an existing conference post. */
 router.put('/:id', async (ctx) => {
