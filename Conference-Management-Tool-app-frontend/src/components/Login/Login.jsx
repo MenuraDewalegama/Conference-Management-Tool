@@ -10,7 +10,8 @@ export class Login extends Component {
         super(props);
         this.state = {
             email: null,
-            password: null
+            password: null,
+            type: null
         };
         this.onSubmit = this.onSubmit.bind(this);
     }
@@ -27,6 +28,8 @@ export class Login extends Component {
         if (this.state.password != '' && this.state.email != '') {
 
             if (this.state.email == 'admin@admin.com' && this.state.password == 'admin') {
+                localStorage.setItem('UserType', 'Admin');
+
                 alert('Successfully loged in');
                 window.location = '/dashboard';
 
@@ -37,7 +40,7 @@ export class Login extends Component {
                     if (internalUserElem.password == this.state.password) {
                         alert('Successfully loged in');
                         localStorage.setItem('User', internalUserElem.name);
-                        localStorage.setItem('UserType', this.state.type);
+                        localStorage.setItem('UserType', internalUserElem.type);
                         window.location = '/';
 
                     } else {
