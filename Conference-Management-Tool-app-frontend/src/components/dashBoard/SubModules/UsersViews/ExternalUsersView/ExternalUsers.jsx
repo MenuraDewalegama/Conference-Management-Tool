@@ -34,8 +34,7 @@ export default class ExternalUsers extends React.Component {
                 <div className="container products-header p-0">
                     <div className="row">
                         <div className='col'>
-                            <h1>Internal Users</h1>
-                            <Link to="/dashboard/externalUsers/create">Create User</Link>
+                            <h1>External Users</h1>
                         </div>
                         <div className='col'
                             style={{
