@@ -1,16 +1,9 @@
 import React, { Component } from 'react'
-import { Document, Page } from "react-pdf";
 import { Button } from 'react-bootstrap';
-
-// import { Document, Page } from 'react-pdf/dist/esm/entry.parcel';
+import EmailService from '../../../service/email.service'
 import axios from 'axios'
-// import pdf from 'url:../../../../../Conference-Management-Tool-app-backend/public/assets/externaluser/60d8c2c9918a8d35cce5adac.pdf'
-
-const url = 'url:D:/SLIIT/3rd Year/2nd Semester/AF/Assignment 2/v3/Conference-Management-Tool/Conference-Management-Tool-app-backend/public'
 
 export class ResearchPaperHolder extends Component {
-
-    state = { numPages: null, pageNumber: 1 };
 
     constructor(props) {
         super(props);
@@ -19,19 +12,6 @@ export class ResearchPaperHolder extends Component {
             status: ''
         }
     }
-
-
-
-    onDocumentLoadSuccess = ({ numPages }) => {
-        this.setState({ numPages });
-    };
-
-
-    goToPrevPage = () =>
-        this.setState(state => ({ pageNumber: state.pageNumber - 1 }));
-    goToNextPage = () =>
-        this.setState(state => ({ pageNumber: state.pageNumber + 1 }));
-
 
     componentDidMount() {
         axios.get('http://localhost:3000/research-papers')
@@ -42,9 +22,7 @@ export class ResearchPaperHolder extends Component {
             });
     }
 
-    statusUpdate(event, research_paper_id, index) {
-
-
+    statusUpdate(event, research_paper_id, index, email, name) {
         if (index == 1) {
             let review = {
                 status: "Approved"
@@ -53,7 +31,12 @@ export class ResearchPaperHolder extends Component {
             axios.put(`http://localhost:3000/research-papers/${research_paper_id}`, review)
                 .then((result) => {
                     alert('Successfully updated the status');
-                    window.location.reload();
+                    // window.location.reload();
+
+                    console.log(`this.${email}`);
+                    const mailMessage = "We have approved your research paper"
+                    this.sendMail(email, name, mailMessage)
+
                 }).catch((err) => {
                     alert(err)
                 });
@@ -65,13 +48,36 @@ export class ResearchPaperHolder extends Component {
             axios.put(`http://localhost:3000/research-papers/${research_paper_id}`, review)
                 .then((result) => {
                     alert('Successfully updated the status');
-                    window.location.reload();
+                    // window.location.reload();
+
+                    const mailMessage = "We have rejected your research paper"
+                    this.sendMail(email, name, mailMessage)
                 }).catch((err) => {
                     alert(err)
                 });
         }
 
     }
+
+    sendMail(email, name, mailMessage) {
+        EmailService.sendEmail({
+            user_id: 'user_Swzja6hgJOB3MOMfn8x53',
+            service_id: 'service_727resg',
+            template_id: 'template_3cvmc3f',
+            template_params: {
+                from_name: 'CMT - SYSTEM',
+                to_name: name,
+                reply_to: email,
+                message: mailMessage
+            },
+            accessToken: '6ceb240ee4e4e409d19845b2e08cd7fa'
+        }).then(response => {
+            window.location.reload();
+            console.log(response);
+        }).catch(reason => {
+            console.error(reason);
+        });
+    };
 
     render() {
         const { pageNumber, numPages } = this.state;
@@ -140,85 +146,37 @@ export class ResearchPaperHolder extends Component {
                                             <h5></h5>
 
                                             <div>
-
-                                                {/* <object width="100%" height="400" data="http://www.africau.edu/images/default/sample.pdf" type="application/pdf"></object> */}
                                                 <object width="100%" height="400" data={`http://localhost:3000${research_paper.imagePath}`} type="application/pdf"></object>
-                                                {/* <Image style={{ minWidth: '400px', width: '100%' }}
-                                                    src={(research_paper.imagePath) ? `/public${research_paper.imagePath}` :'https://via.placeholder.com/1920x1080'} /> */}
-                                                {/* <div>
-                                                    <nav>
-                                                        <button onClick={this.goToPrevPage}>Prev</button>
-                                                        <button onClick={this.goToNextPage}>Next</button>
-                                                    </nav>
-
-                                                    <div style={{ width: '100%' }}>
-                                                        <Document
-                                                            // file={}
-                                                            onLoadSuccess={this.onDocumentLoadSuccess}
-                                                        >
-                                                            <Page pageNumber={pageNumber} width={'100%'} />
-                                                        </Document>
-                                                    </div>
-
-                                                    <p>
-                                                        Page {pageNumber} of {numPages}
-                                                    </p>
-                                                </div> */}
                                             </div>
-                                            {/* <h6>{`/public${research_paper.imagePath}`}</h6> */}
-                                            {/* <a href="http://localhost:3000/assets/externaluser/60d9894c8f60db47b4336ab7.pdf">VIEW PDF</a> */}
                                             <a href={`http://localhost:3000${research_paper.imagePath}`}>VIEW PDF</a>
                                             <br />
                                             <br />
-
-
-                                            {/* {
-                                                (research_paper.status == 'Approved') ?
-                                                    <button type="button" className="btn btn-danger" onClick={event => this.statusUpdate(event, research_paper.id, 0)}>
-                                                        Reject
-                                                    </button>
-
-                                                    :
-                                                    (research_paper.status == 'Rejected') ?
-                                                        <button type="button" className="btn btn-success" onClick={event => this.statusUpdate(event, research_paper.id, 1)}>
-                                                            Approve
-                                                        </button>
-                                                        :
-                                                        <button type="button" className="btn btn-danger" onClick={event => this.statusUpdate(event, research_paper.id, 0)}>
-                                                            Reject
-                                                        </button>,
-                                                <button type="button" className="btn btn-success" onClick={event => this.statusUpdate(event, research_paper.id, 1)}>
-                                                    Approve
-                                                </button>
-
-                                            } */}
-
-
-
-
-
 
                                             {
                                                 (() => {
                                                     if (research_paper.status == 'Approved') {
                                                         return (
-                                                            <button type="button" className="btn btn-danger" onClick={event => this.statusUpdate(event, research_paper.id, 0)}>
+                                                            <button type="button" className="btn btn-danger"
+                                                                onClick={event => this.statusUpdate(event, research_paper.id, 0, research_paper.email, research_paper.name)}>
                                                                 Reject
                                                             </button>
                                                         )
                                                     } else if (research_paper.status == 'Rejected') {
                                                         return (
-                                                            <button type="button" className="btn btn-success" onClick={event => this.statusUpdate(event, research_paper.id, 1)}>
+                                                            <button type="button" className="btn btn-success"
+                                                                onClick={event => this.statusUpdate(event, research_paper.id, 1, research_paper.email, research_paper.name)}>
                                                                 Approve
                                                             </button>
                                                         )
                                                     } else {
                                                         return (
                                                             <div>
-                                                                <button type="button" className="btn btn-danger" onClick={event => this.statusUpdate(event, research_paper.id, 0)}>
+                                                                <button type="button" className="btn btn-danger"
+                                                                    onClick={event => this.statusUpdate(event, research_paper.id, 0, research_paper.email, research_paper.name)}>
                                                                     Reject
                                                                 </button>
-                                                                <button type="button" className="btn btn-success" onClick={event => this.statusUpdate(event, research_paper.id, 1)}>
+                                                                <button type="button" className="btn btn-success"
+                                                                    onClick={event => this.statusUpdate(event, research_paper.id, 1, research_paper.email, research_paper.name)}>
                                                                     Approve
                                                                 </button>
                                                             </div>
@@ -227,26 +185,6 @@ export class ResearchPaperHolder extends Component {
                                                     }
                                                 })()
                                             }
-
-                                            {/* <button type="button" className="btn btn-danger" onClick={event => this.statusUpdate(event, research_paper.id, 0)}>
-                                                Reject
-                                            </button>
-                                            <button type="button" className="btn btn-success" onClick={event => this.statusUpdate(event, research_paper.id, 1)}>
-                                                Approve
-                                            </button> */}
-
-
-                                            {/* {
-                                                (research_paper.status == 'Approved') ?
-                                                    <h6 style={{ textAlign: 'unset', color: 'green' }}>Approved</h6>
-
-                                                    :
-                                                    (research_paper.status == 'Rejected') ?
-                                                        <h6 style={{ textAlign: 'unset', color: 'red' }}>Rejected</h6>
-                                                        :
-                                                        <h6 style={{ textAlign: 'unset', color: 'blue' }}>Processing</h6>
-
-                                            } */}
                                         </div>
                                     </div>
                                 </div>
