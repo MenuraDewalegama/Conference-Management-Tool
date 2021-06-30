@@ -23,7 +23,7 @@ export default class DashBoard extends React.Component {
         const reviewerCount = [];
 
         const extrenalUserCount = this.context?.externalUsers;
-        const PrasenterUserCount = [];
+        const PrasenterCount = [];
         const ResearcherCount = [];
         const AttendeeCount = [];
 
@@ -36,7 +36,16 @@ export default class DashBoard extends React.Component {
             } else if (userCount[index].type == "Reviewer"){
                 reviewerCount.push(userCount[index])
             }
+        }
 
+        for (let index = 0; index < extrenalUserCount.length; index++) {
+            if (extrenalUserCount[index].type == "ATTENDEE") {
+                AttendeeCount.push(extrenalUserCount[index])
+            } else if (extrenalUserCount[index].type == "PRESENTER"){
+                PrasenterCount.push(extrenalUserCount[index])
+            } else if (extrenalUserCount[index].type == "RESEARCHER"){
+                ResearcherCount.push(extrenalUserCount[index])
+            }
         }
 
         return <div>
@@ -104,13 +113,18 @@ export default class DashBoard extends React.Component {
                                         </div>
                                         <hr />
                                         <div>
-                                            <p className="card-category">Reseacher Count</p>
-                                            <h3 className="card-title">{reviewerCount.length}</h3>
+                                            <p className="card-category">Attendee Count</p>
+                                            <h3 className="card-title">{AttendeeCount.length}</h3>
                                         </div>
                                         <hr />
                                         <div>
-                                            <p className="card-category">Editor Count</p>
-                                            <h3 className="card-title">{editorCount.length}</h3>
+                                            <p className="card-category">Prasenter Count</p>
+                                            <h3 className="card-title">{PrasenterCount.length}</h3>
+                                        </div>
+                                        <hr />
+                                        <div>
+                                            <p className="card-category">Researcher Count</p>
+                                            <h3 className="card-title">{ResearcherCount.length}</h3>
                                         </div>
                                     </div>
                                     <div className="card-footer">
