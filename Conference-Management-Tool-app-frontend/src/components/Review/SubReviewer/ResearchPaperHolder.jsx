@@ -14,7 +14,7 @@ export class ResearchPaperHolder extends Component {
     }
 
     componentDidMount() {
-        axios.get('http://localhost:3000/research-papers')
+        axios.get('http://localhost:3000/papers')
             .then((result) => {
                 this.setState({ research_papers: result.data })
             }).catch((err) => {
@@ -28,7 +28,7 @@ export class ResearchPaperHolder extends Component {
                 status: "Approved"
             }
             console.log(research_paper_id);
-            axios.put(`http://localhost:3000/research-papers/${research_paper_id}`, review)
+            axios.put(`http://localhost:3000/papers/${research_paper_id}`, review)
                 .then((result) => {
                     alert('Successfully updated the status');
                     // window.location.reload();
@@ -45,7 +45,7 @@ export class ResearchPaperHolder extends Component {
                 status: "Rejected"
             }
             console.log(research_paper_id);
-            axios.put(`http://localhost:3000/research-papers/${research_paper_id}`, review)
+            axios.put(`http://localhost:3000/papers/${research_paper_id}`, review)
                 .then((result) => {
                     alert('Successfully updated the status');
                     // window.location.reload();

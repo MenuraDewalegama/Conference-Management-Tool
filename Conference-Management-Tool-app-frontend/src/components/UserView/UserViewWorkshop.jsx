@@ -13,7 +13,7 @@ export class UserViewWorkshop extends Component {
     }
 
     componentDidMount() {
-        axios.get('http://localhost:3000/research-papers')
+        axios.get('http://localhost:3000/papers')
             .then(res => {
                 this.setState({ workshops: res.data })
             })
