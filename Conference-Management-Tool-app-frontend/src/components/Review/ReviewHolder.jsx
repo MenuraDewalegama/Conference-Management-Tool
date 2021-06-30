@@ -22,7 +22,7 @@ export class ReviewHolder extends Component {
     }
 
     componentDidMount() {
-        axios.get('http://localhost:3000/papers')
+        axios.get('http://localhost:3000/research-papers')
             .then((result) => {
                 this.setState({ papers: result.data });
 
@@ -295,7 +295,7 @@ export class ReviewHolder extends Component {
                                     </div>
                                     <div className="card-footer">
                                         <div className="stats">
-                                            <Button href="/review/contact-us">Manage Messages</Button>
+                                            <Button href="/review/contact-us">Research Papers</Button>
                                         </div>
                                     </div>
                                 </div>

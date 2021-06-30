@@ -3,7 +3,6 @@
 @date : 17/06/2021
 */
 import React, {useContext, useEffect, useState} from 'react';
-import {useHistory} from 'react-router-dom';
 import {Col, Container, Image, Row} from 'react-bootstrap';
 import {PencilSquare, Trash} from 'react-bootstrap-icons';
 import {ConferencePostContext} from '/src/context/conference-post.context';
@@ -18,29 +17,6 @@ const ConferencePost = (props) => {
     const [conferencePost, setConferencePost] = useState(props.conferencePost);
     const [keySpeakers, setKeySpeakers] = useState([]);
 
-    let history = useHistory();
-
-    /* Redirect to edit UI. */
-    const handleClickOnAddIcon = () => {
-        history.push(`/conferences/add`);
-    };
-
-    /* Redirect to edit UI. */
-    const handleClickOnEditIcon = () => {
-        history.push(`/conferences/${conferencePost?._id}/edit`);
-    };
-
-    const handleClickOnDeleteIcon = (conferencePostID) => {
-        context.deleteConferencePost(conferencePostID).then(response => {
-            console.log(response);
-            console.log('response status', response?.status);
-            window.location = '/';
-            alert('Conference Post deleted successfully!');
-        }).catch(reason => {
-            console.error(reason);
-            alert('Conference Post deletion failed!');
-        });
-    };
 
     useEffect(() => {
         KeySpeakerService.getAllKeySpeakers(conferencePost?._id).then(keySpeakersDB => {
@@ -65,18 +41,14 @@ const ConferencePost = (props) => {
                                 color: 'blue',
                                 fontSize: '1.2rem',
                                 cursor: 'pointer'
-                            }} onClick={(event) => {
-                                handleClickOnEditIcon();
-                            }}/>
+                            }} onClick={(event) => context.editConferencePost(conferencePost)}/>
                         </div>
                         <div title={'Delete this conference-post'}>
                             <Trash style={{
                                 color: 'crimson',
                                 fontSize: '1.2rem',
                                 cursor: 'pointer'
-                            }} onClick={(event) => {
-                                handleClickOnDeleteIcon(conferencePost?._id);
-                            }}
+                            }} onClick={(event) => context.deleteConferencePost(conferencePost?._id)}
                             /></div>
                     </Col>
                 </Row>

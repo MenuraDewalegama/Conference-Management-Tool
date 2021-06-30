@@ -13,7 +13,7 @@ export class UserViewResearchPaper extends Component {
     }
 
     componentDidMount() {
-        axios.get('http://localhost:3000/papers')
+        axios.get('http://localhost:3000/research-papers')
             .then((result) => {
                 this.setState({ research_papers: result.data })
             }).catch((err) => {

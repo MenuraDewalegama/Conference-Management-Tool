@@ -3,22 +3,25 @@ import { Button, Nav, Navbar } from 'react-bootstrap';
 import { Bell, PencilSquare } from 'react-bootstrap-icons';
 import { Route, Link, Switch } from 'react-router-dom';
 import { UserContext } from '../../context/user.context';
+import { DashboardContext } from '../../context/dashboard.context';
 import Register from '../Register/Register';
 import './NavigationBar.css';
 
 const NavigationBar = () => {
     /* state. */
     // const [currentUser, setCurrentUser] = useState({ id: 'U001', name: 'John Doe', type: 'ADMIN'});
-    const { currentUser, logOutUser } = useContext(UserContext);
+    const { loginUser } = useContext(DashboardContext);
 
     useEffect(() => {
         console.log('use effect hook is working!');
+        // console.log(loginUser);
     });
 
     const performLogOut = () => {
         /* log out current user. */
         // logOutUser();
         console.log('user is logging out.');
+        localStorage.clear();
         window.location = '/login';
         /* redirect to main page. */
 
@@ -37,9 +40,8 @@ const NavigationBar = () => {
                     <Navbar.Collapse id="responsive-navbar-nav">
                         <Nav className="mr-auto">
                         </Nav>
-
                         {     // if user logged in
-                            (currentUser) ?
+                            (localStorage.getItem('User')) ?
                                 <Nav>
                                     <Link style={{ margin: 'auto' }} to="/dashBoard" className="nav-link">
                                         <h6 className="user_name">| DashBoard |</h6>
@@ -78,7 +80,7 @@ const NavigationBar = () => {
                                     </Link>
 
 
-                                    {/* <h6 className="user_name">Hi {currentUser?.name}</h6> */}
+                                    <h6 className="user_name">Hi {localStorage.getItem('User')}</h6>
 
 
                                     {//temporaly added for development purposes

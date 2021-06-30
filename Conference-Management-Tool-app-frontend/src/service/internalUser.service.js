@@ -26,6 +26,21 @@ const getAllInternalUsers = () => {
         }
     });
 };
+
+/** Get internal User by email by calling backend services.
+ * @param email  of the internal User  that is being retrieved.
+ * @return Promise promise a result. */
+ const getInternalUserByEmail = (email) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const result = await axios.get(`${process.env.CONFERENCE_MANAGEMENT_BACKEND_API_URL}login/internal/${email}`);
+            resolve(result);
+        } catch (error) {
+            reject(error);
+        }
+    });
+};
+
 /** Save a new InernalUser by calling backend services.
  * @param internalUser InernalUser object with and new values but the ID .
  * @returns Promise promise a result. */
@@ -133,5 +148,6 @@ module.exports = {
     saveInternalUser,
     updateInternalUser,
     getInternalUserByID,
-    deleteInternalUser
+    deleteInternalUser,
+    getInternalUserByEmail
 };

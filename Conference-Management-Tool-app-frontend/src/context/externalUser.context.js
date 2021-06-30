@@ -30,7 +30,7 @@ class ExternalUserProvider extends Component {
         }
     }
 
-    //get all external users
+
     getAllExternalUser() {
         return new Promise(async (resolve, reject) => {
             try {
@@ -49,7 +49,7 @@ class ExternalUserProvider extends Component {
     }
 
 
-    /** Add a new external user */
+    /** Add a new internal user */
     addExternalUser(externalUser) {
         return new Promise(async (resolve, reject) => {
             try {

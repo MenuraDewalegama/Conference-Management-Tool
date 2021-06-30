@@ -2,7 +2,6 @@
 @author : Ssachintha de Zoysa
 @date : 27/05/2021
 */
-//imports
 import React from 'react';
 import { Card, Button, Form, Col, Raw } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
@@ -13,11 +12,9 @@ import 'react-phone-input-2/lib/style.css'
 import 'react-slideshow-image/dist/styles.css'
 import { Zoom } from 'react-slideshow-image';
 import Payment from '../Register/Payment';
-import { toast } from 'react-toastify';
 
 
 //declaring constants
-//images array for slide show
 const slideImages = [
     'https://www.techedt.com/wp-content/uploads/2019/03/Your-guide-to-top-7-tech-conferences-in-2019.png',
     'https://sliitacademy.lk/wp-content/uploads/2020/09/business-degree.jpg',
@@ -26,14 +23,15 @@ const slideImages = [
     'https://miro.medium.com/max/1040/1*0lgunvVYa8gZ_sfMHflyvw.jpeg',
     'https://worldskillsconference.com/application/files/4016/0259/6543/conference-teaser2019-1.jpg'
 
+
 ];
 
-//slide show properties
 const slideProperties = {
     duration: 2500,
     scale: 0.8,
     arrows: false
 }
+
 export default class Register extends React.Component {
 
     constructor(props) {
@@ -55,7 +53,7 @@ export default class Register extends React.Component {
         this.onSubmit = this.onSubmit.bind(this);
     }
 
-    /** Set image file to the component state when user upload a pdf file.
+    /** Set image file to the component state when user upload a image file.
          * @param event */
     onChangeProductFormFile(event) {
         console.log(event.target.files[0]);
@@ -63,7 +61,6 @@ export default class Register extends React.Component {
         this.setState({ imageFile: (imageFile) ? imageFile : null });
     }
 
-    //remove pdf path
     removeImagePath() {
         this.setState({
             pdfPath: ''
@@ -90,14 +87,13 @@ export default class Register extends React.Component {
         if (this.state.imageFile) {
             externalUserObj.imageFile = this.state.imageFile;
         } else {
-            /* existing pdfPath is assigned to the productObject.
-            * That means no pdf update happens. */
+            /* existing imagePath is assigned to the productObject.
+            * That means no image update happens. */
             externalUserObj.imagePath = this.state.imagePath;
         }
         if (externalUserObj.hasOwnProperty('imagePath') && externalUserObj.imagePath.length === 0) {
             delete externalUserObj.imagePath;
         }
-        //creating formData object to pass to the back end with axios requests
         let formData = new FormData();
         formData.append('email', externalUserObj.email);
         formData.append('productImage', externalUserObj.productImage);
@@ -111,37 +107,18 @@ export default class Register extends React.Component {
         formData.append('status', externalUserObj.status);
         formData.append('externalUserImage', externalUserObj.imageFile);
 
-        //validate the 2 fields of passwords whether they are same
         if (this.state.password == this.state.password2) {
             axios.post('http://localhost:3000/externaluser/', formData)
                 .then(res => {
-                    //success notification 
-                    toast.success('User Registratrion Successfull!', {
-                        position: 'top-right',
-                        autoClose: 2000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
-                    });
+                    alert('Successfully added');
                     console.log(res);
-                    //navigate to main page 
-                    setTimeout(function () { window.location = '/'; }, 2000);
+                    window.location.reload();
                 })
                 .catch(err => {
                     alert(err.message)
                 });
         } else {
-            toast.error('Passwords not matching!', {
-                position: 'top-right',
-                autoClose: 2000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-            });
+            alert('Passwords not matching');
         }
     }
 
@@ -153,6 +130,8 @@ export default class Register extends React.Component {
     }
 
     render() {
+
+        // console.log(this.context);
         return (
             <div style={{ backgroundColor: 'whitesmoke' }}>
 
@@ -177,6 +156,9 @@ export default class Register extends React.Component {
                     </div>
 
                 </div>
+
+
+
 
                 <Card border="dark" style={{ width: 'auto', height: 'auto', marginLeft: '15%', marginRight: '15%', marginTop: '1%', marginBottom: '10%', padding: '10px', backgroundColor: 'white' }}>
 
@@ -259,14 +241,21 @@ export default class Register extends React.Component {
                                     </Form.Control>
                                 </Form.Group>
 
+
                             </Form.Row>
+
+
+
                             {(this.state.type != "ATTENDEE") ?
+
                                 <div>
                                     <br />
                                     <Form.Label style={{ color: 'black' }}> Upload Deliverables</Form.Label>
                                     <Form.File accept="application/pdf" className="form-control-file" multiple id="id_productImage"
                                         onChange={event => this.onChangeProductFormFile(event)} />
                                 </div>
+
+
                                 :
                                 ''
                             }
@@ -283,6 +272,7 @@ export default class Register extends React.Component {
                                         <option value="OtherActivity">Other Activity</option>
                                     </Form.Control>
                                 </Form.Group>
+
                                 :
                                 ''
                             }
@@ -299,13 +289,16 @@ export default class Register extends React.Component {
                                         <option value="SPRING">Springboot</option>
                                         <option value="DOCKER">Docker</option>
                                         <option value="JAVASCRIPT">Javascript</option>
+
                                     </Form.Control>
                                 </Form.Group>
+
                                 :
                                 ''
                             }
 
                             {(this.state.type != "ATTENDEE") ?
+
                                 <Form.Group controlId="formBasicContactNo">
                                     <Form.Label style={{ color: 'black' }}>Activity Information</Form.Label>
                                     <Form.Control as="textarea" rows={3}
@@ -313,6 +306,8 @@ export default class Register extends React.Component {
                                         onChange={(event) => this.onChange(event)}
                                     />
                                 </Form.Group>
+
+
                                 :
                                 ''
                             }
@@ -340,9 +335,8 @@ export default class Register extends React.Component {
                         </Form>
 
                         <br />
-                        <div style={{textAlign:'center'}}>
-                            <Link to="/login" style={{ textDecoration: 'none', color: 'black', marginBottom: '10%', textAlign: 'center' }}>Already have an account? Login</Link>
-                        </div>
+
+                        <Link to="/login" style={{ textDecoration: 'none', color: 'black', marginBottom: '10%' }}>Already have an account? Login</Link>
                         <br />
                     </div>
                     <br />

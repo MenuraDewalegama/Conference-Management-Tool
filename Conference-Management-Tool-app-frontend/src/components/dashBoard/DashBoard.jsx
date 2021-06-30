@@ -17,7 +17,6 @@ export default class DashBoard extends React.Component {
     }
 
     render() {
-        console.log(this.context);
         const userCount = this.context?.internalUsers;
         const editorCount = [];
         const reviewerCount = [];
@@ -26,9 +25,6 @@ export default class DashBoard extends React.Component {
         const PrasenterCount = [];
         const ResearcherCount = [];
         const AttendeeCount = [];
-
-        console.log("extrenalUserCount");
-        console.log(extrenalUserCount);
 
         for (let index = 0; index < userCount.length; index++) {
             if (userCount[index].type == "Editor") {
