@@ -71,9 +71,12 @@ const addExternalUser = async ({ email, name, contactNo, password, type, activit
     });
 };
 
-
+const getExternalUsers = async () => {
+    return await externalUserDao.getAllExternalUsers();
+};
 
 module.exports = {
-    addExternalUser
+    addExternalUser,
+    getExternalUsers
 }
 

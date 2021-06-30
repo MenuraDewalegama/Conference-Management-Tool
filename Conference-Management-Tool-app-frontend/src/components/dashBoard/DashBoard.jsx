@@ -6,27 +6,46 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './DashBoard.css';
-import { InternalUserContext } from '../../context/internalUser.context';
-
+import { DashboardContext } from '../../context/dashboard.context';
+// import { InternalUserContext } from '../../context/internalUser.context';
 
 export default class DashBoard extends React.Component {
-    static contextType = InternalUserContext;
+    // static contextType = InternalUserContext;
+    static contextType = DashboardContext;
     constructor(props) {
         super(props);
     }
 
     render() {
+        console.log(this.context);
         const userCount = this.context?.internalUsers;
-        const writerCount = [];
+        const editorCount = [];
         const reviewerCount = [];
 
+        const extrenalUserCount = this.context?.externalUsers;
+        const PrasenterCount = [];
+        const ResearcherCount = [];
+        const AttendeeCount = [];
+
+        console.log("extrenalUserCount");
+        console.log(extrenalUserCount);
+
         for (let index = 0; index < userCount.length; index++) {
-            if (userCount[index].type == "Writer") {
-                writerCount.push(userCount[index])
-            } else {
+            if (userCount[index].type == "Editor") {
+                editorCount.push(userCount[index])
+            } else if (userCount[index].type == "Reviewer"){
                 reviewerCount.push(userCount[index])
             }
+        }
 
+        for (let index = 0; index < extrenalUserCount.length; index++) {
+            if (extrenalUserCount[index].type == "ATTENDEE") {
+                AttendeeCount.push(extrenalUserCount[index])
+            } else if (extrenalUserCount[index].type == "PRESENTER"){
+                PrasenterCount.push(extrenalUserCount[index])
+            } else if (extrenalUserCount[index].type == "RESEARCHER"){
+                ResearcherCount.push(extrenalUserCount[index])
+            }
         }
 
         return <div>
@@ -63,7 +82,7 @@ export default class DashBoard extends React.Component {
                                         <hr />
                                         <div>
                                             <p className="card-category">Writers Count</p>
-                                            <h3 className="card-title">{writerCount.length}</h3>
+                                            <h3 className="card-title">{editorCount.length}</h3>
                                         </div>
                                     </div>
                                     <div className="card-footer">
@@ -75,17 +94,43 @@ export default class DashBoard extends React.Component {
                             </div>
                             <div className="col-lg-3">
                                 <div className="card card-stats">
-                                    <div className="card-header card-header-success card-header-icon">
+                                    <div className="card-header card-header-warning card-header-icon">
                                         <div className="card-icon">
-                                            <i className="material-icons">store</i>
+                                            <i className="material-icons">people_alt</i>
+                                            <br />
+                                            <br />
+                                            <br />
+                                            <i className="material-icons">science</i>
+                                            <br />
+                                            <br />
+                                            <br />
+                                            <i className="material-icons">border_color</i>
                                         </div>
-                                        <p className="card-category">Work Shops</p>
-                                        <h3 className="card-title">12</h3>
+                                        <br />
+                                        <div>
+                                            <p className="card-category">Total External Users</p>
+                                            <h3 className="card-title">{extrenalUserCount.length}</h3>
+                                        </div>
+                                        <hr />
+                                        <div>
+                                            <p className="card-category">Attendee Count</p>
+                                            <h3 className="card-title">{AttendeeCount.length}</h3>
+                                        </div>
+                                        <hr />
+                                        <div>
+                                            <p className="card-category">Prasenter Count</p>
+                                            <h3 className="card-title">{PrasenterCount.length}</h3>
+                                        </div>
+                                        <hr />
+                                        <div>
+                                            <p className="card-category">Researcher Count</p>
+                                            <h3 className="card-title">{ResearcherCount.length}</h3>
+                                        </div>
                                     </div>
                                     <div className="card-footer">
-                                        <div className="stats">
-                                            <i className="material-icons">date_range</i> Up-Comming...
-                  </div>
+                                        <div className="center">
+                                            <Link to="/dashboard/externalusers" className="btn btn-info">View Users</Link>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
