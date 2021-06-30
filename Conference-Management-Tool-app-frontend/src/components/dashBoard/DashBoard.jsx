@@ -220,7 +220,7 @@ export default class DashBoard extends React.Component {
                                     </div>
                                     <div className="card-footer">
                                         <div className="center">
-                                            <Link to="/review" className="btn btn-danger">View Research Papers Details</Link>
+                                            <Link to="/" className="btn btn-danger">View Posts</Link>
                                         </div>
                                     </div>
                                 </div>
