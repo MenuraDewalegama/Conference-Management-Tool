@@ -100,7 +100,7 @@ const approveConferencePost = (conferencePostID) => {
         try {
         
             try { /* send a post request to the backend using axios. */
-                const response = await axios.post(`${process.env.CONFERENCE_MANAGEMENT_BACKEND_API_URL}api/v2/conferences/approve/${conferencePostID}`);
+                const response = await axios.put(`${process.env.CONFERENCE_MANAGEMENT_BACKEND_API_URL}api/v2/conferences/approve/${conferencePostID}`);
                 resolve(response);
             } catch (error) {
                 reject(error);

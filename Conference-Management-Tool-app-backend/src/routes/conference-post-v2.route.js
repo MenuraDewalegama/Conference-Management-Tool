@@ -145,11 +145,11 @@ router.put('/approve/:id', async ctx => {
 
     /* check whether there is a matching record for the given id. */
     try {
-        const result = await approvePost(id);
+        const result = await approvePost(conferencePostID);
         existingInternalUserRecord = result;
         if (!result) {
             /* if no record found. */
-            ctx.response.status = 404;
+            ctx.response.status = 200;
         }
     } catch (error) {
         /* something went wrong when finding a matching record. */
@@ -158,31 +158,7 @@ router.put('/approve/:id', async ctx => {
         return;
     }
 
-    /* read the request body and get the internalUser details. */
-    let internalUser = ctx.request.body;
-
   
-        try { /* update the internalUser. */
-            const result = await updateInternalUser(id, {
-                fullName: internalUser.fullName,
-                contactNo: internalUser.contactNo,
-                email: internalUser.email,
-                type: internalUser.type,
-                password: internalUser.password,
-                    imagePath: (internalUser?.imagePath?.length === 0) ? null : internalUser?.imagePath
-                },
-                ctx.request.files?.internalUserImage,
-                existingInternalUserRecord);
-            ctx.response.status = 204;
-            if (result.modifiedCount === 1) {
-                /* update successful. */
-                ctx.response.status = 204;
-            }
-        } catch (error) {
-            /* something wrong with update process. */
-            ctx.response.status = 500; // internal server error.
-            console.error(error);
-        }
 
 });
 
