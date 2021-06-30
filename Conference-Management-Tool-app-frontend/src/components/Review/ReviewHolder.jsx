@@ -295,7 +295,7 @@ export class ReviewHolder extends Component {
                                     </div>
                                     <div className="card-footer">
                                         <div className="stats">
-                                            <Button href="/review/contact-us">Research Papers</Button>
+                                            <Button href="/review/contact-us">Manage Messages</Button>
                                         </div>
                                     </div>
                                 </div>
