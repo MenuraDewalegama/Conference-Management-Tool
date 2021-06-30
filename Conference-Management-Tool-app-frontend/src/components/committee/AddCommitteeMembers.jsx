@@ -1,7 +1,12 @@
 import React, { Component } from 'react'
-import { Button, Form} from 'react-bootstrap';
+import { Button, Form } from 'react-bootstrap';
 import axios from 'axios';
 
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+
+// const toastMsg =
 
 
 export class AddCommitteeMembers extends Component {
@@ -23,7 +28,7 @@ export class AddCommitteeMembers extends Component {
         console.log("awa");
         console.log(this.props.match.params.id);
         console.log('ID coming from update' + this.props.match.params.id);
-        
+
 
         //get details of the vehicle if the ID
         if (this.props.match.params.id) {
@@ -76,9 +81,16 @@ export class AddCommitteeMembers extends Component {
         if (this.props.match.params.id) {
             axios.put(`http://localhost:3000/members/${this.props.match.params.id}`, member)
                 .then(res => {
-                    alert('Successfully updated');
-                    console.log(res);
-                    window.location = `/`
+                    toast.success('Member Updated Successfully', {
+                        position: 'top-right',
+                        autoClose: 2000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                    });                    
+                    setTimeout(function () { window.location = '/members'; }, 2000);
                 })
                 .catch(err => {
                     alert(err.message)
@@ -86,12 +98,26 @@ export class AddCommitteeMembers extends Component {
         } else {
             axios.post('http://localhost:3000/members', formData)
                 .then((result) => {
-                    console.log(result);
-                    alert("You have successfully added");
-                    window.location.reload();
+                    toast.success('Member Added Successfully', {
+                        position: 'top-right',
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                    });
+                    this.setState({
+                        name: '',
+                        designation:'',
+                        information: ''
+                    });
                 }).catch((err) => {
                     alert(err)
                 });
+
+
+
         }
     }
 
@@ -104,6 +130,7 @@ export class AddCommitteeMembers extends Component {
     }
 
     render() {
+
         return (
             <div className="container" >
                 <div style={{ marginTop: '5%' }}>
@@ -167,7 +194,9 @@ export class AddCommitteeMembers extends Component {
                                         </div>
                                         <br></br>
 
-                                        <Button type="submit" variant="primary" >Submit</Button>
+                                        <Button type="submit" variant="primary" onClick={() => {
+                                        }}>Submit</Button>
+
 
                                     </Form>
 
