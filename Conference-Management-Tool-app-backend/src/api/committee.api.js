@@ -13,6 +13,45 @@ const getAllMembers = async () => {
     return await committeeDao.getAllMembers();
 };
 
+
+const getMember = async id =>{
+    return await committeeDao.getMember(id);
+}
+
+
+const updateMember = async (id,
+    { name, designation, information }) => {
+
+    const member = {
+        name,
+        designation,
+        information}
+
+        return new Promise(async (resolve, reject) => {
+
+            try {
+                /* updating the internalUser. */
+                const result = await committeeDao.updateMember(id, member);
+                resolve(result);
+    
+            } catch (error) {
+                /* error in update process. */
+                reject(error);
+            }
+        })
+};
+
+const deleteMember = async id=>{
+    return new Promise(async (resolve, reject) =>{
+        try {
+            const result = await committeeDao.deleteMember(id);
+            resolve(result);
+        } catch (error) {
+            reject(error);
+        }
+    }) 
+};
+
 /** add internalUser */
 
 const addMember = async ({  name, designation, information }, ctxSpeecherImage) => {
@@ -73,6 +112,6 @@ const addMember = async ({  name, designation, information }, ctxSpeecherImage) 
 
 
 module.exports = {
-    addMember,getAllMembers
+    addMember,getAllMembers,updateMember,deleteMember,getMember
 }
 
