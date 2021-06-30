@@ -1,22 +1,23 @@
 const DatabaseService = require('../service/database.service.js');
 
-//define the collection name
+// Define the collection name
 const collectionName = 'ContactUs';
-//creating the database collection
+// Creating the database collection
 const ContactUs = new DatabaseService(collectionName);
 
-//add an user to the collection
+// Add a contact us message to the collection
 const insertMessage = async ({ email, name, subject, message }) => {
     return await ContactUs.save({ email, name, subject, message })
 }
 
-
+// Get all contact us messages from the collection
 const getAllMessages = async () => {
     const messages = await ContactUs.findAll();
     console.log(messages)
     return messages;
 }
 
+// Delete a contact us message from the collection
 const deleteMessage = async id => {
     return await ContactUs.delete(id);
 }

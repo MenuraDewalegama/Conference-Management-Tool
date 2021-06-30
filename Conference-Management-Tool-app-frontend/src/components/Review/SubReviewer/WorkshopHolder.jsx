@@ -13,6 +13,7 @@ export class WorkshopHolder extends Component {
         }
     }
 
+    // Call the endpoint when starting the relevent page 
     componentDidMount() {
         axios.get('http://localhost:3000/papers')
             .then(res => {
@@ -22,6 +23,7 @@ export class WorkshopHolder extends Component {
             });
     }
 
+    // This method is to update the status
     statusUpdate(event, research_paper_id, index, email, name) {
         if (index == 1) {
             let review = {
@@ -32,11 +34,9 @@ export class WorkshopHolder extends Component {
                 .then((result) => {
                     alert('Successfully updated the status');
                     // window.location.reload();
-
                     console.log(`this.${email}`);
                     const mailMessage = "We have approved your workshop proposal"
                     this.sendMail(email, name, mailMessage)
-
                 }).catch((err) => {
                     alert(err)
                 });
@@ -49,10 +49,8 @@ export class WorkshopHolder extends Component {
                 .then((result) => {
                     alert('Successfully updated the status');
                     // window.location.reload();
-
                     const mailMessage = "We have rejected your workshop proposal"
                     this.sendMail(email, name, mailMessage)
-
                 }).catch((err) => {
                     alert(err)
                 });
@@ -167,25 +165,16 @@ export class WorkshopHolder extends Component {
                                                         } else {
                                                             return (
                                                                 <div>
-                                                                    {/* <button type="button" className="btn btn-danger"
-                                                                        onClick={event => this.statusUpdate(event, workshop.id, 0, workshop.email, workshop.name)}>
-                                                                        Reject
-                                                                    </button> */}
                                                                     <button className="btn btn-danger"
                                                                         onClick={(e) => { if (window.confirm('Are you sure to reject this document?')) this.statusUpdate(event, workshop.id, 0, workshop.email, workshop.name) }} >
                                                                         Reject
                                                                     </button>
-                                                                    {/* <button type="button" className="btn btn-success"
-                                                                        onClick={event => this.statusUpdate(event, workshop.id, 1, workshop.email, workshop.name)}>
-                                                                        Approve
-                                                                    </button> */}
                                                                     <button className="btn btn-success"
                                                                         onClick={(e) => { if (window.confirm('Are you sure to approve this document?')) this.statusUpdate(event, workshop.id, 1, workshop.email, workshop.name) }} >
                                                                         Approve
                                                                     </button>
                                                                 </div>
                                                             )
-
                                                         }
                                                     })()
                                                 }

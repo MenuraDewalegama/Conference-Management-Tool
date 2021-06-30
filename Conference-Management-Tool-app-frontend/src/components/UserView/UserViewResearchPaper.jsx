@@ -12,6 +12,7 @@ export class UserViewResearchPaper extends Component {
         }
     }
 
+    // Call the endpoint when starting the relevent page 
     componentDidMount() {
         axios.get('http://localhost:3000/papers')
             .then((result) => {
@@ -31,9 +32,7 @@ export class UserViewResearchPaper extends Component {
                         (this.state.research_papers.length > 0 && this.state.research_papers.map((research_paper) => (
                             (research_paper.type == "RESEARCHER" && research_paper.status == "Approved") ?
                                 <div className="col-md-6">
-
                                     <div className="card bg-dark">
-
                                         <div className="card-header card-header-light card-header-icon">
                                             <div className="card-icon">
                                                 <i className="material-icons">book</i>
@@ -41,17 +40,13 @@ export class UserViewResearchPaper extends Component {
                                         </div>
 
                                         <div className="p-5 card-body mb-3">
-                                            
                                             <h6>Author Name : {research_paper.name}</h6>
-                                        
-
                                             <div>
                                                 <object width="100%" height="400" data={`http://localhost:3000${research_paper.imagePath}`} type="application/pdf"></object>
                                             </div>
                                             <a href={`http://localhost:3000${research_paper.imagePath}`}>VIEW PDF</a>
                                             <br />
                                             <br />
-
                                         </div>
                                     </div>
                                 </div>

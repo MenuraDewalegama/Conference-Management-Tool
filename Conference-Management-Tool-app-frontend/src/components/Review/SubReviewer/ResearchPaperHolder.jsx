@@ -13,6 +13,7 @@ export class ResearchPaperHolder extends Component {
         }
     }
 
+    // Call the endpoint when starting the relevent page 
     componentDidMount() {
         axios.get('http://localhost:3000/papers')
             .then((result) => {
@@ -22,6 +23,7 @@ export class ResearchPaperHolder extends Component {
             });
     }
 
+    // This method is to update the status
     statusUpdate(event, research_paper_id, index, email, name) {
         if (index == 1) {
             let review = {
@@ -32,11 +34,9 @@ export class ResearchPaperHolder extends Component {
                 .then((result) => {
                     alert('Successfully updated the status');
                     // window.location.reload();
-
                     console.log(`this.${email}`);
                     const mailMessage = "We have approved your research paper"
                     this.sendMail(email, name, mailMessage)
-
                 }).catch((err) => {
                     alert(err)
                 });
@@ -49,7 +49,6 @@ export class ResearchPaperHolder extends Component {
                 .then((result) => {
                     alert('Successfully updated the status');
                     // window.location.reload();
-
                     const mailMessage = "We have rejected your research paper"
                     this.sendMail(email, name, mailMessage)
                 }).catch((err) => {
@@ -91,7 +90,6 @@ export class ResearchPaperHolder extends Component {
                         (this.state.research_papers.length > 0 && this.state.research_papers.map((research_paper) => (
                             (research_paper.type == "RESEARCHER") ?
                                 <div className="col-md-6">
-
                                     <div className="card bg-dark">
 
 
@@ -137,14 +135,11 @@ export class ResearchPaperHolder extends Component {
 
 
                                         <div className="p-3 card-body mb-3">
-
-
                                             <h5></h5>
                                             <h6>Author Name : {research_paper.name}</h6>
                                             <h6>Email : {research_paper.email}</h6>
                                             <h6>Contact No : {research_paper.contactNo}</h6>
                                             <h5></h5>
-
                                             <div>
                                                 <object width="100%" height="400" data={`http://localhost:3000${research_paper.imagePath}`} type="application/pdf"></object>
                                             </div>
@@ -171,18 +166,10 @@ export class ResearchPaperHolder extends Component {
                                                     } else {
                                                         return (
                                                             <div>
-                                                                {/* <button type="button" className="btn btn-danger"
-                                                                    onClick={event => this.statusUpdate(event, research_paper.id, 0, research_paper.email, research_paper.name)}>
-                                                                    Reject
-                                                                </button> */}
                                                                 <button className="btn btn-danger"
                                                                     onClick={(e) => { if (window.confirm('Are you sure to reject this document?')) this.statusUpdate(event, research_paper.id, 0, research_paper.email, research_paper.name) }} >
                                                                     Reject
                                                                 </button>
-                                                                {/* <button type="button" className="btn btn-success"
-                                                                    onClick={event => this.statusUpdate(event, research_paper.id, 1, research_paper.email, research_paper.name)}>
-                                                                    Approve
-                                                                </button> */}
                                                                 <button className="btn btn-success"
                                                                     onClick={(e) => { if (window.confirm('Are you sure to approve this document?')) this.statusUpdate(event, research_paper.id, 1, research_paper.email, research_paper.name) }} >
                                                                     Approve

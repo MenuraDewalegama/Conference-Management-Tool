@@ -24,6 +24,7 @@ export class ContactUs extends Component {
         this.setState({ [event.target.name]: event.target.value });
     }
 
+    // This method is to add a new message
     onSubmit(event) {
         event.preventDefault();
         let contactInfo = {
@@ -32,8 +33,6 @@ export class ContactUs extends Component {
             subject: this.state.subject,
             message: this.state.message
         }
-        // console.log(contactInfo);
-
         axios.post('http://localhost:3000/contact', contactInfo)
             .then((result) => {
                 console.log(result);
@@ -49,12 +48,8 @@ export class ContactUs extends Component {
             <div className="container" >
                 <div style={{ marginTop: '5%' }}>
                     <h1 style={{ textAlign: 'center' }}>Contact Us</h1>
-
-
                     <div className='row'>
-
                         <div className='col-md-6'>
-
                             <div className="card bg-light">
 
                                 <div className="card-header card-header-primary card-header-icon">
@@ -66,10 +61,7 @@ export class ContactUs extends Component {
 
                                 <div className="p-5 card-body mb-3">
 
-
-
                                     <Form onSubmit={this.onSubmit}>
-
 
                                         <Form.Group controlId="formBasicName">
                                             <Form.Label style={{ color: 'black' }}>Email</Form.Label>
@@ -115,16 +107,10 @@ export class ContactUs extends Component {
                                     </Form>
 
                                 </div>
-
-
-
                             </div>
-
-
-
                         </div>
-                        <div className='col-md-6' style={{ marginTop: '5%' }}>
 
+                        <div className='col-md-6' style={{ marginTop: '5%' }}>
                             <img src="https://crove.app/wp-content/uploads/2021/04/undraw_contact_us_15o2-2.png" style={{ height: '60%', width: '100%' }}></img>
                             <h6 style={{ margin: '5%' }}>Colombo 07</h6>
                             <h6 style={{ margin: '5%' }}>T : 011 2222 555</h6>
@@ -132,7 +118,6 @@ export class ContactUs extends Component {
                         </div>
 
                     </div>
-
                 </div>
             </div>
         )

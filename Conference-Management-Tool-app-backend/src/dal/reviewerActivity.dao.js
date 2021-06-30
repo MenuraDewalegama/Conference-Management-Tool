@@ -5,13 +5,13 @@ const collectionName = 'ExternalUsers';
 //creating the database collection
 const ExternalUsers = new DatabaseService(collectionName);
 
+// Getting all data from the collection
 const getAllPapers = async () => {
     const papers = await ExternalUsers.findAll();
     // console.log(papers)
     let research_papers = [];
     if (papers.length > 0) {
         papers.map((paper) => {
-            // if (paper.type == "RESEARCHER") {
             paperDetails = {
                 id: paper._id,
                 email: paper.email,
@@ -25,14 +25,13 @@ const getAllPapers = async () => {
                 imagePath: paper.imagePath
             }
             research_papers.push(paperDetails)
-            // }
             console.log(paper)
         });
     }
     return research_papers;
-    // return papers;
 }
 
+// Updating status of the external user's document
 const updateStatus = async (id, { status }) => {
     const reviewUpdate = {
         status
