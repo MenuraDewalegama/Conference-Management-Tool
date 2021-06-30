@@ -26,7 +26,10 @@ class ConferencePostProvider extends Component {
                 return prevState.conferencePosts = conferencePosts;
             });
         }).catch(reason => {
-            console.log(`Something went wrong when retrieving conferencePosts from backend.`);
+            this.setState((prevState) => {
+                return prevState.conferencePosts = [];
+            });
+            console.log(`Something went wrong when retrieving conferencePosts from backend. Check backend services are up and running.`);
         });
     }
 

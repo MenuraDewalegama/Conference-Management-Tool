@@ -3,7 +3,7 @@
 @date : 17/06/2021
 */
 
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {useHistory} from 'react-router-dom';
 import {ConferencePostContext} from '../../../context/conference-post.context';
 import ConferencePost from './conference-post/ConferencePost';
@@ -14,6 +14,13 @@ const ConferencePosts = () => {
 
     const history = useHistory();
     const [isShowMore, setIsShowMore] = useState(false);
+
+    useEffect(() => {
+        if (context.conferencePosts.length <= 1) {
+            setIsShowMore(false);
+        }
+    }, [context.conferencePosts]);
+
 
     const toggleIsShowMore = () => {
         setIsShowMore(!isShowMore);
@@ -65,8 +72,6 @@ const ConferencePosts = () => {
             ) : ''}
 
             {context.conferencePosts.map((conferencePost, idx) => {
-                // console.log(conferencePost);
-                console.log('context',context.conferencePosts);
                 return (
                     <div key={conferencePost?._id}>
                         {((isShowMore && context.conferencePosts.length > 1) || (idx === 0 && context.conferencePosts.length >= 1)) ?
@@ -74,26 +79,33 @@ const ConferencePosts = () => {
                                              isShowMore={isShowMore}/>)
                             : ''
                         }
+
                     </div>
                 );
             })}
 
-            <Container>
-                <Row style={{padding: '1.5rem 0'}}>
-                    <Col>
-                        <div style={{
-                            display: 'flex',
-                            flexDirection: 'row',
-                            justifyContent: 'center',
-                            alignContent: 'center'
-                        }}>
-                            <Button onClick={toggleIsShowMore}>
-                                {(isShowMore) ? 'View Less' : 'View All'}
-                            </Button>
-                        </div>
-                    </Col>
-                </Row>
-            </Container>
+            {(context.conferencePosts.length > 1) ? (
+                showMoreLessButton()
+            ) : ''}
+
+            {(context.conferencePosts.length === 0) ?
+                (<Container className={'p-4'}><div>No Conference Posts Found.</div></Container>) : ''}
+            {/*<Container>*/}
+            {/*    <Row style={{padding: '1.5rem 0'}}>*/}
+            {/*        <Col>*/}
+            {/*            <div style={{*/}
+            {/*                display: 'flex',*/}
+            {/*                flexDirection: 'row',*/}
+            {/*                justifyContent: 'center',*/}
+            {/*                alignContent: 'center'*/}
+            {/*            }}>*/}
+            {/*                <Button onClick={toggleIsShowMore}>*/}
+            {/*                    {(isShowMore) ? 'View Less' : 'View All'}*/}
+            {/*                </Button>*/}
+            {/*            </div>*/}
+            {/*        </Col>*/}
+            {/*    </Row>*/}
+            {/*</Container>*/}
         </div>
     );
 };

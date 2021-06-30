@@ -12,8 +12,8 @@ import KeySpeakers from '../../key-speakers/KeySpeakers';
 const ConferencePost = (props) => {
 
     const context = useContext(ConferencePostContext);
-
-    const [baseURL, setBaseURL] = useState(`http://localhost:3000/`);
+    const [backendURL, setBackendURL] = useState(process.env.CONFERENCE_MANAGEMENT_BACKEND_API_URL);
+    const [baseURL, setBaseURL] = useState(backendURL);
     const [conferencePost, setConferencePost] = useState(props.conferencePost);
     const [keySpeakers, setKeySpeakers] = useState([]);
 
