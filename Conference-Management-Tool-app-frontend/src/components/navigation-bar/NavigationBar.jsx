@@ -40,66 +40,96 @@ const NavigationBar = () => {
                     <Navbar.Collapse id="responsive-navbar-nav">
                         <Nav className="mr-auto">
                         </Nav>
+
                         {     // if user logged in
-                            (localStorage.getItem('User')) ?
+                            (localStorage.getItem('UserType') == 'ATTENDEE' || localStorage.getItem('UserType') == 'PRESENTER' || localStorage.getItem('UserType') == 'RESEARCHER') ?
                                 <Nav>
-                                    <Link style={{ margin: 'auto' }} to="/dashBoard" className="nav-link">
-                                        <h6 className="user_name">| DashBoard |</h6>
-                                    </Link>
 
                                     <Link style={{ margin: 'auto' }} to="/" className="nav-link">
-                                        <h6 className="user_name">| Home |</h6>
+                                        <h6 className="user_name">Home</h6>
                                     </Link>
 
                                     <Link style={{ margin: 'auto' }} to="/workshops" className="nav-link">
-                                        <h6 className="user_name">| Workshops |</h6>
+                                        <h6 className="user_name">Workshops</h6>
                                     </Link>
 
                                     <Link style={{ margin: 'auto' }} to="/research-papers" className="nav-link">
-                                        <h6 className="user_name">| Research Papers |</h6>
+                                        <h6 className="user_name">Research Papers</h6>
                                     </Link>
 
-                                    <Link style={{ margin: 'auto' }} to="/" className="nav-link">
-                                        <h6 className="user_name">| Tech Sessions |</h6>
-                                    </Link>
-
-                                    <Link style={{ margin: 'auto' }} to="/" className="nav-link">
-                                        <h6 className="user_name">| Research Presentations |</h6>
-                                    </Link>
 
                                     <Link style={{ margin: 'auto' }} to="/downloads" className="nav-link">
-                                        <h6 className="user_name">| Downloads |</h6>
+                                        <h6 className="user_name">Downloads</h6>
                                     </Link>
 
                                     <Link style={{ margin: 'auto' }} to="/members" className="nav-link">
-                                        <h6 className="user_name">| Committee |</h6>
+                                        <h6 className="user_name">Committee</h6>
                                     </Link>
 
                                     <Link style={{ margin: 'auto' }} to="/contact-us" className="nav-link">
-                                        <h6 className="user_name">| Contact Us |</h6>
+                                        <h6 className="user_name">Contact Us</h6>
                                     </Link>
 
 
                                     <h6 className="user_name">Hi {localStorage.getItem('User')}</h6>
 
 
-                                    {//temporaly added for development purposes
-                                    }
-
-                                    <Link style={{ margin: 'auto' }} to="/register-home" className="nav-link">
-                                        Get Registered
-                                    </Link>
-
-
-                                    <Button className="nav-link" variant="danger"
+                                    <Button className="nav-link" variant="danger" style={{ marginRight: '3%' }}
                                         onClick={() => performLogOut()}>Logout</Button>
                                 </Nav>
 
                                 //if user is not logged in
-                                : <Nav>
-                                    <Link to="/login" className="nav-link navigation_property">Login</Link>
-                                    <Link to="/register" className="nav-link navigation_property">Register</Link>
-                                </Nav>
+                                : (localStorage.getItem('UserType') == 'Editor') ?
+
+                                    <Nav>
+                                        <h6 className="user_name">Hi {localStorage.getItem('User')}</h6>
+
+                                        <Link style={{ margin: 'auto' }} to="/" className="nav-link">
+                                            <h6 className="user_name">Home</h6>
+                                        </Link>
+
+                                        <Button className="nav-link" variant="danger" style={{ marginRight: '3%' }}
+                                            onClick={() => performLogOut()}>Logout</Button>
+
+                                    </Nav>
+
+
+                                    : (localStorage.getItem('UserType') == 'Reviewer') ?
+                                        <Nav>
+                                            <h6 className="user_name">Hi {localStorage.getItem('User')}</h6>
+
+
+                                            <Link style={{ margin: 'auto' }} to="/review" className="nav-link">
+                                                Reviewer
+                                            </Link>
+
+                                            <Button className="nav-link" variant="danger" style={{ marginRight: '3%' }}
+                                                onClick={() => performLogOut()}>Logout</Button>
+
+                                        </Nav>
+
+
+                                        : (localStorage.getItem('UserType') == 'Admin') ?
+                                            <Nav>
+
+                                                <Link style={{ margin: 'auto' }} to="/dashBoard" className="nav-link"> Dashboard    </Link>
+                                                <Link style={{ margin: 'auto' }} to="/add-members" className="nav-link"> Add Committee members </Link>
+                                                <Link style={{ margin: 'auto' }} to="/internal/members" className="nav-link"> View Committee members </Link>
+
+                                                <Button className="nav-link" variant="danger"
+                                                    onClick={() => performLogOut()}>Logout</Button>
+
+                                            </Nav>
+                                            :
+                                            <Nav>
+                                                <Link style={{ margin: 'auto' }} to="/downloads" className="nav-link">
+                                                    <h6 className="user_name">Downloads</h6>
+                                                </Link>
+                                                <Link to="/login" className="nav-link navigation_property">Login</Link>
+                                                <Link style={{ margin: 'auto' }} to="/register-home" className="nav-link">
+                                                    Register
+                                                </Link>
+                                            </Nav>
                         }
 
                     </Navbar.Collapse>

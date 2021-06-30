@@ -76,7 +76,7 @@ export class AddCommitteeMembers extends Component {
                         draggable: true,
                         progress: undefined,
                     });
-                    setTimeout(function () { window.location = '/members'; }, 2000);
+                    setTimeout(function () { window.location = '/internal/members'; }, 2000);
                 })
                 .catch(err => {
                     alert(err.message)
@@ -99,7 +99,7 @@ export class AddCommitteeMembers extends Component {
                         designation: '',
                         information: ''
                     });
-                    setTimeout(function () { window.location = '/members'; }, 2000);
+                    setTimeout(function () { window.location = '/internal/members'; }, 2000);
                 }).catch((err) => {
                     alert(err)
                 });

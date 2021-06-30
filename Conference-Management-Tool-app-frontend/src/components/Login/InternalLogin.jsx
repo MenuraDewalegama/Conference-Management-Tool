@@ -40,8 +40,8 @@ export class InternalLogin extends Component {
                         } else if (internalUserElem.type == 'Reviewer') {
                             window.location = '/review';
                         }
-                        localStorage.setItem('User', internalUserElem.firstName);
-                        localStorage.setItem('UserType', this.state.type);
+                        localStorage.setItem('User', internalUserElem.fullName);
+                        localStorage.setItem('UserType', internalUserElem.type);
                         console.log(this.context.loginUser );
                     } else {
                         alert('Invalid Credentials')
