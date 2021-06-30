@@ -15,16 +15,30 @@ const insertMessage = async ({ email, name, subject, message }) => {
     return new Promise(async (resolve, reject) => {
         try {
             const result = await contactUsDao.insertMessage(contactInfo);
-            resolve(result) 
+            resolve(result)
         } catch (error) {
             console.log(error)
         };
     });
 };
 
+const getAllMessages = async () => {
+    return await contactUsDao.getAllMessages();
+}
+
+const deleteMessage = async id => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const result = await contactUsDao.deleteMessage(id);
+            resolve(result);
+        } catch (error) {
+            reject(error);
+        }
+    })
+};
 
 
 module.exports = {
-    insertMessage
+    insertMessage, getAllMessages, deleteMessage
 }
 

@@ -16,7 +16,8 @@ export class ReviewHolder extends Component {
             workshop_count_processing: 0,
             workshop_count_approved: 0,
             workshop_count_rejectd: 0,
-            status: ''
+            status: '',
+            messages: []
         }
     }
 
@@ -77,6 +78,14 @@ export class ReviewHolder extends Component {
                     // this.setState({ workshop_count: count2 });
 
                 }
+            }).catch((err) => {
+                console.log(`Something went wrong ${err}`);
+            });
+
+
+        axios.get('http://localhost:3000/contact')
+            .then((result) => {
+                this.setState({ messages: result.data })
             }).catch((err) => {
                 console.log(`Something went wrong ${err}`);
             });
@@ -260,6 +269,44 @@ export class ReviewHolder extends Component {
 
                         </div>
                     </div>
+
+
+
+                    <div className='p-5 card bg-dark'>
+
+                        <h3>Contct Us Messages</h3>
+
+                        <div className="row" style={{ marginTop: '2%' }}>
+
+                            <div className="col-lg-3">
+                                <div className="card card-stats bg-light">
+                                    <div className="card-header card-header card-header-icon">
+                                        <div className="card-icon">
+                                            <i className="material-icons">list</i>
+                                        </div>
+                                        <p className="card-category">All</p>
+
+                                        {
+                                            (this.state.messages.length > 0) ?
+                                                <h3 className="card-title">{this.state.messages.length}</h3>
+                                                :
+                                                <h3 className="card-title">0</h3>
+                                        }
+                                    </div>
+                                    <div className="card-footer">
+                                        <div className="stats">
+                                            <Button href="/review/contact-us">Research Papers</Button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+
+
                 </div>
 
 

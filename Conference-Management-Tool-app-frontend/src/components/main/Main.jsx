@@ -16,6 +16,7 @@ import UserViewWorkshop from '../UserView/UserViewWorkshop';
 import AddCommitteeMembers from '../committee/AddCommitteeMembers';
 import CommitteeMembers from '../committee/ViewComMembers';
 import AdminViewComMembers from '../committee/AdminViewComMembers';
+import ReviewContactUS from '../ContactUs/ReviewContactUS';
 
 /* functional component. */
 const Main = () => {
@@ -55,6 +56,8 @@ const Main = () => {
                 <Route exact path="/login" component={LoginHolder}/>
                 <Route exact path="/internal/login" component={InternalLoginHolder}/>
                 <Route path="/review/project-proposals" component={WorkshopHolder}/>
+                <Route path="/review/contact-us" component={ReviewContactUS}/>
+
             </Switch>
         </div>
     );
