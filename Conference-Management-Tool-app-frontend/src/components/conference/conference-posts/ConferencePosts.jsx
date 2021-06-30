@@ -57,7 +57,7 @@ const ConferencePosts = () => {
                 <Container>
                     <Row>
                         <Col>
-                            <h1>Conference Posts</h1>
+                            <h2>Conference Posts</h2>
                         </Col>
                         <Col style={{
                             display: 'flex',

@@ -1,10 +1,15 @@
 import React, { Component } from 'react'
-import { Card, Button, Form, Col, Raw, Image } from 'react-bootstrap';
+import { Button, Form } from 'react-bootstrap';
 import axios from 'axios';
 
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
-export class CommitteeMembers extends Component {
+// const toastMsg =
+
+
+export class AddCommitteeMembers extends Component {
 
     constructor(props) {
         super(props);
@@ -16,6 +21,31 @@ export class CommitteeMembers extends Component {
             imageFile: null
         };
         this.onSubmit = this.onSubmit.bind(this);
+    }
+
+    componentDidMount() {
+
+        console.log("awa");
+        console.log(this.props.match.params.id);
+        console.log('ID coming from update' + this.props.match.params.id);
+
+
+        //get details of the vehicle if the ID
+        if (this.props.match.params.id) {
+            axios.get(`http://localhost:3000/members/${this.props.match.params.id}`)
+                .then(res => {
+                    console.log('response:' + res.data.name);
+                    this.setState({
+                        name: res.data.name,
+                        designation: res.data.designation,
+                        information: res.data.information
+                    });
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
+        }
+
     }
 
     onChange(event) {
@@ -47,14 +77,48 @@ export class CommitteeMembers extends Component {
         formData.append('information', member.information);
         formData.append('speecherImage', member.imageFile);
 
-        axios.post('http://localhost:3000/members', formData)
-            .then((result) => {
-                console.log(result);
-                alert("You have successfully added");
-                window.location.reload();
-            }).catch((err) => {
-                alert(err)
-            });
+
+        if (this.props.match.params.id) {
+            axios.put(`http://localhost:3000/members/${this.props.match.params.id}`, member)
+                .then(res => {
+                    toast.success('Member Updated Successfully', {
+                        position: 'top-right',
+                        autoClose: 2000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                    });                    
+                    setTimeout(function () { window.location = '/members'; }, 2000);
+                })
+                .catch(err => {
+                    alert(err.message)
+                })
+        } else {
+            axios.post('http://localhost:3000/members', formData)
+                .then((result) => {
+                    toast.success('Member Added Successfully', {
+                        position: 'top-right',
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                    });
+                    this.setState({
+                        name: '',
+                        designation:'',
+                        information: ''
+                    });
+                }).catch((err) => {
+                    alert(err)
+                });
+
+
+
+        }
     }
 
     /** Set image file to the component state when user upload a image file.
@@ -66,10 +130,11 @@ export class CommitteeMembers extends Component {
     }
 
     render() {
+
         return (
             <div className="container" >
                 <div style={{ marginTop: '5%' }}>
-                    <h1 style={{ textAlign: 'center' }}>Add Committe AddOrgMembers</h1>
+                    <h1 style={{ textAlign: 'center' }}>Add Committe Members</h1>
 
 
                     <div className='row'>
@@ -124,12 +189,14 @@ export class CommitteeMembers extends Component {
                                         <div>
                                             <br />
                                             <Form.Label style={{ color: 'black' }}> Upload Image</Form.Label>
-                                            <Form.File style={{color:'black'}} className="form-control-file" id="id_productImage"
+                                            <Form.File style={{ color: 'black' }} className="form-control-file" id="id_productImage"
                                                 onChange={event => this.onChangeImage(event)} />
                                         </div>
                                         <br></br>
 
-                                        <Button type="submit" variant="primary" >Submit</Button>
+                                        <Button type="submit" variant="primary" onClick={() => {
+                                        }}>Submit</Button>
+
 
                                     </Form>
 
@@ -156,4 +223,4 @@ export class CommitteeMembers extends Component {
     }
 }
 
-export default CommitteeMembers
+export default AddCommitteeMembers

@@ -9,6 +9,7 @@ import { Link, Route, Switch } from 'react-router-dom';
 import DashBoard from './DashBoard';
 import './DashBoard.css';
 import InternalUsersViewHolder from './SubModules/UsersViews/InternalUsersViewHolder';
+import ExternalUsersViewHolder from './SubModules/UsersViews/ExternalUsersView/ExternalUsersViewHolder';
 
 export default class DashBoardHolder extends React.Component{
 
@@ -24,6 +25,9 @@ export default class DashBoardHolder extends React.Component{
                 </Route>
                  <Route path='/dashboard/internalusers'>
                    <InternalUsersViewHolder/>
+                </Route>
+                <Route path='/dashboard/externalusers'>
+                   <ExternalUsersViewHolder/>
                 </Route>
           </Switch>
         </div>

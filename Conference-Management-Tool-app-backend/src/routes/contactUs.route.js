@@ -1,6 +1,6 @@
 const Router = require('@koa/router');
 
-const { insertMessage } = require('../api/contactUs.api');
+const { insertMessage, getAllMessages, deleteMessage } = require('../api/contactUs.api');
 
 
 const router = new Router({
@@ -39,5 +39,29 @@ router.post('/', async ctx => {
 
 });
 
+router.get('/', async ctx => {
+    try {
+        const messages = await getAllMessages();
+        ctx.response.status = 200;
+        ctx.response.type = 'application/json';
+        ctx.response.body = JSON.stringify(messages);
+    } catch (error) {
+        ctx.response.status = 500;
+    }
+});
+
+
+router.del('/:id', async ctx => {
+    const id = ctx.params.id;
+    try {
+        const result = await deleteMessage(id);
+        // console.log(result);
+        ctx.response.status = 200;
+    } catch (error) {
+        ctx.response.status = 500;
+        console.error(error);
+    }
+
+});
 
 module.exports = router;

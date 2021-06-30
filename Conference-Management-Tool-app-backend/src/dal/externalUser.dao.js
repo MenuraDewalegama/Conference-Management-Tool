@@ -15,7 +15,12 @@ const updateExternaluserImagePath = async (id, { imagePath }) => {
     return await ExternalUsers.update(id, { imagePath });
 };
 
+const getAllExternalUsers = async ()=>{
+    return await ExternalUsers.findAll();
+};
 
 module.exports = {
-    addExternalUser, updateExternaluserImagePath
+    addExternalUser,
+    updateExternaluserImagePath,
+    getAllExternalUsers
 }

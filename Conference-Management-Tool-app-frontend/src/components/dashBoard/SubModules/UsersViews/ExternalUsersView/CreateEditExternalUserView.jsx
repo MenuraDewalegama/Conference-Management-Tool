@@ -1,25 +1,25 @@
 import React from 'react';
 import { Link } from "react-router-dom";
-import { InternalUserContext } from '../../../../context/internalUser.context';
+import { ExternalUserContext } from '../../../../../context/externalUser.context';
 import { Button, Col, Container, Form, Image, Row } from 'react-bootstrap';
 // import Prompt from '../prompt/Prompt';
 
-export default class CreateEditUserView extends React.Component {
-    static contextType = InternalUserContext;
+export default class CreateEditExternalUserView extends React.Component {
+    static contextType = ExternalUserContext;
 
     constructor(props) {
         super(props);
 
         this.state = {
             isAdding: true, // true = dealing with an insertion operation.
-            fullName: '',
+            name: '',
             contactNo: '',
             email: '',
-            type: 'Editor',
+            type: 'Writer',
             password: '',
-            internalUserId: 0,
-            isInternalUserIdValid: false,
-            internalUserRecord: null, // if matching record found, then we can store it here
+            externalUserId: 0,
+            isExternalUserIdValid: false,
+            externalUserRecord: null, // if matching record found, then we can store it here
             imagePath: '',
             imageFile: null
         }
@@ -30,18 +30,18 @@ export default class CreateEditUserView extends React.Component {
 
         /* get the internalUser id from the URL and assign it to state(internalUserId). */
         // const internalUserIDFromURL = this.props.match.params?.internalUserID;
-        const internalUserIDFromURL = this.props.match.params?.internalUserID;
-        if (internalUserIDFromURL) {
+        const internalUserIDFromURL = this.props.match.params?.externalUserID;
+        if (externalUserIDFromURL) {
             /* set isAdding to false because we deal with updating a record. */
             this.setState({
                 isAdding: false, // false = we deal with a update operation
             });
 
             // TODO: validate internalUserId
-            if (/^[A-Za-z0-9]{24}$/.test(internalUserIDFromURL)) {
+            if (/^[A-Za-z0-9]{24}$/.test(externalUserIDFromURL)) {
                 this.setState({
-                    isInternalUserIdValid: true,
-                    internalUserId: internalUserIDFromURL
+                    isExternalUserIdValid: true,
+                    externalUserId: externalUserIDFromURL
                 });
 
                 // TODO: getinternalUserId.
@@ -49,11 +49,11 @@ export default class CreateEditUserView extends React.Component {
                 * if no matching record found set the state(internalUserIdRecord) to null,
                 * if matching record is found. */
                 // TODO: set state(imagePath), if found matching record.
-                this.context.getInternalUserByID(internalUserIDFromURL).then(internalUserElem => {
+                this.context.getExternalUserByID(externalUserIDFromURL).then(externalUserElem => {
                     this.setState({
-                        internalUserRecord: internalUserElem,
-                        internalUserId: internalUserElem?._id,
-                        fullName: internalUserElem?.fullName,
+                        externalUserRecord: externalUserElem,
+                        externalUserId: externalUserElem?._id,
+                        name: internalUserElem?.name,
                         contactNo: internalUserElem?.contactNo,
                         email: internalUserElem?.email,
                         type: internalUserElem?.type,
@@ -78,7 +78,7 @@ export default class CreateEditUserView extends React.Component {
 
     /** Set image file to the component state when user upload a image file.
     * @param event */
-    onChangeInternalUserFormFile(event) {
+    onChangeExternalUserFormFile(event) {
         const imageFile = event.target.files[0];
         this.setState({ imageFile: (imageFile) ? imageFile : null });
     }
@@ -93,8 +93,8 @@ export default class CreateEditUserView extends React.Component {
     /** perform save or update operation.
     * @param saveOrUpdate addInternalUser method or updateInternalUser method. */
     performSaveOrUpdate(saveOrUpdate) {
-        const internalUserObject = {
-            fullName: this.state.fullName,
+        const externalUserObject = {
+            name: this.state.name,
             contactNo: this.state.contactNo,
             email: this.state.email,
             type: this.state.type,
@@ -104,47 +104,47 @@ export default class CreateEditUserView extends React.Component {
 
         /* if image is uploaded, then assign it to internalUserObject. */
         if (this.state.imageFile) {
-            internalUserObject.internalUserImage = this.state.imageFile;
+            externalUserObject.externalUserImage = this.state.imageFile;
         } else {
             /* existing imagePath is assigned to the internalUserObject.
             * That means no image update happens. */
-            internalUserObject.imagePath = this.state.imagePath;
+            externalUserObject.imagePath = this.state.imagePath;
         }
 
         if (this.state.isAdding) {
             /* add a new internal User. */
-            if (internalUserObject.hasOwnProperty('imagePath') && internalUserObject.imagePath.length === 0) {
+            if (externalUserbject.hasOwnProperty('imagePath') && externalUserObject.imagePath.length === 0) {
                 delete internalUserObject.imagePath;
             }
-            saveOrUpdate(internalUserObject).then(value => {
+            saveOrUpdate(externalUserObject).then(value => {
                 // TODO: display insert successful or not
                 // display insertion successful
-                console.log('Internal User added successfully!');
-                window.location = '/dashboard/internalusers';
+                console.log('External User added successfully!');
+                window.location = '/dashboard/externalUsers';
             }).catch(reason => {
                 console.error(reason);
             });
         } else {
             /* update operation. */
-            internalUserObject.id = this.state.internalUserId;
-            saveOrUpdate(internalUserObject).then(value => {
+            externalUserObject.id = this.state.externalUserId;
+            saveOrUpdate(externalUserObject).then(value => {
                 // TODO: display update successful or not
                 // display updated successfully
-                console.log('Internal User updated successfully!');
-                window.location = '/dashboard/internalusers';
+                console.log('External User updated successfully!');
+                window.location = '/dashboard/externalUsers';
             }).catch(reason => {
                 console.error(reason);
             });
         }
         this.setState({
-            fullName: '',
+            name: '',
             contactNo: '',
             email: '',
             type: '',
             password: '123qwe',
-            internalUserId: 0,
-            isInternalUserIdValid: false,
-            internalUserRecord: null,
+            externalUserId: 0,
+            isExternalUserIdValid: false,
+            externalUserRecord: null,
             imagePath: '',
             imageFile: null
         });
@@ -154,7 +154,7 @@ export default class CreateEditUserView extends React.Component {
         const { saveOrUpdate } = this.props;
         /* if we deal with updating a internalUser and the internalUser id is not valid.
       Then, display invalid.*/
-        if (!this.state.isInternalUserIdValid && !this.state.isAdding) {
+        if (!this.state.isExternalUserIdValid && !this.state.isAdding) {
             const message = 'Internal User ID is invalid';
             // return (
             //     <><Prompt message={message} /></>
@@ -163,7 +163,7 @@ export default class CreateEditUserView extends React.Component {
 
         /* if no matching record found. */
         // TODO: if no matching record is found then, display 'no matching record is found'
-        if (!this.state.internalUserRecord && !this.state.isAdding) {
+        if (!this.state.externalUserRecord && !this.state.isAdding) {
             const message = 'No matching Internal User record found.';
             // return (
             //     <><Prompt message={message} /></>
@@ -187,7 +187,7 @@ export default class CreateEditUserView extends React.Component {
                                     <form>
                                         <div className="form-group">
                                             <label>Full Name</label>
-                                            <Form.Control type="text" className="form-control" value={this.state.fullName} name="fullName" onChange={event => { this.onChange(event) }} id="exampleFormControlInput1" placeholder="ex:- Jone Deo" />
+                                            <Form.Control type="text" className="form-control" value={this.state.name} name="name" onChange={event => { this.onChange(event) }} id="exampleFormControlInput1" placeholder="ex:- Jone Deo" />
                                         </div>
                                         <div className="form-group">
                                             <label>ContactNo:</label>
@@ -200,7 +200,7 @@ export default class CreateEditUserView extends React.Component {
                                         <div className="form-group">
                                             <label>select Type</label>
                                             <select className="form-control" name="type" value={this.state.type} onChange={event => { this.onChange(event) }} id="exampleFormControlSelect1">
-                                                <option>Editor</option>
+                                                <option>Writer</option>
                                                 <option>Reviewer</option>
                                             </select>
                                         </div>
@@ -211,7 +211,7 @@ export default class CreateEditUserView extends React.Component {
                                                     src={(this.state?.imagePath) ?
                                                         `http://localhost:3000${this.state.imagePath}` :
                                                         `https://via.placeholder.com/300`}
-                                                    alt={`${this.state.name} internalUser image`}
+                                                    alt={`${this.state.name} externalUser image`}
                                                     rounded />
 
                                                     <div>
@@ -223,9 +223,9 @@ export default class CreateEditUserView extends React.Component {
                                                     </div>
                                                 </>
                                             }
-                                            <Form.File id="id_internalUserImage"
-                                                label="Upload Internal User Image"
-                                                onChange={event => this.onChangeInternalUserFormFile(event)} />
+                                            <Form.File id="id_externalUserImage"
+                                                label="Upload External User Image"
+                                                onChange={event => this.onChangeExternalUserFormFile(event)} />
                                         </div>
                                         <button type="button" className="btn btn-info"
                                             onClick={event => {
@@ -236,7 +236,7 @@ export default class CreateEditUserView extends React.Component {
                                             } {/* <Link to="/dashboard/internalusers">Submit</Link> */}
                                         </button>
                                         <button type="button" className="btn btn-warning">
-                                            <Link to="/dashboard/internaluser">Cancel</Link></button>
+                                            <Link to="/dashboard/externalUser">Cancel</Link></button>
                                     </form>
                                 </div>
                             </div>

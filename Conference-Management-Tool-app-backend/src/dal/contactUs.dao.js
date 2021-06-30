@@ -11,6 +11,17 @@ const insertMessage = async ({ email, name, subject, message }) => {
 }
 
 
+const getAllMessages = async () => {
+    const messages = await ContactUs.findAll();
+    console.log(messages)
+    return messages;
+}
+
+const deleteMessage = async id => {
+    return await ContactUs.delete(id);
+}
+
+
 module.exports = {
-    insertMessage
+    insertMessage, getAllMessages, deleteMessage
 }

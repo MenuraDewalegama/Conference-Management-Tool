@@ -25,7 +25,7 @@ export class ViewComMembers extends Component {
             <div className="container  text-center">
               
                 <br/>
-                <h1 style={{marginTop:'5%'}}>Organizing Committee</h1>
+                <h1 style={{marginTop:'5%', backgroundColor:'black', color:'white'}}>O  r  g  a  n  i  z  i  n  g   C  o  m  m  i  t  t  e  e</h1>
                 <br />
                 {this.state.members.length > 0 && this.state.members.map((item, index) => (
                     <div>
@@ -43,9 +43,9 @@ export class ViewComMembers extends Component {
                             />
 
                             <Card.Body className="p-3">
-                                <h4><b>{item.name}</b></h4>
-                                <h5>{item.designation}</h5>
-                                <h5>{item.information}</h5>
+                                <h3 style={{backgroundColor:'black',color:'white', marginLeft:'25%',marginRight:'25%', boxShadow:'5px 10px 20px black'}}><b>{item.name}</b></h3>
+                                <h4 style={{fontFamily:'initial'}}>{item.designation}</h4>
+                                <h5 style={{fontFamily:'monospace', textAlign:'left'}}>{item.information}</h5>
                             </Card.Body>
                         </Card>
                         
