@@ -22,7 +22,7 @@ export class ReviewHolder extends Component {
     }
 
     componentDidMount() {
-        axios.get('http://localhost:3000/research-papers')
+        axios.get('http://localhost:3000/papers')
             .then((result) => {
                 this.setState({ papers: result.data });
 

@@ -5,7 +5,7 @@ const mimeTypes = require('mime-types');
 const { getAllPapers, updateStatus } = require('../api/reviewerActivity.api');
 
 const router = new Router({
-    prefix: '/research-papers'
+    prefix: '/papers'
 });
 
 /** get all research papers. */
