@@ -71,11 +71,16 @@ export class ReviewContactUS extends Component {
                                             <h5>Sender Email : {message.email}</h5>
                                             <h5>Message : {message.message}</h5>
                                             {/* <h5>{message._id}</h5> */}
-                                            <button type="button"
+                                            {/* <button type="button"
                                                 className="btn btn-danger"
                                                 onClick={event => this.deleteMessage(event, message._id)}>
                                                 Delete
-                                            </button >
+                                            </button > */}
+
+                                            <button className="btn btn-danger"
+                                                onClick={(e) => { if (window.confirm('Are you sure to delete this message?')) this.deleteMessage(event, message._id) }} >
+                                                Delete
+                                            </button>
 
                                         </div>
                                     </div>

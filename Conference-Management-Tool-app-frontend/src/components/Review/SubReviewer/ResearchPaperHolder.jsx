@@ -156,27 +156,35 @@ export class ResearchPaperHolder extends Component {
                                                 (() => {
                                                     if (research_paper.status == 'Approved') {
                                                         return (
-                                                            <button type="button" className="btn btn-danger"
-                                                                onClick={event => this.statusUpdate(event, research_paper.id, 0, research_paper.email, research_paper.name)}>
+                                                            <button className="btn btn-danger"
+                                                                onClick={(e) => { if (window.confirm('Are you sure to reject this document?')) this.statusUpdate(event, research_paper.id, 0, research_paper.email, research_paper.name) }} >
                                                                 Reject
                                                             </button>
                                                         )
                                                     } else if (research_paper.status == 'Rejected') {
                                                         return (
-                                                            <button type="button" className="btn btn-success"
-                                                                onClick={event => this.statusUpdate(event, research_paper.id, 1, research_paper.email, research_paper.name)}>
+                                                            <button className="btn btn-success"
+                                                                onClick={(e) => { if (window.confirm('Are you sure to approvr this document?')) this.statusUpdate(event, research_paper.id, 1, research_paper.email, research_paper.name) }} >
                                                                 Approve
                                                             </button>
                                                         )
                                                     } else {
                                                         return (
                                                             <div>
-                                                                <button type="button" className="btn btn-danger"
+                                                                {/* <button type="button" className="btn btn-danger"
                                                                     onClick={event => this.statusUpdate(event, research_paper.id, 0, research_paper.email, research_paper.name)}>
                                                                     Reject
+                                                                </button> */}
+                                                                <button className="btn btn-danger"
+                                                                    onClick={(e) => { if (window.confirm('Are you sure to reject this document?')) this.statusUpdate(event, research_paper.id, 0, research_paper.email, research_paper.name) }} >
+                                                                    Reject
                                                                 </button>
-                                                                <button type="button" className="btn btn-success"
+                                                                {/* <button type="button" className="btn btn-success"
                                                                     onClick={event => this.statusUpdate(event, research_paper.id, 1, research_paper.email, research_paper.name)}>
+                                                                    Approve
+                                                                </button> */}
+                                                                <button className="btn btn-success"
+                                                                    onClick={(e) => { if (window.confirm('Are you sure to approve this document?')) this.statusUpdate(event, research_paper.id, 1, research_paper.email, research_paper.name) }} >
                                                                     Approve
                                                                 </button>
                                                             </div>
